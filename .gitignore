@@ -1,0 +1,46 @@
+# --- Visual Studio Temporary Files ---
+.vs/
+*.user
+*.aps
+*.ncb
+*.opendb
+*.pch
+*.vsidx
+*.suo
+*.db
+*.ipch
+*.sln.docstates
+
+# --- Build Output (The "Junk") ---
+# This ignores the folders where VS puts your compiled code
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]ut/
+[Bb]uild/
+
+# --- Compiled Files ---
+*.exe
+*.dll
+*.lib
+*.pdb
+*.obj
+*.ilk
+*.exp
+*.recipe
+*.tlog
+*.lastbuildstate
+*.log
+
+# --- Specific GLAD/Internal Cache ---
+.cache/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Asset Backups (Optional) ---
+*.bak
+*.tmp

@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Synapse/Synapse.vcxproj" Id="2fec8bb4-99dc-4b4b-83bf-c97b6f8f672a" />
+</Solution>
