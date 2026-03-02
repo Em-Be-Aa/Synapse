@@ -110,11 +110,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies;$(ProjectDir)dependencies\Includes\glad\;$(ProjectDir)dependencies\Includes\glfw</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\Lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)Shaders" "$(OutDir)Shaders" /s /y /i
@@ -130,21 +132,27 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies;$(ProjectDir)dependencies\Includes\glad\;$(ProjectDir)dependencies\Includes\glfw</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\Lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Glad\glad.c" />
+    <ClCompile Include="source\ImageLoader\Image.cpp" />
     <ClCompile Include="source\ImageLoader\stb_image.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Shader\Shader.cpp" />
+    <ClCompile Include="source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ImageLoader\Image.h" />
     <ClInclude Include="source\ImageLoader\stb_image.h" />
     <ClInclude Include="source\Shader\Shader.h" />
+    <ClInclude Include="source\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
