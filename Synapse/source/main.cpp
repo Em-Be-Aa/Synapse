@@ -8,21 +8,29 @@
 #include "Shader/Shader.h"
 #include "ImageLoader/Image.h"
 #include "Window/Window.h"
-
-
-// Input Processing
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
+#include "Input/InputManager.h"
 
 
 int main()
 {
     //Window
     Window DefaultWindow;
+
+    //Input Manger
+    InputManager InputManager(DefaultWindow.window);
+
+    glm::vec3 CameraPosition(0.0f, 0.0f, -10.0f);
+
+    //Bind Inputs 
+    InputManager.BindKey(GLFW_KEY_ESCAPE, [&DefaultWindow](){ glfwSetWindowShouldClose(DefaultWindow.window, true); });
+    InputManager.BindKey(GLFW_KEY_W, [&DefaultWindow, &CameraPosition]() { CameraPosition[2] = CameraPosition[2] + 0.05; });
+    InputManager.BindKey(GLFW_KEY_S, [&DefaultWindow, &CameraPosition]() { CameraPosition[2] = CameraPosition[2] - 0.05; });
+    InputManager.BindKey(GLFW_KEY_A, [&DefaultWindow, &CameraPosition]() { CameraPosition[0] = CameraPosition[0] + 0.05; });
+    InputManager.BindKey(GLFW_KEY_D, [&DefaultWindow, &CameraPosition]() { CameraPosition[0] = CameraPosition[0] - 0.05; });
+    InputManager.BindKey(GLFW_KEY_Q, [&DefaultWindow, &CameraPosition]() { CameraPosition[1] = CameraPosition[1] - 0.05; });
+    InputManager.BindKey(GLFW_KEY_E, [&DefaultWindow, &CameraPosition]() { CameraPosition[1] = CameraPosition[1] + 0.05; });
+
+
 
     // Image loading and Binding Textures
     Image woodenboxImage("Assets/Textures/WoodenBox.jpg");
@@ -142,8 +150,8 @@ int main()
     // Render Loop
     while (!glfwWindowShouldClose(DefaultWindow.window))
     {
-        // Input Processing)(Escape for now)
-        processInput(DefaultWindow.window);
+        // Input Processing
+        InputManager.ProcessInputs();
 
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -155,10 +163,10 @@ int main()
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
         glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -10.0f));
+        view = glm::translate(view, CameraPosition);
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(20.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
         int modelLoc = glGetUniformLocation(FirstShader.ID, "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

@@ -141,6 +141,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="source\Glad\glad.c" />
     <ClCompile Include="source\ImageLoader\Image.cpp" />
     <ClCompile Include="source\ImageLoader\stb_image.cpp" />
@@ -149,6 +150,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Input\InputManager.h" />
     <ClInclude Include="source\ImageLoader\Image.h" />
     <ClInclude Include="source\ImageLoader\stb_image.h" />
     <ClInclude Include="source\Shader\Shader.h" />
