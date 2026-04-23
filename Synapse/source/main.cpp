@@ -1,7 +1,5 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include "ImageLoader/stb_image.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -9,147 +7,95 @@
 #include "ImageLoader/Image.h"
 #include "Window/Window.h"
 #include "Input/InputManager.h"
+#include "Camera/Camera.h"
+#include "Actor/ActorManager.h"
+#include "Tile/TileManager.h"
+#include "Player/Player.h"
+
+
+float deltaTime = 0.0f;	
+float lastFrame = 0.0f;
 
 
 int main()
 {
-    //Window
+    // Window
     Window DefaultWindow;
 
-    //Input Manger
+    // Input Manger
     InputManager InputManager(DefaultWindow.window);
 
-    glm::vec3 CameraPosition(0.0f, 0.0f, -10.0f);
-
-    //Bind Inputs 
-    InputManager.BindKey(GLFW_KEY_ESCAPE, [&DefaultWindow](){ glfwSetWindowShouldClose(DefaultWindow.window, true); });
-    InputManager.BindKey(GLFW_KEY_W, [&DefaultWindow, &CameraPosition]() { CameraPosition[2] = CameraPosition[2] + 0.05; });
-    InputManager.BindKey(GLFW_KEY_S, [&DefaultWindow, &CameraPosition]() { CameraPosition[2] = CameraPosition[2] - 0.05; });
-    InputManager.BindKey(GLFW_KEY_A, [&DefaultWindow, &CameraPosition]() { CameraPosition[0] = CameraPosition[0] + 0.05; });
-    InputManager.BindKey(GLFW_KEY_D, [&DefaultWindow, &CameraPosition]() { CameraPosition[0] = CameraPosition[0] - 0.05; });
-    InputManager.BindKey(GLFW_KEY_Q, [&DefaultWindow, &CameraPosition]() { CameraPosition[1] = CameraPosition[1] - 0.05; });
-    InputManager.BindKey(GLFW_KEY_E, [&DefaultWindow, &CameraPosition]() { CameraPosition[1] = CameraPosition[1] + 0.05; });
-
-
-
-    // Image loading and Binding Textures
-    Image woodenboxImage("Assets/Textures/WoodenBox.jpg");
-    Image wallpaperImage("Assets/Textures/Wallpaper.jpg");
+    // Camera
+    Camera DefaultCamera;
 
     // Shaders
     Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
 
+    TileManager tileMap(&FirstShader); 
 
-    float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    Player SynapsePlayer("Assets/Player/Alchemist/PNG/PNG Sequences/Idle Blinking/0_Bloody_Alchemist_Idle Blinking_000.png", &FirstShader);
 
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    // Bind Inputs 
+    //InputManager.BindKey(GLFW_KEY_ESCAPE, [&DefaultWindow]() { glfwSetWindowShouldClose(DefaultWindow.window, true); });
+    //InputManager.BindKey(GLFW_KEY_Q, [&DefaultCamera]() { DefaultCamera.cameraPosition += DefaultCamera.cameraSpeed * DefaultCamera.cameraFront; });
+    //InputManager.BindKey(GLFW_KEY_E, [&DefaultCamera]() { DefaultCamera.cameraPosition -= DefaultCamera.cameraSpeed * DefaultCamera.cameraFront; });
+    //InputManager.BindKey(GLFW_KEY_A, [&DefaultCamera]() { DefaultCamera.cameraPosition -= glm::normalize(glm::cross(DefaultCamera.cameraFront, DefaultCamera.cameraUp)) * DefaultCamera.cameraSpeed; });
+    //InputManager.BindKey(GLFW_KEY_D, [&DefaultCamera]() { DefaultCamera.cameraPosition += glm::normalize(glm::cross(DefaultCamera.cameraFront, DefaultCamera.cameraUp)) * DefaultCamera.cameraSpeed; });
+    //InputManager.BindKey(GLFW_KEY_W, [&DefaultCamera]() { DefaultCamera.cameraPosition[1] = DefaultCamera.cameraPosition[1] + DefaultCamera.cameraSpeed; });
+    //InputManager.BindKey(GLFW_KEY_S, [&DefaultCamera]() { DefaultCamera.cameraPosition[1] = DefaultCamera.cameraPosition[1] - DefaultCamera.cameraSpeed; });
+    //InputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
 
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
-
-    unsigned int indices[] =
-    {
-        0,  1,  2,
-        3,  4,  5,
-        6,  7,  8,
-        9,  10, 11,
-        12, 13, 14,
-        15, 16, 17,
-        18, 19, 20,
-        21, 22, 23,
-        24, 25, 26,
-        27, 28, 29,
-        30, 31, 32,
-        33, 34, 35,
-    };
-
-    glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f,  0.0f,  0.0f),
-        glm::vec3(2.0f,  5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f,  3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f,  2.0f, -2.5f),
-        glm::vec3(1.5f,  0.2f, -1.5f),
-        glm::vec3(-1.3f,  1.0f, -1.5f)
-    };
-
-    // Vertex buffer Array and Objects
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
-
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    //glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    FirstShader.use();
-    FirstShader.setInt("texture2", 1);
-
+    InputManager.BindKey(GLFW_KEY_ESCAPE, [&DefaultWindow]() { glfwSetWindowShouldClose(DefaultWindow.window, true); });
+    //InputManager.BindKey(GLFW_KEY_Q, [&DefaultCamera]() { DefaultCamera.cameraPosition += DefaultCamera.cameraSpeed * DefaultCamera.cameraFront; });
+    //InputManager.BindKey(GLFW_KEY_E, [&DefaultCamera]() { DefaultCamera.cameraPosition -= DefaultCamera.cameraSpeed * DefaultCamera.cameraFront; });
+    InputManager.BindKey(GLFW_KEY_A, [&DefaultCamera]() { DefaultCamera.cameraPosition -= glm::normalize(glm::cross(DefaultCamera.cameraFront, DefaultCamera.cameraUp)) * DefaultCamera.cameraSpeed; });
+    InputManager.BindKey(GLFW_KEY_D, [&DefaultCamera]() { DefaultCamera.cameraPosition += glm::normalize(glm::cross(DefaultCamera.cameraFront, DefaultCamera.cameraUp)) * DefaultCamera.cameraSpeed; });
+    InputManager.BindKey(GLFW_KEY_W, [&DefaultCamera]() { DefaultCamera.cameraPosition[1] = DefaultCamera.cameraPosition[1] + DefaultCamera.cameraSpeed; });
+    InputManager.BindKey(GLFW_KEY_S, [&DefaultCamera]() { DefaultCamera.cameraPosition[1] = DefaultCamera.cameraPosition[1] - DefaultCamera.cameraSpeed; });
+    InputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
+    
     
     glEnable(GL_DEPTH_TEST);
 
-    //TODO: Clean the Render Loop
+    double previousTime = glfwGetTime();
+    int frameCount = 0;
+
+    srand(time(0));
+
 
     // Render Loop
     while (!glfwWindowShouldClose(DefaultWindow.window))
     {
+
+        double currentTime = glfwGetTime();
+
+        // 2. We rendered a frame, so count it!
+        frameCount++;
+
+        // 3. Has a full second passed since we last printed?
+        if (currentTime - previousTime >= 1.0)
+        {
+            // Print the FPS
+            std::cout << "FPS: " << frameCount << std::endl;
+
+            // Reset for the next second
+            frameCount = 0;
+            previousTime = currentTime;
+        }
+
+
+        // Delta Time
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        DefaultCamera.cameraSpeed = 2.5 * deltaTime;
+        std::cout << "Camera Position is as follows: " << DefaultCamera.cameraPosition.x << std::endl;
+        SynapsePlayer.playerPosition = {DefaultCamera.cameraPosition.x, DefaultCamera.cameraPosition.y , 0.0003};
+
         // Input Processing
         InputManager.ProcessInputs();
 
@@ -157,17 +103,17 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        //FirstShader.use();
 
         // 3D Transformation, Camera and Projection
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, CameraPosition);
+        glm::mat4 view;
+        view = glm::lookAt(DefaultCamera.cameraPosition, DefaultCamera.cameraPosition + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
 
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
+        
         int modelLoc = glGetUniformLocation(FirstShader.ID, "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -179,33 +125,16 @@ int main()
 
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        FirstShader.use();
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, woodenboxImage.ID);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, wallpaperImage.ID);
-       
-        glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 10; i++)
+        
+        for (Actor* actor : ActorManager::GetActorManager()->RegisteredActors)
         {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-            int modelLoc = glGetUniformLocation(FirstShader.ID, "model");
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-            glDrawArrays(GL_TRIANGLES, 0, 36);
+            actor->Tick();
         }
+
 
         glfwSwapBuffers(DefaultWindow.window);
         glfwPollEvents();
     }
-
-
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
 
 
 	// Cleanup and Exit

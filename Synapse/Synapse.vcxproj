@@ -141,6 +141,11 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Player\Player.cpp" />
+    <ClCompile Include="source\Actor\ActorManager.cpp" />
+    <ClCompile Include="source\Actor\Actor.cpp" />
+    <ClCompile Include="source\Tile\Tile.cpp" />
+    <ClCompile Include="source\Camera\Camera.cpp" />
     <ClCompile Include="source\Input\InputManager.cpp" />
     <ClCompile Include="source\Glad\glad.c" />
     <ClCompile Include="source\ImageLoader\Image.cpp" />
@@ -148,21 +153,82 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Shader\Shader.cpp" />
     <ClCompile Include="source\Window\Window.cpp" />
+    <ClCompile Include="source\Tile\TileManager.cpp" />
+    <ClCompile Include="source\Sprite\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Player\Player.h" />
+    <ClInclude Include="source\Actor\ActorManager.h" />
+    <ClInclude Include="source\Actor\Actor.h" />
+    <ClInclude Include="source\Tile\Tile.h" />
+    <ClInclude Include="source\Camera\Camera.h" />
     <ClInclude Include="source\Input\InputManager.h" />
     <ClInclude Include="source\ImageLoader\Image.h" />
     <ClInclude Include="source\ImageLoader\stb_image.h" />
     <ClInclude Include="source\Shader\Shader.h" />
     <ClInclude Include="source\Window\Window.h" />
+    <ClInclude Include="source\Tile\TileManager.h" />
+    <ClInclude Include="source\Sprite\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
     <None Include="Shaders\shader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Map\Props\A.png" />
+    <Image Include="Assets\Map\Props\Artifact.png" />
+    <Image Include="Assets\Map\Props\B.png" />
+    <Image Include="Assets\Map\Props\Ball.png" />
+    <Image Include="Assets\Map\Props\Barell_01.png" />
+    <Image Include="Assets\Map\Props\Barell_02.png" />
+    <Image Include="Assets\Map\Props\Barell_03.png" />
+    <Image Include="Assets\Map\Props\Cactus_01.png" />
+    <Image Include="Assets\Map\Props\Cactus_02.png" />
+    <Image Include="Assets\Map\Props\Cactus_03.png" />
+    <Image Include="Assets\Map\Props\Dot_A.png" />
+    <Image Include="Assets\Map\Props\Dot_B.png" />
+    <Image Include="Assets\Map\Props\Dot_C.png" />
+    <Image Include="Assets\Map\Props\Flag_A.png" />
+    <Image Include="Assets\Map\Props\Flag_B.png" />
+    <Image Include="Assets\Map\Props\Football_Goals_A.png" />
+    <Image Include="Assets\Map\Props\Football_Goals_B.png" />
+    <Image Include="Assets\Map\Props\Log.png" />
+    <Image Include="Assets\Map\Props\Markup_01.png" />
+    <Image Include="Assets\Map\Props\Markup_02.png" />
+    <Image Include="Assets\Map\Props\Markup_03.png" />
+    <Image Include="Assets\Map\Props\Platform.png" />
+    <Image Include="Assets\Map\Props\Rock_01.png" />
+    <Image Include="Assets\Map\Props\Rock_02.png" />
+    <Image Include="Assets\Map\Props\Rock_03.png" />
+    <Image Include="Assets\Map\Props\Stump.png" />
+    <Image Include="Assets\Map\Props\Tire_01.png" />
+    <Image Include="Assets\Map\Props\Tire_02.png" />
+    <Image Include="Assets\Map\Props\Tire_03.png" />
+    <Image Include="Assets\Map\Props\Tree_01.png" />
+    <Image Include="Assets\Map\Props\Tree_02.png" />
+    <Image Include="Assets\Map\Props\Tree_03.png" />
+    <Image Include="Assets\Map\Props\Tree_04.png" />
+    <Image Include="Assets\Map\Props\Tree_05.png" />
+    <Image Include="Assets\Map\Props\Tree_06.png" />
+    <Image Include="Assets\Map\Props\Tree_07.png" />
+    <Image Include="Assets\Map\Props\Tree_08.png" />
+    <Image Include="Assets\Map\Props\Tree_09.png" />
+    <Image Include="Assets\Map\Props\Well.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_A.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_A.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_B.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_B.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_C.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_C.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_A.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_A.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_B.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_B.png" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.jpg" />
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.png" />
     <Image Include="Assets\Textures\LightWallpaper.jpg" />
     <Image Include="Assets\Textures\Wallpaper.jpg" />
+    <Image Include="Assets\Textures\WoodenBox.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,27 @@
     <ClCompile Include="source\Input\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Camera\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tile\Tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Actor\Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Actor\ActorManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tile\TileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sprite\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader\Shader.h">
@@ -53,6 +74,27 @@
     <ClInclude Include="source\Input\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tile\Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Actor\Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Actor\ActorManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tile\TileManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sprite\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
@@ -63,6 +105,162 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Textures\Wallpaper.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_C.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Artifact.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Barell_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Barell_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Barell_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Cactus_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Cactus_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Cactus_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Dot_A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Dot_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Dot_C.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Flag_A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Flag_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Football_Goals_A.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Football_Goals_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Log.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Markup_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Markup_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Markup_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Platform.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Rock_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Rock_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Rock_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Stump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tire_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tire_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tire_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_04.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_05.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_06.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_07.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_08.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Tree_09.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Props\Well.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_A.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\WoodenBox.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_B.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_01_C.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_A.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_B.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

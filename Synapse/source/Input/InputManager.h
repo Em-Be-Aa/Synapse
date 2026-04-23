@@ -17,6 +17,10 @@ public:
 
     void ProcessInputs();
 
+    std::function<void(double, double)> onMouseMove;
+
+    static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
+
 
 private:
 
