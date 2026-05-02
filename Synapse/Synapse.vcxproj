@@ -155,8 +155,10 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Window\Window.cpp" />
     <ClCompile Include="source\Tile\TileManager.cpp" />
     <ClCompile Include="source\Sprite\Sprite.cpp" />
+    <ClCompile Include="source\Statistics\StatManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Input\IInputObserver.h" />
     <ClInclude Include="source\Player\Player.h" />
     <ClInclude Include="source\Actor\ActorManager.h" />
     <ClInclude Include="source\Actor\Actor.h" />
@@ -169,6 +171,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Window\Window.h" />
     <ClInclude Include="source\Tile\TileManager.h" />
     <ClInclude Include="source\Sprite\Sprite.h" />
+    <ClInclude Include="source\Statistics\StatManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />

@@ -2,11 +2,9 @@
 
 ActorManager* ActorManager::GetActorManager()
 {
+	static ActorManager DefaultActorManager;
 
-	static ActorManager* DefaultActorManager = new ActorManager();
-
-	return DefaultActorManager;
-
+	return &DefaultActorManager;
 }
 
 void ActorManager::RegisterActor(Actor* Actor)

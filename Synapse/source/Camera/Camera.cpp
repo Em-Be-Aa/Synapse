@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include <iostream>
 
 
 void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
@@ -36,6 +37,36 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(front);
+}
+
+void Camera::Tick()
+{
+    // Delta Time
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
+    cameraSpeed = 2.5 * deltaTime;
+}
+
+void Camera::onInputAction(int Key)
+{
+    if (Key == GLFW_KEY_W)
+    {
+        cameraPosition[1] = cameraPosition[1] + cameraSpeed;
+    }
+    else if(Key == GLFW_KEY_A)
+    {
+        cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    }
+    else if (Key == GLFW_KEY_S)
+    {
+        cameraPosition[1] = cameraPosition[1] - cameraSpeed;
+    }
+    else if (Key == GLFW_KEY_D)
+    {
+        cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    }
 }
 
 

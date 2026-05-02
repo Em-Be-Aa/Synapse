@@ -70,10 +70,8 @@ public:
 
             int randomRow = rand() % rows/2;
             if (rand() % 2 == 0) randomRow = -randomRow;
-            std::cout << "random row number" << randomRow << std::endl;
             int randomColumn = rand() % columns/2;
             if (rand() % 2 == 0) randomColumn= -randomColumn;
-            std::cout << "random column number" << randomColumn << std::endl;
             glm::vec2 pos = { randomRow, randomColumn };
 
             translations.push_back(pos);

@@ -12,7 +12,6 @@ TileManager::TileManager(Shader* Shader)
     //patch2Tile = new Tile("Assets/Map/Blocks/Block_B_02.png");
 
     backgroundTiles = generatebackgroundTilePositions();
-
     patchTiles = generatepatchTilePositions();
 
 

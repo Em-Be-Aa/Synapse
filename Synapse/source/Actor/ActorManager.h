@@ -4,7 +4,6 @@
 class ActorManager
 {
 
-
 private:
 
 	ActorManager() {};
@@ -12,10 +11,9 @@ private:
 public:
 
 	static ActorManager* GetActorManager();
+	void RegisterActor(Actor* Actor);
 
 	std::vector<Actor*> RegisteredActors;
-
-	void RegisterActor(Actor* Actor);
 
 };
 

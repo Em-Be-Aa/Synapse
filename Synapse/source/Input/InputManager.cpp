@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <iostream>
 
 
 InputManager::InputManager(GLFWwindow* window) 
@@ -11,24 +12,19 @@ InputManager::InputManager(GLFWwindow* window)
 
 }
 
-void InputManager::BindKey(int Key, std::function<void()> command)
-{
-
-	inputMap[Key] = command;
-
-}
 
 void InputManager::ProcessInputs()
 {
-
-	for(const auto& keyValuePair : inputMap) 
+	for (IInputObserver* observer: observers)
 	{
-		if (glfwGetKey(InputWindow, keyValuePair.first) == GLFW_PRESS)
+		for (int inputAction : inputActions)
 		{
-			keyValuePair.second();
+			if (glfwGetKey(InputWindow, inputAction) == GLFW_PRESS)
+			{
+				observer->onInputAction(inputAction);
+			}
 		}
 	}
-
 }
 
 void InputManager::mouse_callback(GLFWwindow* window, double xposIn, double yposIn)

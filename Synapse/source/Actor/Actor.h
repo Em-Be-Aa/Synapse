@@ -1,5 +1,8 @@
 #pragma once
-class Actor
+
+#include "../Input/IInputObserver.h"
+
+class Actor : public IInputObserver
 {
 
 public:
@@ -9,7 +12,8 @@ public:
 	unsigned int ID;
 
 	virtual void Init();
-
 	virtual void Tick();
+
+	virtual void onInputAction(int Key) override {};
 };
 

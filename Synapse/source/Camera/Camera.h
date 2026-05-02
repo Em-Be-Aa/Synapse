@@ -1,9 +1,10 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include "../Actor/Actor.h"
 #include <glm/glm.hpp>
 
-class Camera
+class Camera: public Actor
 {
 
 public:
@@ -25,6 +26,13 @@ public:
 	bool enable3D = false;
 
 	void CameraMove(GLFWwindow* window, double xposIn, double yposIn);
+
+
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
+
+	void Tick() override;
+	void onInputAction(int Key) override;
 
 };
 
