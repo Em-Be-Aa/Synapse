@@ -9,16 +9,19 @@ StatManager::StatManager()
 }
 
 
-void StatManager::Tick()
+void StatManager::Tick(double deltaTime)
 {
 	currentTime = glfwGetTime();
 	frameCount++;
 
-	if (currentTime - initialTime >= 1)
+	if (enableFPS && enableDrawcalls && currentTime - initialTime >= 1)
 	{
-		std::cout << "FPS :" << frameCount << std::endl;
-
+		std::cout << "Game Stats------------ " << "FPS: " << frameCount << std::endl;
+		std::cout << "Game Stats------------ " << "Draw Calls: " << drawCalls << std::endl;
 		frameCount = 0;
 		initialTime = currentTime;
 	}
+
+	drawCalls = 0;
+	
 }

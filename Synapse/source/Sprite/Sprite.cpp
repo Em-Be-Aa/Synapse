@@ -4,13 +4,12 @@
 Sprite::Sprite(const char* imagePath)
 {
     float vertices[] = {
-   -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-   -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
+   -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom Left
+    0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // Bottom Right
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // Top Right
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // Top Right
+   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // Top Left
+   -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom Left
     };
 
     unsigned int indices[] =
@@ -38,10 +37,5 @@ Sprite::Sprite(const char* imagePath)
     glEnableVertexAttribArray(1);
 
     DefaultImage = new Image(imagePath);
-
-}
-
-void Sprite::Tick()
-{
 
 }

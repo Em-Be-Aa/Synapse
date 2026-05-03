@@ -39,16 +39,17 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
     cameraFront = glm::normalize(front);
 }
 
-void Camera::Tick()
+void Camera::Tick(double deltaTime)
 {
     // Delta Time
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    cameraSpeed = 2.5 * deltaTime;
+    cameraSpeed = 1.5 * deltaTime;
 }
 
+// Change Input actions from camera to player...camera should follow player
 void Camera::onInputAction(int Key)
 {
     if (Key == GLFW_KEY_W)

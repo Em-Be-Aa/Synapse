@@ -31,4 +31,5 @@ Image::Image(const char* imagePath)
 void Image::FreeTexture()
 {
     stbi_image_free(Texture);
+    Texture = nullptr;
 }

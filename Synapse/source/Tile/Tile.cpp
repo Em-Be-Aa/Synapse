@@ -12,7 +12,3 @@ Tile::Tile(const char* imagePath) : Sprite(imagePath)
 }
 
 
-void Tile::Tick()
-{
-
-}

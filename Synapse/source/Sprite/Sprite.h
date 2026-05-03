@@ -7,8 +7,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "../ImageLoader/Image.h"
+#include "Animator.h"
 
-class Sprite : public Actor
+class Sprite
 {
 
 public:
@@ -19,8 +20,10 @@ public:
     unsigned int EBO;
 
     Image* DefaultImage;
+    Animator spriteAnimator;
 
-    void Tick() override;
+protected:
+
 
 
 };

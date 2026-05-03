@@ -21,6 +21,7 @@ public:
 
     TileType Type;
 
-    void Tick() override;
-
+private:
+    
+    glm::vec2 SpriteTile{ 1, 1 };
 };

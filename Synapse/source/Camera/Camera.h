@@ -31,7 +31,7 @@ public:
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	void Tick() override;
+	void Tick(double deltaTime) override;
 	void onInputAction(int Key) override;
 
 };

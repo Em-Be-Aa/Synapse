@@ -2,23 +2,17 @@
 
 #include "../Sprite/Sprite.h"
 #include "../Shader/Shader.h"
+#include "Character.h"
 #include "../Camera/Camera.h"
 
-class Player : public Sprite
+class Player : public Character
 {
 
 public:
 
 	Player(const char* imagePath, Shader* defaultShader, Camera* Camera);
 
-	glm::vec3 playerPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
-
-	void Tick() override;
-
-private:
-
-	Shader* defaultShader;
-	Camera* playerCamera;
+	void Tick(double deltaTime) override;
 
 };
 

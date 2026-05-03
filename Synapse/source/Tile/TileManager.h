@@ -12,7 +12,7 @@ public:
 
     TileManager(Shader* Shader);
 
-	void Tick();
+	void Tick(double deltaTime);
 
     std::vector<glm::vec2> generatebackgroundTilePositions() 
     {

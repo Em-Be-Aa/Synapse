@@ -141,6 +141,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Player\Character.cpp" />
+    <ClCompile Include="source\Sprite\Animator.cpp" />
     <ClCompile Include="source\Player\Player.cpp" />
     <ClCompile Include="source\Actor\ActorManager.cpp" />
     <ClCompile Include="source\Actor\Actor.cpp" />
@@ -158,6 +160,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Statistics\StatManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Player\Character.h" />
+    <ClInclude Include="source\Sprite\Animator.h" />
     <ClInclude Include="source\Input\IInputObserver.h" />
     <ClInclude Include="source\Player\Player.h" />
     <ClInclude Include="source\Actor\ActorManager.h" />
@@ -229,6 +233,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <Image Include="Assets\Map\Tiles\Ground_Tile_02_B.png" />
     <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.jpg" />
     <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.png" />
+    <Image Include="Assets\Textures\Grass_Tile.png" />
     <Image Include="Assets\Textures\LightWallpaper.jpg" />
     <Image Include="Assets\Textures\Wallpaper.jpg" />
     <Image Include="Assets\Textures\WoodenBox.jpg" />

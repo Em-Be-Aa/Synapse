@@ -12,7 +12,7 @@ public:
 	unsigned int ID;
 
 	virtual void Init();
-	virtual void Tick();
+	virtual void Tick(double deltaTime);
 
 	virtual void onInputAction(int Key) override {};
 };

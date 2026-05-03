@@ -26,6 +26,6 @@ void Actor::Init()
 {
 }
 
-void Actor::Tick()
+void Actor::Tick(double deltaTime)
 {
 }

@@ -20,9 +20,10 @@ int main()
     InputManager DefaultInputManager(DefaultWindow.window);
     Camera DefaultCamera;
     Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
-    StatManager StatLogger;
+    StatManager::Get();
     TileManager tileMap(&FirstShader); 
-    Player SynapsePlayer("Assets/Player/Alchemist/PNG/PNG Sequences/Idle Blinking/0_Bloody_Alchemist_Idle Blinking_000.png", &FirstShader, &DefaultCamera);
+    Player SynapsePlayer("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png", &FirstShader, &DefaultCamera);
+   
 
     DefaultInputManager.observers.push_back(&DefaultCamera);
     DefaultInputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
@@ -31,10 +32,18 @@ int main()
     glEnable(GL_DEPTH_TEST);
     srand(time(0));
 
+    double currentTime;
+    double initialTime = glfwGetTime();
+    double deltaTime = 0.0f;
 
     // Render Loop
     while (!glfwWindowShouldClose(DefaultWindow.window))
     {
+
+        currentTime = glfwGetTime();
+        deltaTime = currentTime - initialTime;
+        initialTime = currentTime;
+
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -58,6 +67,7 @@ int main()
         int projectionLoc = glGetUniformLocation(FirstShader.ID, "projection");
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
@@ -66,7 +76,7 @@ int main()
         
         for (Actor* actor : ActorManager::GetActorManager()->RegisteredActors)
         {
-            actor->Tick();
+            actor->Tick(deltaTime);
         }
 
 
