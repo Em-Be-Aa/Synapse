@@ -2,6 +2,11 @@
 #include <iostream>
 
 
+Camera::Camera(Actor* AttachedActor)
+{
+    attachedActor = AttachedActor;
+}
+
 void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
 {
     float xpos = static_cast<float>(xposIn);
@@ -46,28 +51,13 @@ void Camera::Tick(double deltaTime)
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    cameraSpeed = 1.5 * deltaTime;
+    cameraSpeed = 1.0 * deltaTime;
+
+    Position = {  attachedActor->Position.x, attachedActor->Position.y , 3.0 };
+
+
 }
 
-// Change Input actions from camera to player...camera should follow player
-void Camera::onInputAction(int Key)
-{
-    if (Key == GLFW_KEY_W)
-    {
-        cameraPosition[1] = cameraPosition[1] + cameraSpeed;
-    }
-    else if(Key == GLFW_KEY_A)
-    {
-        cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    }
-    else if (Key == GLFW_KEY_S)
-    {
-        cameraPosition[1] = cameraPosition[1] - cameraSpeed;
-    }
-    else if (Key == GLFW_KEY_D)
-    {
-        cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    }
-}
+
 
 

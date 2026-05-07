@@ -27,13 +27,13 @@ class Character : public Actor
 
 public:
 
-	Character(const char* imagePath, Shader* defaultShader, Camera* Camera);
+	Character(const char* imagePath, Shader* defaultShader);
 	void UpdateAnim(Anim_Mode Mode);
 	virtual void Tick(double deltaTime) override;
 
-	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0003f);
 	double Speed = 0.0f;
 	glm::vec3 Velocity;
+	float movementSpeed = 1.0f;
 
 protected:
 
@@ -43,7 +43,10 @@ protected:
 	Image* currentSpritesheet = nullptr;
 	Anim_Mode currentAnim = IDLE;
 
-private:
+	glm::vec3 characterFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 characterUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+public: // fix this this should be private
 
 	std::map<Anim_Mode, Anim_Clip> animMontage = {
 	{ IDLE,   Anim_Clip("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",			{6, 1}) },

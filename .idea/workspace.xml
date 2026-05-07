@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppGeneralOptions" type="string" />
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="30b6f38e-7aaa-462b-8b8a-f24f37913d18" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Actor/Actor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Actor/Actor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Camera/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Camera/Camera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Camera/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Camera/Camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Player/Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Player/Character.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Player/Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Player/Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Player/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Player/Player.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/Player/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/Player/Player.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Synapse/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Synapse/source/main.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="7uUawkdn" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3DPMP0XPYEurDIU8JZsqVwIapJK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "CppGeneralOptionsId",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30b6f38e-7aaa-462b-8b8a-f24f37913d18" name="Changes" comment="" />
+      <created>1778179224933</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778179224933</updated>
+      <workItem from="1778179226443" duration="292000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

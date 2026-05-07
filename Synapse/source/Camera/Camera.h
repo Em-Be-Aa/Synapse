@@ -9,7 +9,8 @@ class Camera: public Actor
 
 public:
 
-	glm::vec3 cameraPosition	= glm::vec3(0.0f, 0.0f, 3.0f);
+	Camera(Actor* AttachedActor);
+
 	glm::vec3 cameraFront		= glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp			= glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -22,8 +23,9 @@ public:
 	float pitch = 0.0f;
 
 	float cameraSpeed = 0.03;
-
 	bool enable3D = false;
+
+	Actor* attachedActor = nullptr;
 
 	void CameraMove(GLFWwindow* window, double xposIn, double yposIn);
 
@@ -32,7 +34,6 @@ public:
 	float lastFrame = 0.0f;
 
 	void Tick(double deltaTime) override;
-	void onInputAction(int Key) override;
 
 };
 

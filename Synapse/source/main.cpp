@@ -18,14 +18,21 @@ int main()
 {
     Window DefaultWindow;
     InputManager DefaultInputManager(DefaultWindow.window);
-    Camera DefaultCamera;
     Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
     StatManager::Get();
     TileManager tileMap(&FirstShader); 
-    Player SynapsePlayer("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png", &FirstShader, &DefaultCamera);
+    Player SynapsePlayer("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png", &FirstShader); //Why path is still needed
+    Character SlimeEnemy("Assets/Player/Human/With_Shadows/Monster_Slime_Idle-Sheet.png", &FirstShader);
+    Camera DefaultCamera(&SynapsePlayer);
    
+    // Fix this (also why when player is at the same position of enemy a transparent square is shown that covers the enemy)
+    SlimeEnemy.animMontage = {
+    { IDLE,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Idle-Sheet.png",			{6, 1}) },
+    { WALK,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Walk-Sheet.png",			{8, 1}) },
+    { JUMP,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Jump_Fall-Sheet.png",		{6, 1}) },
+    };
 
-    DefaultInputManager.observers.push_back(&DefaultCamera);
+    DefaultInputManager.observers.push_back(&SynapsePlayer);
     DefaultInputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
     
     
@@ -53,7 +60,7 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
 
         glm::mat4 view;
-        view = glm::lookAt(DefaultCamera.cameraPosition, DefaultCamera.cameraPosition + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
+        view = glm::lookAt(DefaultCamera.Position, DefaultCamera.Position + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
 
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);

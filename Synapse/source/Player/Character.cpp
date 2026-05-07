@@ -3,10 +3,9 @@
 #include "../Shader/Shader.h"
 #include "../Statistics/StatManager.h"
 
-Character::Character(const char* imagePath, Shader* Shader, Camera* Camera) : characterSprite(imagePath)
+Character::Character(const char* imagePath, Shader* Shader) : characterSprite(imagePath)
 {
-    characterShader = Shader;
-    characterCamera = Camera;
+    characterShader = Shader; 
 
     UpdateAnim(IDLE);
 }
@@ -33,6 +32,8 @@ void Character::UpdateAnim(Anim_Mode Mode)
 
 void Character::Tick(double deltaTime)
 {
+    movementSpeed = 1.0 * deltaTime;
+
     if (deltaTime != 0)
     {
         Velocity = (Position - previousPosition) / glm::vec1(deltaTime);
