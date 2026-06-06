@@ -15,7 +15,7 @@ public:
 
 	GLFWwindow* window;
 
-	int Width	= 800;
-	int Height	= 600;
+	float Width	= 800.0f;
+	float Height = 600.0f;
 };
 

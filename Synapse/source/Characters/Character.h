@@ -4,36 +4,22 @@
 #include "../Shader/Shader.h"
 #include "../Camera/Camera.h"
 #include <map>
-
-enum Anim_Mode 
-{
-	NONE,
-	IDLE,
-	WALK,
-	JUMP,
-};
-
-struct Anim_Clip 
-{
-	Image* spriteSheet;
-	glm::vec2 imageTiles;
-
-	Anim_Clip() = default;
-	Anim_Clip(const char* imagePath, glm::vec2 tileInfo) : spriteSheet(new Image(imagePath)), imageTiles(tileInfo) {}
-};
+#include "../Collision/CollisionComponent.h"
+#include "../Enums&Structs/GameTypes.h"
 
 class Character : public Actor
 {
 
 public:
 
-	Character(const char* imagePath, Shader* defaultShader);
+	Character(Shader* defaultShader);
 	void UpdateAnim(Anim_Mode Mode);
 	virtual void Tick(double deltaTime) override;
 
 	double Speed = 0.0f;
 	glm::vec3 Velocity;
 	float movementSpeed = 1.0f;
+	glm::vec3 deltaPosition;
 
 protected:
 
@@ -42,11 +28,12 @@ protected:
 	Sprite characterSprite;
 	Image* currentSpritesheet = nullptr;
 	Anim_Mode currentAnim = IDLE;
+	CollisionComponent Collidor;
 
 	glm::vec3 characterFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 characterUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-public: // fix this this should be private
+public: // fix this, this should be private
 
 	std::map<Anim_Mode, Anim_Clip> animMontage = {
 	{ IDLE,   Anim_Clip("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",			{6, 1}) },
@@ -55,4 +42,6 @@ public: // fix this this should be private
 	};
 
 	glm::vec3 previousPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
+
+	const char* defaultImage = "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png";
 };

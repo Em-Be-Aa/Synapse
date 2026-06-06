@@ -1,15 +1,10 @@
 #pragma once
+
 #include "../Sprite/Sprite.h"
-#include "../Shader/Shader.h"
+#include "../Enums&Structs/GameTypes.h"
 
 
 
-enum TileType {
-    None,
-    Grass,
-    Land,
-    Water
-};
 
 
 class Tile : public Sprite
@@ -17,11 +12,11 @@ class Tile : public Sprite
 
 public:
 
-    Tile(const char* imagePath);
+    Tile(const char* imagePath) : Sprite(imagePath) {};
 
-    TileType Type;
 
 private:
+
+    TileType Type;
     
-    glm::vec2 SpriteTile{ 1, 1 };
 };

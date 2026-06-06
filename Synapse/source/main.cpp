@@ -4,39 +4,56 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Shader/Shader.h"
-#include "ImageLoader/Image.h"
 #include "Window/Window.h"
-#include "Input/InputManager.h"
+#include "Managers/InputManager.h"
 #include "Camera/Camera.h"
-#include "Actor/ActorManager.h"
-#include "Tile/TileManager.h"
-#include "Player/Player.h"
-#include "Statistics/StatManager.h"
+#include "Managers/TickManager.h"
+#include "Actor/Object.h"
+#include "Tile/TileMap.h"
+#include "Characters/Player.h"
+#include "Characters/Enemy.h"
+#include "Managers/CollisionManager.h"
+#include "Managers/StatManager.h"
+
+/* 
+ 
+TODO:
+
+1. Fix Collision Box moving for enemy when player moves. ✅
+2. Make Renderer and remove logic from Tick.
+3. Make Animation System include a single play of animation for attacks and stuff.
+4. Make a Json system that loads info for the game at start and classes can use them(Player, Enemy, Tiles etc).
+5. Make a grid system, all actors should be aware of their grid(or grid should have all actors in it). Through this make the collision system decoupled and moving actors should check for collision in their grid.
+6. Movement along diagonal is faster, balance it.
+7. Collidors of top and right stop player further from the other actors collision box.
+
+*/
 
 
 int main()
 {
     Window DefaultWindow;
-    InputManager DefaultInputManager(DefaultWindow.window);
-    Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
-    StatManager::Get();
-    TileManager tileMap(&FirstShader); 
-    Player SynapsePlayer("Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png", &FirstShader); //Why path is still needed
-    Character SlimeEnemy("Assets/Player/Human/With_Shadows/Monster_Slime_Idle-Sheet.png", &FirstShader);
-    Camera DefaultCamera(&SynapsePlayer);
-   
-    // Fix this (also why when player is at the same position of enemy a transparent square is shown that covers the enemy)
-    SlimeEnemy.animMontage = {
-    { IDLE,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Idle-Sheet.png",			{6, 1}) },
-    { WALK,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Walk-Sheet.png",			{8, 1}) },
-    { JUMP,   Anim_Clip("Assets/Player/Human/With_Shadows/Monster_Slime_Jump_Fall-Sheet.png",		{6, 1}) },
-    };
 
+    // Managers
+    InputManager DefaultInputManager(DefaultWindow.window);
+    StatManager::Get();
+    CollisionManager::GetCollisionManager();
+
+    //make some system to manage all shaders and rendering.....adding it in actors logic is too hectic
+    Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
+    TileMap Landscape(&FirstShader); 
+
+    // Actors
+    Player SynapsePlayer(&FirstShader);
+    Camera DefaultCamera(&SynapsePlayer);
+    Enemy SlimeEnemy(&FirstShader);
+
+    // Setting Input Actor
     DefaultInputManager.observers.push_back(&SynapsePlayer);
     DefaultInputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
     
     
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     srand(time(0));
 
     double currentTime;
@@ -63,8 +80,8 @@ int main()
         view = glm::lookAt(DefaultCamera.Position, DefaultCamera.Position + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-        
+        projection = glm::perspective(glm::radians(45.0f), (DefaultWindow.Width / DefaultWindow.Height), 0.1f, 100.0f);
+
         int modelLoc = glGetUniformLocation(FirstShader.ID, "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -78,14 +95,14 @@ int main()
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
-        // Input Processing
+        // Process Inputs
         DefaultInputManager.ProcessInputs();
         
-        for (Actor* actor : ActorManager::GetActorManager()->RegisteredActors)
+        // Tick World
+        for (Object* O : TickManager::GetTickManager()->RegisteredObjects)
         {
-            actor->Tick(deltaTime);
+            O->Tick(deltaTime);
         }
-
 
         glfwSwapBuffers(DefaultWindow.window);
         glfwPollEvents();

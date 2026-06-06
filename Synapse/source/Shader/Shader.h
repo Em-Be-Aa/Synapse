@@ -1,21 +1,12 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
 
 
 class Shader
 {
 
 public:
-
-	// The program ID
-	unsigned int ID;
 
 	// Constructor, reads and builds shader
 	Shader(const char* vertexPath, const char* fragmentPath);
@@ -27,7 +18,7 @@ public:
 	void setInt(const std::string &name, int value) const;
 	void setFloat(const std::string &name, float value) const;
 
-
-
+	// The program ID
+	unsigned int ID;
 };
 

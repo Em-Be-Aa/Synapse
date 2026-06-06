@@ -10,7 +10,7 @@ class Player : public Character
 
 public:
 
-	Player(const char* imagePath, Shader* defaultShader);
+	Player(Shader* defaultShader);
 
 	void Tick(double deltaTime) override;
 	void onInputAction(int Key) override;

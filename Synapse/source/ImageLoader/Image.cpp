@@ -1,5 +1,7 @@
 #include "Image.h"
 #include <iostream>
+#include <glad/glad.h>
+#include "stb_image.h"
 
 Image::Image(const char* imagePath)
 {

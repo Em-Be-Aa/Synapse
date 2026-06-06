@@ -33,7 +33,7 @@
     <ClCompile Include="source\Window\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Input\InputManager.cpp">
+    <ClCompile Include="source\Managers\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Camera\Camera.cpp">
@@ -45,25 +45,37 @@
     <ClCompile Include="source\Actor\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Actor\ActorManager.cpp">
+    <ClCompile Include="source\Managers\TickManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Tile\TileManager.cpp">
+    <ClCompile Include="source\Tile\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player\Player.cpp">
+    <ClCompile Include="source\Characters\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Sprite\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Statistics\StatManager.cpp">
+    <ClCompile Include="source\Managers\StatManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Sprite\Animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player\Character.cpp">
+    <ClCompile Include="source\Characters\Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision\CollisionComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Actor\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +92,7 @@
     <ClInclude Include="source\Window\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Input\InputManager.h">
+    <ClInclude Include="source\Managers\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Camera\Camera.h">
@@ -92,28 +104,46 @@
     <ClInclude Include="source\Actor\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Actor\ActorManager.h">
+    <ClInclude Include="source\Managers\TickManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Tile\TileManager.h">
+    <ClInclude Include="source\Tile\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Player\Player.h">
+    <ClInclude Include="source\Characters\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Sprite\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Statistics\StatManager.h">
+    <ClInclude Include="source\Managers\StatManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Input\IInputObserver.h">
+    <ClInclude Include="source\Interfaces\IInputObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Sprite\Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Player\Character.h">
+    <ClInclude Include="source\Characters\Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Interfaces\ITicker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision\CollisionComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Actor\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CollisionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enums&amp;Structs\GameTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

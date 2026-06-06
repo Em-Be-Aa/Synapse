@@ -1,21 +1,16 @@
 #pragma once
 
-#include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include "stb_image.h"
 
 class Image 
 {
 
 public:
 
-	Image() {}
 	Image(const char* imagePath);
 
-	int width;
-	int height;
-	int nrChannels;
+	int width = 0;
+	int height = 0;
+	int nrChannels = 0;
 
 	unsigned char* Texture;
 	unsigned int ID;

@@ -51,11 +51,8 @@ void Camera::Tick(double deltaTime)
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    cameraSpeed = 1.0 * deltaTime;
-
+    // Follow Attached Actor
     Position = {  attachedActor->Position.x, attachedActor->Position.y , 3.0 };
-
-
 }
 
 

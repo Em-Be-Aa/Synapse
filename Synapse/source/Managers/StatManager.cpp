@@ -1,5 +1,4 @@
 #include "StatManager.h"
-#include "StatManager.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -14,7 +13,7 @@ void StatManager::Tick(double deltaTime)
 	currentTime = glfwGetTime();
 	frameCount++;
 
-	if (enableFPS && enableDrawcalls && currentTime - initialTime >= 1)
+	if (enableStats && (currentTime - initialTime >= 1))
 	{
 		std::cout << "Game Stats------------ " << "FPS: " << frameCount << std::endl;
 		std::cout << "Game Stats------------ " << "Draw Calls: " << drawCalls << std::endl;

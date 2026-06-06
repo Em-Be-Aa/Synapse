@@ -1,15 +1,14 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <map>
 #include <functional>
-#include "../Actor/Actor.h"
-#include "IInputObserver.h"
+#include "../Interfaces/IInputObserver.h"
 
 
 
 class InputManager
 {
+
 public:
 
 	InputManager(GLFWwindow* window);
@@ -20,6 +19,7 @@ public:
 	GLFWwindow* InputWindow;
 
     std::vector<IInputObserver*> observers = {};
+
 
 private:
 

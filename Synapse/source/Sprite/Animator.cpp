@@ -5,7 +5,7 @@ Animator::Animator(glm::vec2 TileXY)
 {
 	tileXY = TileXY;
 	uvScale = { 1.0f / TileXY.x, 1.0f / TileXY.y};
-	uvOffset = { 0, 0 };
+	uvOffset = {0, 0};
 }
 
 

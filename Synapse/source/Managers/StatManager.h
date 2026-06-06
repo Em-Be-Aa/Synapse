@@ -8,23 +8,22 @@ class StatManager : public Actor
 
 public:
 
+	void Tick(double deltaTime) override;
 	static StatManager& Get() 
 	{
 		static StatManager instance;
 		return instance;
 	};
 
+	int drawCalls = 0;
+
+private:
+
+	StatManager();
+
 	double initialTime = 0.0f;
 	double currentTime = 0.0f;
 	int frameCount = 0;
-	int drawCalls = 0;
-
-	bool enableDrawcalls = true;
-	bool enableFPS = true;
-
-	void Tick(double deltaTime) override;
-
-private:
-	StatManager();
+	bool enableStats = false;
 };
 

@@ -13,18 +13,15 @@ class Sprite
 {
 
 public:
-    Sprite(const char* imagePath);
+	Sprite();
+	Sprite(const char* imagePath);
 
-    unsigned int VAO;
-    unsigned int VBO;
-    unsigned int EBO;
+	unsigned int VAO;
+	unsigned int VBO;
+	unsigned int EBO;
 
-    Image* DefaultImage;
-    Animator spriteAnimator;
-
-protected:
-
-
+	Image* DefaultImage;
+	Animator spriteAnimator;
 
 };
 
