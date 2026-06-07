@@ -3,7 +3,7 @@
 #include "../Actor/Actor.h"
 
 
-class StatManager : public Actor
+class StatManager : public Object
 {
 
 public:

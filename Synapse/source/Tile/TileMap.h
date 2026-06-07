@@ -3,28 +3,22 @@
 #include "../Actor/Actor.h"
 #include "glm/glm.hpp"
 #include "../Shader/Shader.h"
-#include "Tile.h"
+#include "../Sprite/Sprite.h"
 
-class TileMap : public Actor
+class TileMap : public Object
 {
 
 public:
 
-    TileMap(Shader* Shader);
+    TileMap();
 	void Tick(double deltaTime);
-
-
 
     std::vector<glm::vec2> backgroundTiles;
     std::vector<glm::vec2> patchTiles;
 
-
 private:
 
-    Shader* defaultShader;
-    Tile* basicTile;
-    Tile* patch1Tile;
-    Tile* patch2Tile;
+    Sprite* basicTile;
 
     std::vector<glm::vec2> generatebackgroundTilePositions()
     {

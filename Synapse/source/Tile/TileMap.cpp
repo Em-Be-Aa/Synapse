@@ -1,14 +1,13 @@
 #include "TileMap.h"
 #include <glm/ext/matrix_transform.hpp>
-#include "Tile.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "../Managers/StatManager.h"
+#include "../Shader/Renderer2D.h"
 
-TileMap::TileMap(Shader* Shader)
+TileMap::TileMap()
 {
-    defaultShader = Shader;
 
-    basicTile = new Tile("Assets/Map/Tiles/Mixed_Tile.png");
+    basicTile = new Sprite("Assets/Map/Tiles/Mixed_Tile.png");
 
     backgroundTiles = generatebackgroundTilePositions();
     patchTiles = generatepatchTilePositions();
@@ -23,30 +22,10 @@ void TileMap::Tick(double deltaTime)
 	for (glm::vec2 Translation : backgroundTiles)
 	{ 
 
-        defaultShader->use();
+        // Submit tile to Renderer2D instead of issuing GL calls here
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(Translation, 0.0f));
+        glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
+        Renderer2D::Submit(basicTile->DefaultImage->ID, model, uv);
 
-        glm::mat4 model = glm::mat4(1.0f)
-            ;
-        model = glm::translate(model, glm::vec3(Translation, 0.0f));
-
-        int modelLoc = glGetUniformLocation(defaultShader->ID, "model");
-        int uvScaleLoc = glGetUniformLocation(defaultShader->ID, "uvScale");
-        int uvOffsetLoc = glGetUniformLocation(defaultShader->ID, "uvOffset");
-
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform2f(uvScaleLoc, 1.0f, 1.0f);
-        glUniform2f(uvOffsetLoc, 0.0f, 0.0f);
-
-        glActiveTexture(GL_TEXTURE0);
-
-        glBindTexture(GL_TEXTURE_2D, basicTile->DefaultImage->ID);
-       
-        glBindVertexArray(basicTile->VAO);
-
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        StatManager::Get().drawCalls++;
 	}
-
-
-
 }

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../ImageLoader/Image.h"
+
+
 enum Anim_Mode
 {
 	NONE,
@@ -28,4 +31,10 @@ enum TileType {
 	Grass,
 	Land,
 	Water
+};
+
+struct AnimationClip {
+	std::string imagepath;
+	int tileX = 1;
+	int tileY = 1;
 };

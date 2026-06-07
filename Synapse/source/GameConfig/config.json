@@ -1,0 +1,22 @@
+{
+  "game_settings": {
+    "resolution_X": 800,
+    "resolution_Y": 600
+  },
+  "player": {
+    "animations": {
+      "idle": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
+        "frames": 6
+      },
+      "walk": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
+        "frames": 8
+      },
+      "jump": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
+        "frames": 6
+      }
+    }
+  }
+}

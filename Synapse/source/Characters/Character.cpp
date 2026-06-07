@@ -4,11 +4,17 @@
 #include "../Shader/Shader.h"
 #include "../Managers/CollisionManager.h"
 #include "../Managers/StatManager.h"
+#include "../Managers/SynapseFunctionLibrary.h"
 
 // make these hard coded things better
-Character::Character(Shader* Shader) : Collidor(Shader, "Assets/Map/Tiles/Boundary.png", this)
+Character::Character() : Collidor(this)
 {
-    characterShader = Shader; 
+    //nlohmann::json Config = SynapseFunctionLibrary::loadJson();
+
+    //std::string path = Config["player"]["animations"]["idle"]["path"].get<std::string>();
+    //int frames = Config["player"]["animations"]["idle"]["frames"].get<int>();
+    //characterSprite.spriteAnimator.animations["IDLE"] = { path, frames, 1};
+
     UpdateAnim(IDLE);
 }
 
@@ -21,11 +27,11 @@ void Character::UpdateAnim(Anim_Mode Mode)
     if (It != animMontage.end())
     {
         Anim_Clip& currentMontage = It->second;
-        currentSpritesheet = currentMontage.spriteSheet;
+        characterSprite.DefaultImage = currentMontage.spriteSheet;
         characterSprite.spriteAnimator.UpdateUV(currentMontage.imageTiles);
     }
 
-    if (currentSpritesheet == nullptr)
+    if (characterSprite.DefaultImage == nullptr)
     {
         std::cout << "Current Sprite Sheet is Null" << std::endl;
         return;
@@ -36,7 +42,7 @@ void Character::UpdateAnim(Anim_Mode Mode)
 void Character::Tick(double deltaTime)
 {
     movementSpeed = 1.0 * deltaTime;
-    // compute collision box using the collider's BoxSize so smaller boxes work per-entity
+
     float halfX = Collidor.BoxSize.x * 0.5f;
     float halfY = Collidor.BoxSize.y * 0.5f;
     Collidor.Box.min = { Position.x + deltaPosition.x - halfX, Position.y + deltaPosition.y - halfY };
@@ -72,27 +78,16 @@ void Character::Tick(double deltaTime)
     }
     
 
-    if (currentSpritesheet == nullptr)
+    if (characterSprite.DefaultImage == nullptr)
     {
         return;
     }
 
-    characterShader->use();
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, Position);
-    //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-
-    int modelLoc = glGetUniformLocation(characterShader->ID, "model");
-    int uvScaleLoc = glGetUniformLocation(characterShader->ID, "uvScale");
-    int uvOffsetLoc = glGetUniformLocation(characterShader->ID, "uvOffset");
-
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniform2f(uvScaleLoc, characterSprite.spriteAnimator.uvScale.x, characterSprite.spriteAnimator.uvScale.y);
-    glUniform2f(uvOffsetLoc, characterSprite.spriteAnimator.uvOffset.x, characterSprite.spriteAnimator.uvOffset.y);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, currentSpritesheet->ID);
-    glBindVertexArray(characterSprite.VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    StatManager::Get().drawCalls++;
+    RenderComp.model = glm::translate(glm::mat4(1.0f), Position);
+    RenderComp.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator.uvScale.x, characterSprite.spriteAnimator.uvScale.y,
+                                         characterSprite.spriteAnimator.uvOffset.x, characterSprite.spriteAnimator.uvOffset.y);
+    if (characterSprite.DefaultImage)
+    {
+        RenderComp.textureID = characterSprite.DefaultImage->ID;
+    }
 }

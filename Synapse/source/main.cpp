@@ -6,14 +6,17 @@
 #include "Shader/Shader.h"
 #include "Window/Window.h"
 #include "Managers/InputManager.h"
+#include "Shader/Renderer2D.h"
 #include "Camera/Camera.h"
 #include "Managers/TickManager.h"
 #include "Actor/Object.h"
+#include "Managers/RenderManager.h"
 #include "Tile/TileMap.h"
 #include "Characters/Player.h"
 #include "Characters/Enemy.h"
 #include "Managers/CollisionManager.h"
 #include "Managers/StatManager.h"
+
 
 /* 
  
@@ -36,17 +39,17 @@ int main()
 
     // Managers
     InputManager DefaultInputManager(DefaultWindow.window);
-    StatManager::Get();
-    CollisionManager::GetCollisionManager();
 
     //make some system to manage all shaders and rendering.....adding it in actors logic is too hectic
-    Shader FirstShader("Shaders/shader.vs", "Shaders/shader.fs");
-    TileMap Landscape(&FirstShader); 
+    TileMap Landscape;
+
+    // Initialize Renderer2D with sprite shader (use same shader for now)
+    Renderer2D::Init("Shaders/shader.vs", "Shaders/shader.fs");
 
     // Actors
-    Player SynapsePlayer(&FirstShader);
+    Player SynapsePlayer;
     Camera DefaultCamera(&SynapsePlayer);
-    Enemy SlimeEnemy(&FirstShader);
+    Enemy SlimeEnemy;
 
     // Setting Input Actor
     DefaultInputManager.observers.push_back(&SynapsePlayer);
@@ -73,30 +76,21 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+        // Process Inputs
+        DefaultInputManager.ProcessInputs();
+
         // 3D Transformation, Camera and Projection
         glm::mat4 model = glm::mat4(1.0f);
 
         glm::mat4 view;
-        view = glm::lookAt(DefaultCamera.Position, DefaultCamera.Position + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
+        glm::vec3 CameraPosition = {DefaultCamera.attachedActor->Position.x, DefaultCamera.attachedActor->Position.y, 3.0f};
+        view = glm::lookAt(CameraPosition, CameraPosition + DefaultCamera.cameraFront, DefaultCamera.cameraUp);
 
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), (DefaultWindow.Width / DefaultWindow.Height), 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), ((float)DefaultWindow.Width / (float)DefaultWindow.Height), 0.1f, 100.0f);
 
-        int modelLoc = glGetUniformLocation(FirstShader.ID, "model");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-        int viewLoc = glGetUniformLocation(FirstShader.ID, "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-        int projectionLoc = glGetUniformLocation(FirstShader.ID, "projection");
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
-
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
-        // Process Inputs
-        DefaultInputManager.ProcessInputs();
+        // Start renderer scene for Renderer2D (this will set view/projection uniforms)
+        Renderer2D::BeginScene(view, projection);
         
         // Tick World
         for (Object* O : TickManager::GetTickManager()->RegisteredObjects)
@@ -104,12 +98,24 @@ int main()
             O->Tick(deltaTime);
         }
 
+        // Submit all registered RenderComponents to Renderer2D
+        for (RenderComponent* rc : RenderManager::GetRenderManager().RenderComps)
+        {
+            if (rc)
+                Renderer2D::Submit(*rc);
+        }
+
+        // End and flush renderer
+        Renderer2D::EndScene();
+
         glfwSwapBuffers(DefaultWindow.window);
         glfwPollEvents();
     }
 
 
 	// Cleanup and Exit
+    // Shutdown renderer resources
+    Renderer2D::Shutdown();
     glfwTerminate();
     return 0;
 }

@@ -17,5 +17,13 @@ public:
 	unsigned int ID;
 	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0003f);
 
+
+protected:
+
+	double Speed = 0.0f;
+	glm::vec3 Velocity;
+	float movementSpeed = 1.0f;
+	glm::vec3 deltaPosition;
+
 };
 

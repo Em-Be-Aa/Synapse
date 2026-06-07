@@ -2,7 +2,7 @@
 #include "glm/glm.hpp"
 #include "../Shader/Shader.h"
 
-Player::Player(Shader* Shader) : Character(Shader)
+Player::Player()
 {
     // make the player's collision box smaller than the full sprite
     Collidor.BoxSize = glm::vec2(0.3f, 0.3f);

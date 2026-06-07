@@ -5,6 +5,7 @@
 #include "../Shader/Shader.h"
 #include "../Sprite/Sprite.h"
 #include "../Enums&Structs/GameTypes.h"
+#include "../Shader/RenderComponent.h"
 
 
 class CollisionComponent : public Object
@@ -12,7 +13,7 @@ class CollisionComponent : public Object
 
 public:
 
-	CollisionComponent(Shader* shader, const char* imagePath, Actor* ownerActor);
+	CollisionComponent(Actor* ownerActor);
 	void Tick(double deltaTime) override;
 
 	CollisionBox Box;
@@ -25,6 +26,7 @@ private:
 	Shader* collisionShader;
 	Sprite collisionSprite;
 	Actor* owner;
+	RenderComponent RenderComp;
 	
 };
 

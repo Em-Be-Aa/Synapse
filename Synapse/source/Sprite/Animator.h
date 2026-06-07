@@ -2,10 +2,11 @@
 
 #include "glm/glm.hpp"
 #include "../Actor/Actor.h"
+#include <string>
+#include "../Enums&Structs/GameTypes.h"
 
 
-// TODO: This should not be actor, find a better way to tick this
-class Animator: public Actor
+class Animator: public Object
 {
 public:
 
@@ -19,6 +20,8 @@ public:
 	glm::vec2 uvOffset{0, 0};
 
 	void Tick(double deltaTime) override;
+
+	std::unordered_map<std::string, AnimationClip> animations; 
 
 private:
 	float frameTime = 0.15f;  // seconds per frame

@@ -46,13 +46,7 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
 
 void Camera::Tick(double deltaTime)
 {
-    // Delta Time
-    float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
 
-    // Follow Attached Actor
-    Position = {  attachedActor->Position.x, attachedActor->Position.y , 3.0 };
 }
 
 

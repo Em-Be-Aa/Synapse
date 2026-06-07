@@ -4,7 +4,7 @@
 #include "../Actor/Actor.h"
 #include <glm/glm.hpp>
 
-class Camera: public Actor
+class Camera: public Object
 {
 
 public:

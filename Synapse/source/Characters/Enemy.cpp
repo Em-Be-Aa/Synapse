@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "Enemy.h"
 
-Enemy::Enemy(Shader* defaultShader) : Character(defaultShader)
+Enemy::Enemy()
 {
 
     Position = {1.0f, 2.0f, 0.0003f};

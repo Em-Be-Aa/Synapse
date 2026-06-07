@@ -7,7 +7,7 @@ class Enemy: public Character
 
 public:
 
-	Enemy(Shader* defaultShader);
+	Enemy();
 
 };
 

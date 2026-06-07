@@ -141,6 +141,10 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GameConfig\GameConfigs.cpp" />
+    <ClCompile Include="source\Managers\RenderManager.cpp" />
+    <ClCompile Include="source\Shader\RenderComponent.cpp" />
+    <ClCompile Include="source\Shader\Renderer2D.cpp" />
     <ClCompile Include="source\Managers\CollisionManager.cpp" />
     <ClCompile Include="source\Actor\Object.cpp" />
     <ClCompile Include="source\Collision\CollisionComponent.cpp" />
@@ -150,7 +154,6 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Characters\Player.cpp" />
     <ClCompile Include="source\Managers\TickManager.cpp" />
     <ClCompile Include="source\Actor\Actor.cpp" />
-    <ClCompile Include="source\Tile\Tile.cpp" />
     <ClCompile Include="source\Camera\Camera.cpp" />
     <ClCompile Include="source\Managers\InputManager.cpp" />
     <ClCompile Include="source\Glad\glad.c" />
@@ -162,8 +165,14 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Tile\TileMap.cpp" />
     <ClCompile Include="source\Sprite\Sprite.cpp" />
     <ClCompile Include="source\Managers\StatManager.cpp" />
+    <ClCompile Include="source\Managers\SynapseFunctionLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\GameConfig\GameConfigs.h" />
+    <ClInclude Include="source\GameConfig\json.hpp" />
+    <ClInclude Include="source\Managers\RenderManager.h" />
+    <ClInclude Include="source\Shader\RenderComponent.h" />
+    <ClInclude Include="source\Shader\Renderer2D.h" />
     <ClInclude Include="source\Managers\CollisionManager.h" />
     <ClInclude Include="source\Actor\Object.h" />
     <ClInclude Include="source\Collision\CollisionComponent.h" />
@@ -175,7 +184,6 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Characters\Player.h" />
     <ClInclude Include="source\Managers\TickManager.h" />
     <ClInclude Include="source\Actor\Actor.h" />
-    <ClInclude Include="source\Tile\Tile.h" />
     <ClInclude Include="source\Camera\Camera.h" />
     <ClInclude Include="source\Managers\InputManager.h" />
     <ClInclude Include="source\ImageLoader\Image.h" />
@@ -186,10 +194,12 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Sprite\Sprite.h" />
     <ClInclude Include="source\Managers\StatManager.h" />
     <ClInclude Include="source\Interfaces\ITicker.h" />
+    <ClInclude Include="source\Managers\SynapseFunctionLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
     <None Include="Shaders\shader.vs" />
+    <None Include="source\GameConfig\config.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Map\Props\A.png" />
