@@ -5,15 +5,31 @@
   },
   "player": {
     "animations": {
-      "idle": {
+      "IDLE": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
         "frames": 6
       },
-      "walk": {
+      "WALK": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
         "frames": 8
       },
-      "jump": {
+      "JUMP": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
+        "frames": 6
+      }
+    }
+  },
+  "slime": {
+    "animations": {
+      "IDLE": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
+        "frames": 6
+      },
+      "WALK": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
+        "frames": 8
+      },
+      "JUMP": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
         "frames": 6
       }

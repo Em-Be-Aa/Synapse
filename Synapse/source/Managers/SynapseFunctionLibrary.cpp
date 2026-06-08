@@ -4,29 +4,38 @@
 
 nlohmann::json SynapseFunctionLibrary::loadJson()
 {
-    // Consider passing the path as a parameter eventually, e.g., loadJson(const std::string& filepath)
-    std::string filepath = "E:/Learning/Synapse/Synapse/source/GameConfig/gameconfig.json";
-    std::ifstream file(filepath);
-
-    if (!file.is_open()) {
-        std::cerr << "ENGINE ERROR: Failed to open file at path: " << filepath << "\n";
-        std::cerr << "Check your IDE's Working Directory settings!\n";
-        return nlohmann::json({}); // Return an empty JSON object
-    }
+    // Try multiple candidate paths relative to the working directory.
+    // It's common for the working directory to be the project root or the build/exe folder,
+    // so we try a few likely locations and the old absolute path for convenience.
+    std::vector<std::string> candidates = {
+        "source/GameConfig/config.json",
+        "source/GameConfig/gameconfig.json",
+        "Synapse/source/GameConfig/config.json",
+        "Synapse/source/GameConfig/gameconfig.json",
+        "GameConfig/config.json",
+        "E:/Learning/Synapse/Synapse/source/GameConfig/gameconfig.json"
+    };
 
     nlohmann::json config;
+    for (const auto &filepath : candidates)
+    {
+        std::ifstream file(filepath);
+        if (!file.is_open())
+            continue;
 
-    try {
-        file >> config;
+        try {
+            file >> config;
+            return config;
+        }
+        catch (const nlohmann::json::parse_error& e) {
+            std::cerr << "JSON PARSE ERROR in " << filepath << ":\n" << e.what() << "\n";
+            return nlohmann::json({});
+        }
     }
-    catch (const nlohmann::json::parse_error& e) {
-        // Catches syntax errors (missing commas, brackets) in the JSON file
-        std::cerr << "JSON PARSE ERROR in " << filepath << ":\n" << e.what() << "\n";
-        return nlohmann::json({});
-    }
 
-    // file.close() is automatically called when 'file' goes out of scope, 
-    // so you don't actually need to write it manually.
-
-    return config;
+    // If we reach here, none of the candidate files could be opened
+    std::cerr << "ENGINE ERROR: Failed to open config file. Tried paths:\n";
+    for (const auto &p : candidates) std::cerr << "  " << p << "\n";
+    std::cerr << "Check your IDE's Working Directory or place config.json in one of the above locations.\n";
+    return nlohmann::json({});
 }

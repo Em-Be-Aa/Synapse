@@ -1,34 +1,24 @@
 #include "Character.h"
 #include "glm/glm.hpp"
 #include <iostream>
-#include "../Shader/Shader.h"
 #include "../Managers/CollisionManager.h"
-#include "../Managers/StatManager.h"
-#include "../Managers/SynapseFunctionLibrary.h"
+#include "../GameConfig/GameConfigs.h"
 
 // make these hard coded things better
 Character::Character() : Collidor(this)
 {
-    //nlohmann::json Config = SynapseFunctionLibrary::loadJson();
-
-    //std::string path = Config["player"]["animations"]["idle"]["path"].get<std::string>();
-    //int frames = Config["player"]["animations"]["idle"]["frames"].get<int>();
-    //characterSprite.spriteAnimator.animations["IDLE"] = { path, frames, 1};
-
-    UpdateAnim(IDLE);
 }
 
 // Animation system..understand it again and make it a bit cleaner....map is not clean and should be configurable by child classes....also add consistent checks for nullptr if there is a chance
-void Character::UpdateAnim(Anim_Mode Mode)
+void Character::UpdateAnim(std::string Mode)
 {
-    currentAnim = Mode;
-
-    auto It = animMontage.find(currentAnim);
+    auto It = animMontage.find(Mode);
     if (It != animMontage.end())
     {
         Anim_Clip& currentMontage = It->second;
         characterSprite.DefaultImage = currentMontage.spriteSheet;
         characterSprite.spriteAnimator.UpdateUV(currentMontage.imageTiles);
+        currentAnim = Mode;
     }
 
     if (characterSprite.DefaultImage == nullptr)
@@ -67,13 +57,14 @@ void Character::Tick(double deltaTime)
         Speed = glm::length(Velocity);
         previousPosition = Position;
 
-        if (Speed == 0 && currentAnim != IDLE)
+        if (Speed == 0 && currentAnim != "IDLE")
         {
-            UpdateAnim(IDLE);
+            UpdateAnim("IDLE");
         }
-        else if(Speed != 0 && currentAnim != WALK)
+        else if (Speed != 0 && currentAnim != "WALK")
         {
-            UpdateAnim(WALK);
+            UpdateAnim("WALK");
+
         }
     }
     
