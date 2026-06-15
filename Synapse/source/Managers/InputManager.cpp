@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <iostream>
 
 
 InputManager::InputManager(GLFWwindow* window) 
@@ -16,11 +17,23 @@ void InputManager::ProcessInputs()
 {
 	for (IInputObserver* observer: observers)
 	{
-		for (int inputAction : inputActions)
+		for (auto& inputAction : inputActions)
 		{
-			if (glfwGetKey(InputWindow, inputAction) == GLFW_PRESS)
+			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_PRESS && !inputAction.second.wasPressed)
 			{
-				observer->onInputAction(inputAction);
+				observer->onInputClicked(inputAction.first);
+				inputAction.second.wasPressed = true;
+			}
+
+			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_PRESS)
+			{
+				observer->onInputPressed(inputAction.first);
+			}
+
+			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_RELEASE && inputAction.second.wasPressed)
+			{
+				observer->onInputReleased(inputAction.first);
+				inputAction.second.wasPressed = false;
 			}
 		}
 	}

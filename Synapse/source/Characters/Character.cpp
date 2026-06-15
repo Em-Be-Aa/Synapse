@@ -1,36 +1,18 @@
+#include "../GameConfig/GameConfigs.h"
+#include "../Managers/CollisionManager.h"
 #include "Character.h"
 #include "glm/glm.hpp"
 #include <iostream>
-#include "../Managers/CollisionManager.h"
-#include "../GameConfig/GameConfigs.h"
 
 // make these hard coded things better
 Character::Character() : Collidor(this)
 {
 }
 
-// Animation system..understand it again and make it a bit cleaner....map is not clean and should be configurable by child classes....also add consistent checks for nullptr if there is a chance
-void Character::UpdateAnim(std::string Mode)
-{
-    auto It = animMontage.find(Mode);
-    if (It != animMontage.end())
-    {
-        Anim_Clip& currentMontage = It->second;
-        characterSprite.DefaultImage = currentMontage.spriteSheet;
-        characterSprite.spriteAnimator.UpdateUV(currentMontage.imageTiles);
-        currentAnim = Mode;
-    }
-
-    if (characterSprite.DefaultImage == nullptr)
-    {
-        std::cout << "Current Sprite Sheet is Null" << std::endl;
-        return;
-    }
-}
-
 
 void Character::Tick(double deltaTime)
 {
+    // Movement and Collision Update
     movementSpeed = 1.0 * deltaTime;
 
     float halfX = Collidor.BoxSize.x * 0.5f;
@@ -48,37 +30,32 @@ void Character::Tick(double deltaTime)
         Collidor.Box.min = { Position.x - halfX, Position.y - halfY };
         Collidor.Box.max = { Position.x + halfX, Position.y + halfY };
     }
-
     deltaPosition = { 0.0f, 0.0f, 0.0f};
 
+
+    // Animation Mode Update
     if (deltaTime != 0)
     {
         Velocity = (Position - previousPosition) / glm::vec1(deltaTime);
         Speed = glm::length(Velocity);
         previousPosition = Position;
 
-        if (Speed == 0 && currentAnim != "IDLE")
+        if (Speed == 0 && characterSprite.spriteAnimator.GetCurrentAnim() != "IDLE" && !characterSprite.spriteAnimator.currentMontage.isMontage)
         {
-            UpdateAnim("IDLE");
+            characterSprite.spriteAnimator.SetCurrentAnim("IDLE");
         }
-        else if (Speed != 0 && currentAnim != "WALK")
+        else if (Speed != 0 && characterSprite.spriteAnimator.GetCurrentAnim() != "WALK" && !characterSprite.spriteAnimator.currentMontage.isMontage)
         {
-            UpdateAnim("WALK");
+            characterSprite.spriteAnimator.SetCurrentAnim("WALK");
 
         }
     }
-    
-
-    if (characterSprite.DefaultImage == nullptr)
-    {
-        return;
-    }
-
+   
     RenderComp.model = glm::translate(glm::mat4(1.0f), Position);
     RenderComp.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator.uvScale.x, characterSprite.spriteAnimator.uvScale.y,
                                          characterSprite.spriteAnimator.uvOffset.x, characterSprite.spriteAnimator.uvOffset.y);
-    if (characterSprite.DefaultImage)
+    if (characterSprite.spriteAnimator.currentMontage.spriteSheet)
     {
-        RenderComp.textureID = characterSprite.DefaultImage->ID;
+        RenderComp.textureID = characterSprite.spriteAnimator.currentMontage.spriteSheet->ID;
     }
 }

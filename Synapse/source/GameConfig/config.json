@@ -3,35 +3,53 @@
     "resolution_X": 800,
     "resolution_Y": 600
   },
+
+
   "player": {
     "animations": {
       "IDLE": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
-        "frames": 6
+        "frames": 6,
+        "isMontage" : false
       },
       "WALK": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
-        "frames": 8
+        "frames": 8,
+        "isMontage": false
       },
       "JUMP": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
-        "frames": 6
+        "frames": 6,
+        "isMontage": false
+      },
+      "LIGHT ATTACK": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Attack1-Sheet.png",
+        "frames": 8,
+        "isMontage": true
+      },
+      "HEAVY ATTACK": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Attack2-Sheet.png",
+        "frames": 8,
+        "isMontage": true
       }
     }
   },
   "slime": {
     "animations": {
       "IDLE": {
-        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
-        "frames": 6
+        "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Idle-Sheet.png",
+        "frames": 6,
+        "isMontage": false
       },
       "WALK": {
-        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
-        "frames": 8
+        "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Walk-Sheet.png",
+        "frames": 8,
+        "isMontage": false
       },
       "JUMP": {
-        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
-        "frames": 6
+        "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Jump_Fall-Sheet.png",
+        "frames": 6,
+        "isMontage": false
       }
     }
   }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../ImageLoader/Image.h"
+#include <glm/glm.hpp>
+#include <string>
 
 
 enum Anim_Mode
@@ -15,9 +17,10 @@ struct Anim_Clip
 {
 	Image* spriteSheet;
 	glm::vec2 imageTiles;
+	bool isMontage = false;
 
 	Anim_Clip() = default;
-	Anim_Clip(const char* imagePath, glm::vec2 tileInfo) : spriteSheet(new Image(imagePath)), imageTiles(tileInfo) {}
+	Anim_Clip(const char* imagePath, glm::vec2 tileInfo, bool state) : spriteSheet(new Image(imagePath)), imageTiles(tileInfo), isMontage(state) {}
 };
 
 struct CollisionBox
@@ -37,4 +40,9 @@ struct AnimationClip {
 	std::string imagepath;
 	int tileX = 1;
 	int tileY = 1;
+};
+
+struct KeyState {
+	bool wasPressed = false;
+	bool isPressed = false;
 };

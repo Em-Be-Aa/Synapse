@@ -10,7 +10,6 @@ CollisionManager* CollisionManager::GetCollisionManager()
 void CollisionManager::RegisterCollisionComponent(CollisionComponent* Coll)
 {
     CollisionComponents.push_back(Coll);
-    std::cout << "Collision Component Registered" << std::endl;
 }
 
 void CollisionManager::Tick(double deltaTime)

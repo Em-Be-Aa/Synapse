@@ -1,8 +1,10 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
-#include <functional>
+#include "../Enums&Structs/GameTypes.h"
 #include "../Interfaces/IInputObserver.h"
+#include <functional>
+#include <GLFW/glfw3.h>
+#include <map>
 
 
 
@@ -12,41 +14,50 @@ class InputManager
 public:
 
 	InputManager(GLFWwindow* window);
-    void ProcessInputs();
-    static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
+	void ProcessInputs();
+	static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 
-    std::function<void(double, double)> onMouseMove;
+	std::function<void(double, double)> onMouseMove;
 	GLFWwindow* InputWindow;
 
-    std::vector<IInputObserver*> observers = {};
+	std::vector<IInputObserver*> observers = {};
 
 
 private:
 
-    std::vector<int> inputActions = 
-    { 
-        // --- Movement / Main Letters ---
-        GLFW_KEY_W,
-        GLFW_KEY_A,
-        GLFW_KEY_S,
-        GLFW_KEY_D,
-        GLFW_KEY_Q,
-        GLFW_KEY_E,
+	// I dont think struct is needed as a simple wasdown bool is enough
+	std::map<int, KeyState> inputActions =
+	{
+		// --- Movement / Main Letters ---
+        {GLFW_KEY_W, { false, false}},
+	    {GLFW_KEY_A, { false, false}},
+	    {GLFW_KEY_S, { false, false}},
+	    {GLFW_KEY_D, { false, false}},
+	    {GLFW_KEY_Q, { false, false}},
+	    {GLFW_KEY_E, { false, false}},
 
-        // --- Actions & Modifiers ---
-        GLFW_KEY_SPACE,        
-        GLFW_KEY_ESCAPE,      
-        GLFW_KEY_ENTER,
-        GLFW_KEY_LEFT_SHIFT,   
-        GLFW_KEY_LEFT_CONTROL, 
-        GLFW_KEY_TAB,        
+		// --- Actions & Modifiers ---
+		{GLFW_KEY_SPACE,{ false, false} },
+		{GLFW_KEY_ESCAPE, { false, false }},
+		{GLFW_KEY_ENTER, { false, false }},
+		{GLFW_KEY_LEFT_SHIFT, { false, false }},
+		{GLFW_KEY_LEFT_CONTROL, { false, false }},
+		{GLFW_KEY_TAB, { false, false }},
 
-        // --- Arrows ---
-        GLFW_KEY_UP,   
-        GLFW_KEY_DOWN,  
-        GLFW_KEY_LEFT, 
-        GLFW_KEY_RIGHT,
+		// --- Arrows ---
+		{GLFW_KEY_UP, { false, false }},
+		{GLFW_KEY_DOWN, { false, false }},
+		{GLFW_KEY_LEFT, { false, false }},
+		{GLFW_KEY_RIGHT, { false, false }},
 
-    };
+		// --- Abilities ---
+		{GLFW_KEY_Q, { false, false }},
+		{GLFW_KEY_E, { false, false }},
+		{GLFW_KEY_G, { false, false }},
+
+		// --- Mouse Buttons ---
+		{GLFW_MOUSE_BUTTON_1, { false, false }},
+		{GLFW_MOUSE_BUTTON_2, { false, false }}
+	};
 
 };

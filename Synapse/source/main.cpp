@@ -1,34 +1,30 @@
+#include "Actor/Object.h"
+#include "Camera/Camera.h"
+#include "Characters/Enemy.h"
+#include "Characters/Player.h"
+#include "Managers/InputManager.h"
+#include "Managers/RenderManager.h"
+#include "Managers/TickManager.h"
+#include "Shader/Renderer2D.h"
+#include "Tile/TileMap.h"
+#include "Window/Window.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "Shader/Shader.h"
-#include "Window/Window.h"
-#include "Managers/InputManager.h"
-#include "Shader/Renderer2D.h"
-#include "Camera/Camera.h"
-#include "Managers/TickManager.h"
-#include "Actor/Object.h"
-#include "Managers/RenderManager.h"
-#include "Tile/TileMap.h"
-#include "Characters/Player.h"
-#include "Characters/Enemy.h"
-#include "Managers/CollisionManager.h"
-#include "Managers/StatManager.h"
 
-
-/* 
+                                            
+/*                                      
  
 TODO:
 
-1. Fix Collision Box moving for enemy when player moves. ✅
-2. Make Renderer and remove logic from Tick.
 3. Make Animation System include a single play of animation for attacks and stuff.
-4. Make a Json system that loads info for the game at start and classes can use them(Player, Enemy, Tiles etc).
 5. Make a grid system, all actors should be aware of their grid(or grid should have all actors in it). Through this make the collision system decoupled and moving actors should check for collision in their grid.
 6. Movement along diagonal is faster, balance it.
 7. Collidors of top and right stop player further from the other actors collision box.
+8. Make Event System in game. Listener and things like that.
+9. Make click, press, and release things for keyboard buttons....
 
 */
 
@@ -48,6 +44,10 @@ int main()
 
     // Actors
     Player SynapsePlayer;
+    // duplicates should not be added.
+    SynapsePlayer.GetAbilityComponent().AddAbility("LIGHT ATTACK", &SynapsePlayer.GetSpriteComponent().spriteAnimator);
+    SynapsePlayer.GetAbilityComponent().AddAbility("HEAVY ATTACK", &SynapsePlayer.GetSpriteComponent().spriteAnimator);
+
     Camera DefaultCamera(&SynapsePlayer);
     Enemy SlimeEnemy;
 

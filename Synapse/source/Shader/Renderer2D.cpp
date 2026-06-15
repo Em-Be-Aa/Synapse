@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 
+
+// Simplify this
 namespace
 {
     struct Submission { unsigned int textureID; glm::mat4 model; glm::vec4 uv; glm::vec4 tint; int layer; };

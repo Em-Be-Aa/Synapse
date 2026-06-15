@@ -1,5 +1,5 @@
-#include "GameConfigs.h"
 #include "../Managers/SynapseFunctionLibrary.h"
+#include "GameConfigs.h"
 
 
 GameConfigs::GameConfigs()
@@ -25,7 +25,8 @@ std::map<std::string, Anim_Clip> GameConfigs::GetCharacterData(std::string chara
         {
             std::string path = animData["path"].get<std::string>();
             int frames = animData["frames"].get<int>();
-            characterData.insert({ animName, Anim_Clip(path.c_str(), {frames, 1})});
+            bool isMontage = animData["isMontage"].get<bool>();
+            characterData.insert({ animName, Anim_Clip(path.c_str(), {frames, 1}, isMontage)});
         }
 
         return characterData;
