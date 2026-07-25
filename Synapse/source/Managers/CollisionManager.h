@@ -1,7 +1,7 @@
 #pragma once
-#include <vector>
 #include "../Actor/Object.h"
 #include "../Collision/CollisionComponent.h"
+#include <vector>
 
 
 class CollisionManager : public Object
@@ -11,9 +11,9 @@ public:
 
 
 	void RegisterCollisionComponent(CollisionComponent* Coll);
-	void Tick(double deltaTime) override;
+	void Update(double deltaTime) override;
 	static CollisionManager* GetCollisionManager();
-	bool CheckCollision(const CollisionBox& movingObject);
+	void CheckCollision(CollisionComponent& Collidor);
 	bool IsColliding(const CollisionBox& A, const CollisionBox& B)
 	{
 		return	A.min.x < B.max.x &&

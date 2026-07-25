@@ -44,7 +44,7 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
     cameraFront = glm::normalize(front);
 }
 
-void Camera::Tick(double deltaTime)
+void Camera::Update(double deltaTime)
 {
 
 }

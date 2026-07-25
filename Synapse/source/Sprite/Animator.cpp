@@ -28,7 +28,7 @@ void Animator::UpdateAnim(std::string Mode)
 	}
 }
 
-void Animator::Tick(double deltaTime)
+void Animator::Update(double deltaTime)
 {
 	
 	//std::cout << "current state: " << currentAnim << std::endl;

@@ -1,3 +1,4 @@
+#include "../Actor/Actor.h"
 #include "TickManager.h"
 
 // This should be Tick Manager...every spawnable thing and managers should implement ITicker and by of some object class which will have tick bool and if tick for that object will run for the game.
@@ -8,9 +9,9 @@ TickManager* TickManager::GetTickManager()
 	return &DefaultTickManager;
 }
 
-void TickManager::RegisterObject(Object* O)
+void TickManager::RegisterObject(Actor* O)
 {
-	RegisteredObjects.push_back(O);
+	RegisteredActors.push_back(O);
 }
 
 

@@ -1,4 +1,5 @@
 #include "AbilityComponent.h"
+#include "Character.h"
 #include <string>
 
 AbilityComponent::AbilityComponent()
@@ -6,9 +7,16 @@ AbilityComponent::AbilityComponent()
 
 }
 
-void AbilityComponent::AddAbility(std::string Tag, Animator* targetAnimator)
+
+// We are assuming characters can have and use abilities....look into this if this is the right approach
+void AbilityComponent::AddAbility(std::string Tag, Character* owner)
 {
-	Ability* newAbility = new Ability(Tag, targetAnimator);
+	componentOwner = owner;
+
+	std::unique_ptr<Ability> ability(new Ability(Tag, owner->GetSpriteComponent().spriteAnimator));
+	Ability* newAbility = ability.get();
+	UpdateManager::GetUpdateManager().Register(std::move(ability));
+	newAbility->Init();
 	abilities.push_back(newAbility);
 }
 
@@ -27,8 +35,18 @@ Ability* AbilityComponent::GetAbility(std::string Tag)
 
 void AbilityComponent::ActivateAbility(std::string Tag)
 {
+	// Multiple abilities can be active if passive abilities are introduced..so fix this later
+	for (auto abil : abilities)
+	{
+		if (abil->GetCooldownStatus())
+		{
+			return;
+		}
+	
+	}
+
 	if (Ability* targetAbility = GetAbility(Tag))
 	{
-		targetAbility->Activate();
+		targetAbility->Activate(componentOwner);
 	}
 }

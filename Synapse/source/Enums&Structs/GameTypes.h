@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
+class Actor;
 
 enum Anim_Mode
 {
@@ -45,4 +46,8 @@ struct AnimationClip {
 struct KeyState {
 	bool wasPressed = false;
 	bool isPressed = false;
+};
+
+struct CollisionInfo {
+	Actor* Collidor;
 };

@@ -5,7 +5,9 @@
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
 #include "Managers/TickManager.h"
+#include "Managers/UpdateManager.h"
 #include "Shader/Renderer2D.h"
+#include "Templates/Templates.h"
 #include "Tile/TileMap.h"
 #include "Window/Window.h"
 #include <glad/glad.h>
@@ -13,6 +15,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <memory>
 
                                             
 /*                                      
@@ -37,24 +40,25 @@ int main()
     InputManager DefaultInputManager(DefaultWindow.window);
 
     //make some system to manage all shaders and rendering.....adding it in actors logic is too hectic
-    TileMap Landscape;
+    TileMap* Landscape = SpawnActor<TileMap>();
 
-    // Initialize Renderer2D with sprite shader (use same shader for now)
+    // you dont even understand it...make it your self..the namespace thing remove it
     Renderer2D::Init("Shaders/shader.vs", "Shaders/shader.fs");
 
     // Actors
-    Player SynapsePlayer;
-    // duplicates should not be added.
-    SynapsePlayer.GetAbilityComponent().AddAbility("LIGHT ATTACK", &SynapsePlayer.GetSpriteComponent().spriteAnimator);
-    SynapsePlayer.GetAbilityComponent().AddAbility("HEAVY ATTACK", &SynapsePlayer.GetSpriteComponent().spriteAnimator);
+    Player* SynapsePlayer = SpawnActor<Player>();
+    Enemy* SlimeEnemy = SpawnActor<Enemy>();
 
-    Camera DefaultCamera(&SynapsePlayer);
-    Enemy SlimeEnemy;
+    // duplicates should not be added.
+    SynapsePlayer->GetAbilityComponent().AddAbility("LIGHT ATTACK", SynapsePlayer);
+    SynapsePlayer->GetAbilityComponent().AddAbility("HEAVY ATTACK", SynapsePlayer);
+
+    Camera DefaultCamera(SynapsePlayer);
 
     // Setting Input Actor
-    DefaultInputManager.observers.push_back(&SynapsePlayer);
+    DefaultInputManager.observers.push_back(SynapsePlayer);
     DefaultInputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
-    
+
     
     //glEnable(GL_DEPTH_TEST);
     srand(time(0));
@@ -92,10 +96,22 @@ int main()
         // Start renderer scene for Renderer2D (this will set view/projection uniforms)
         Renderer2D::BeginScene(view, projection);
         
-        // Tick World
-        for (Object* O : TickManager::GetTickManager()->RegisteredObjects)
+        // Update World...this should work for things we need updated before we tick world
+        for (auto& O : UpdateManager::GetUpdateManager().RegisteredObjects)
         {
-            O->Tick(deltaTime);
+            if (!O->isPendingDestroy)
+            {
+                O->Update(deltaTime);
+            }
+        }
+
+        // Tick World
+        for (Actor* O : TickManager::GetTickManager()->RegisteredActors)
+        {
+            if (!O->isPendingDestroy)
+            {
+                O->Tick(deltaTime);
+            }
         }
 
         // Submit all registered RenderComponents to Renderer2D
@@ -107,6 +123,9 @@ int main()
 
         // End and flush renderer
         Renderer2D::EndScene();
+
+        // Remove Pending Destroy Objects
+        UpdateManager::GetUpdateManager().RemovePendingDestroyObjects();
 
         glfwSwapBuffers(DefaultWindow.window);
         glfwPollEvents();

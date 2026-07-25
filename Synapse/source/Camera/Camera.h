@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "../Actor/Actor.h"
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 class Camera: public Object
@@ -32,7 +32,7 @@ public:
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	void Tick(double deltaTime) override;
+	void Update(double deltaTime) override;
 
 };
 

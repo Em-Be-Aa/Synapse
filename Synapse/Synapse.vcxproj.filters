@@ -99,6 +99,12 @@
     <ClCompile Include="source\Characters\Ability.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Interfaces\IUpdate.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\UpdateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader\Shader.h">
@@ -192,6 +198,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Interfaces\IAnimate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\UpdateManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Templates\Templates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,8 @@
+#include "../Managers/StatManager.h"
+#include "../Shader/Renderer2D.h"
 #include "TileMap.h"
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../Managers/StatManager.h"
-#include "../Shader/Renderer2D.h"
 
 TileMap::TileMap()
 {
@@ -14,7 +14,7 @@ TileMap::TileMap()
 }
     
 
-void TileMap::Tick(double deltaTime)
+void TileMap::Update(double deltaTime)
 {
 
     // use instanced draw for this....900 draw calls are too much..also state chages like binds should be outside the loop so they dont run in a for loop...read about frustum culling and batching

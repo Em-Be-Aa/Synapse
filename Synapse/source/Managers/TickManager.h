@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Actor/Object.h"
+#include "../Actor/Actor.h"
 #include <vector>
 
 class TickManager
@@ -13,9 +13,9 @@ private:
 public:
 
 	static TickManager* GetTickManager();
-	void RegisterObject(Object* O);
+	void RegisterObject(Actor* O);
 
-	std::vector<Object*> RegisteredObjects;
+	std::vector<Actor*> RegisteredActors;
 
 };
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,6 +145,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Characters\AbilityComponent.cpp" />
     <ClCompile Include="source\Characters\HealthComponent.cpp" />
     <ClCompile Include="source\GameConfig\GameConfigs.cpp" />
+    <ClCompile Include="source\Interfaces\IUpdate.h" />
     <ClCompile Include="source\Managers\RenderManager.cpp" />
     <ClCompile Include="source\Shader\RenderComponent.cpp" />
     <ClCompile Include="source\Shader\Renderer2D.cpp" />
@@ -169,6 +170,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Sprite\Sprite.cpp" />
     <ClCompile Include="source\Managers\StatManager.cpp" />
     <ClCompile Include="source\Managers\SynapseFunctionLibrary.cpp" />
+    <ClCompile Include="source\Managers\UpdateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Characters\Ability.h" />
@@ -196,12 +198,14 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\ImageLoader\Image.h" />
     <ClInclude Include="source\ImageLoader\stb_image.h" />
     <ClInclude Include="source\Shader\Shader.h" />
+    <ClInclude Include="source\Templates\Templates.h" />
     <ClInclude Include="source\Window\Window.h" />
     <ClInclude Include="source\Tile\TileMap.h" />
     <ClInclude Include="source\Sprite\Sprite.h" />
     <ClInclude Include="source\Managers\StatManager.h" />
     <ClInclude Include="source\Interfaces\ITicker.h" />
     <ClInclude Include="source\Managers\SynapseFunctionLibrary.h" />
+    <ClInclude Include="source\Managers\UpdateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />

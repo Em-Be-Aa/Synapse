@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Actor/Actor.h"
-#include "glm/glm.hpp"
 #include "../Shader/Shader.h"
 #include "../Sprite/Sprite.h"
+#include "glm/glm.hpp"
 
 class TileMap : public Object
 {
@@ -11,7 +11,7 @@ class TileMap : public Object
 public:
 
     TileMap();
-	void Tick(double deltaTime);
+	void Update(double deltaTime);
 
     std::vector<glm::vec2> backgroundTiles;
     std::vector<glm::vec2> patchTiles;

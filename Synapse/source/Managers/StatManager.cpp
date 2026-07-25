@@ -8,7 +8,7 @@ StatManager::StatManager()
 }
 
 
-void StatManager::Tick(double deltaTime)
+void StatManager::Update(double deltaTime)
 {
 	currentTime = glfwGetTime();
 	frameCount++;

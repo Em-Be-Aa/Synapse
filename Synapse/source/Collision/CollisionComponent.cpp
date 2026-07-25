@@ -1,22 +1,23 @@
-#include "CollisionComponent.h"
 #include "../Managers/CollisionManager.h"
+#include "../Managers/StatManager.h"
+#include "CollisionComponent.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../Managers/StatManager.h"
 #include <glm/gtc/type_ptr.hpp>
 
 // Add visible rectangle for owners.
-CollisionComponent::CollisionComponent(Actor* ownerActor) : collisionSprite("Assets/Map/Tiles/Boundary.png")
+CollisionComponent::CollisionComponent() : collisionSprite("Assets/Map/Tiles/Boundary.png")
 {
 	CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
-    owner = ownerActor;
 }
 
-void CollisionComponent::Tick(double deltaTime)
+void CollisionComponent::Update(double deltaTime)
 {
     glm::vec2 center = (Box.min + Box.max) * 0.5f;
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(center, owner->Position.z));
+    glm::vec3 modelPosition = glm::vec3(center, 0); 
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), modelPosition);
     model = glm::scale(model, glm::vec3(BoxSize.x, BoxSize.y, 1.0f));
+
 
     RenderComp.model = model;
     RenderComp.textureID = collisionSprite.DefaultImage->ID;

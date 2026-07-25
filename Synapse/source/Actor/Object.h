@@ -1,15 +1,19 @@
 #pragma once
 
-#include "../Interfaces/ITicker.h"
+#include "../Interfaces/IUpdate.h"
 
 
-class Object : public ITicker
+class Object : public IUpdate
 {
 public: 
 
 	Object();
+	virtual ~Object();
 
-	virtual void Tick(double deltaTime) override {};
+	virtual void Update(double deltaTime) = 0;
+	virtual void Init() {};
+	virtual void Destroy() {};
 
+	bool isPendingDestroy = false;
 };
 

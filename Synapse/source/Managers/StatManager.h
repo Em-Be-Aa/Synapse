@@ -8,7 +8,7 @@ class StatManager : public Object
 
 public:
 
-	void Tick(double deltaTime) override;
+	void Update(double deltaTime) override;
 	static StatManager& Get() 
 	{
 		static StatManager instance;

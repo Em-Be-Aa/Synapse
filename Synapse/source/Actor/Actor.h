@@ -1,19 +1,24 @@
 #pragma once
 
 #include "../Interfaces/IInputObserver.h"
+#include "../Interfaces/ITicker.h"
 #include "Object.h"
 #include <glm/glm.hpp>
 
 
 // Classes should not be actor if they just want tick...they can use the interface themselves...
-class Actor : public Object, public IInputObserver
+class Actor : public Object, public IInputObserver, public ITicker
 {
 
 public:
 
 	Actor();
+	~Actor();
 
-	virtual void Init();
+	void Init() override;
+	void Destroy() override;
+	void Tick(double deltaTime) override {};
+	void Update(double deltaTime) override {};
 	void onInputPressed(int Key) override {};
 	void onInputReleased(int Key) override {};
 	void onInputClicked(int Key) override {};

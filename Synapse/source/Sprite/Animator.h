@@ -20,7 +20,7 @@ public:
 	glm::vec2 uvOffset{0, 0};
 
 	void UpdateAnim(std::string Mode);
-	void Tick(double deltaTime) override;
+	void Update(double deltaTime) override;
 
 	void PlayAnimation(std::string Mode) override
 	{
