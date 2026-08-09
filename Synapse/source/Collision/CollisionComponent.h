@@ -13,16 +13,21 @@ class CollisionComponent : public Object
 {
 
 public:
-
 	CollisionComponent();
+	CollisionComponent(bool isDamage);
+	CollisionComponent(Actor* Owner, bool isDamage);
+
+	~CollisionComponent();
+
 	// This is component of an actor...think about if this need tick or update....this goes for all components...the initial thought was to use update for managers, components so their logic runs before actors run tick
 	void Update(double deltaTime) override;
 
 	CollisionBox Box;
 	bool isColliding = false;
 	glm::vec2 BoxSize = glm::vec2(1.0f, 1.0f);
+	bool isDamageCollidor = false;
 
-	Delegate<CollisionInfo, void> CollisionDelegate;
+	Delegate<CollisionInfo> CollisionDelegate;
 
 
 private:
@@ -31,6 +36,8 @@ private:
 	Sprite collisionSprite;
 	Actor* owner;
 	RenderComponent RenderComp;
+
+	std::vector<CollisionComponent*> currentCollidors;
 	
 
 public:
@@ -45,6 +52,40 @@ public:
 		isColliding = State;
 	};
 
+	bool GetCollisionState()
+	{
+		return isColliding;
+	};
+
+	void UpdateCollidors(std::vector<CollisionComponent*> CCS)
+	{
+		
+		if (CCS.empty())
+		{
+			SetCollisionState(false);
+			currentCollidors = {};
+		}
+		else
+		{
+			SetCollisionState(true);
+			currentCollidors = CCS;
+		}
+	}
+
+	bool IsCurrentCollidor(CollisionComponent* CC)
+	{
+		if (currentCollidors.empty() || !CC)
+		{
+			return false;
+		}
+		else
+		{
+			auto iterator = std::find(currentCollidors.begin(), currentCollidors.end(), CC);
+			return (!currentCollidors.empty() && iterator != currentCollidors.end());
+		}
+
+
+	}
 };
 
                                                              

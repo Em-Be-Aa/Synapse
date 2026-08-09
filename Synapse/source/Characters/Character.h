@@ -8,7 +8,7 @@
 #include "HealthComponent.h"
 
 
-class Character : public Actor
+class Character: public Actor
 {
 
 public:
@@ -16,8 +16,11 @@ public:
 	Character();
 	void Tick(double deltaTime) override;
 	void Update(double deltaTime) override;
+	void Destroy() override;
 
 	void OnCollision(CollisionInfo Info);
+	void OnCharacterDeath();
+	void OnAnimationMontageComplete(std::string Anim);
 
 protected:
 

@@ -3,6 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Enums&Structs/GameTypes.h"
 #include "../Interfaces/IAnimate.h"
+#include "../Templates/Templates.h"
 #include "glm/glm.hpp"
 #include <map>
 #include <string>
@@ -45,6 +46,8 @@ public:
 	std::unordered_map<std::string, AnimationClip> animations;
 	std::map<std::string, Anim_Clip> animMontage = {};
 	Anim_Clip currentMontage;
+
+	Delegate<std::string> onMontageComplete;
 
 private:
 

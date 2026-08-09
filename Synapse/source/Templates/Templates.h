@@ -5,33 +5,33 @@
 #include <vector>
 
 // Make this a template so delegate with different inputs and outputs can instantiate it
-template<typename In, typename Out = void>
+template<typename... Args>
 class Delegate
 {
 
 public:
 
-	void Subscribe(std::function<Out(In)> functor)
+	void Subscribe(std::function<void(Args...)> functor)
 	{
 		subscribers.push_back(functor);
 	};
 
-	void Broadcast(In payload) const
+	void Broadcast(Args... payload) const
 	{
 		for (const auto& subscriber : subscribers)
 		{
-			subscriber(payload);
+			subscriber(payload...);
 		}
 	};
 
 
 private:
 
-	std::vector<std::function<Out(In)>> subscribers;
+	std::vector<std::function<void(Args...)>> subscribers;
 
 };
 
-// change this name to be generic
+// change this name to be generic...also this is not the right way to register objects and actors.....i have to manually paste this code for abilities and manager and such that need update....figure this out...
 template<typename T, typename... Args>
 T* SpawnActor(Args&&... args)
 {

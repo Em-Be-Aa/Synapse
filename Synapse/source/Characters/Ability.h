@@ -35,6 +35,8 @@ private:
 	float currentActivationTime = 0.0f;
 	bool isActivated = false;
 
+	AbilityCollisionInfo abilInfo;
+
 	CollisionComponent* abilityCollidor;
 
 };

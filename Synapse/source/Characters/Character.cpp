@@ -1,20 +1,33 @@
 #include "../GameConfig/GameConfigs.h"
 #include "Character.h"
 #include "glm/glm.hpp"
+#include <algorithm>
 #include <iostream>
 
 // make these hard coded things better
 Character::Character()
 { 
 
-    Collidor = SpawnActor<CollisionComponent>();
+    Collidor = SpawnActor<CollisionComponent>(this, false);
 
     // Bind to Collision Delegate(try to find a better way so each class doesn't have to bind in their begin play or constructor....research if this is the only option as Unreal does this too i think.......)
     Collidor->CollisionDelegate.Subscribe
     (
         [this](CollisionInfo Info){this->OnCollision(Info);}
     );
+
+    HealthComp.onDeath.Subscribe
+    (
+        [this]() {this->OnCharacterDeath();}
+    );
+
+    characterSprite.spriteAnimator->onMontageComplete.Subscribe
+    (
+        [this](std::string Anim) {this->OnAnimationMontageComplete(Anim);}
+    );
+
 }
+
 
 //fix this mess in update and tick
 void Character::Tick(double deltaTime)
@@ -74,7 +87,45 @@ void Character::Update(double deltaTime)
 
 void Character::OnCollision(CollisionInfo Info)
 {
-    
+    auto iterator = std::find(Info.ignoreActors.begin(), Info.ignoreActors.end(), this);
 
-    //deltaPosition = { 0.0f, 0.0f, 0.0f };
+    if ((Info.Collidor && Info.Collidor == this) || (!Info.ignoreActors.empty() && iterator != Info.ignoreActors.end()))
+    {
+        std::cout << "Ignoring Collision for this actor" << std::endl;
+        return;
+    }
+    
+    if (Info.isDamageCollidor)
+    {
+
+        // Don't hardcode it, this should come from the ability or attack the character overlapped....
+        HealthComp.TakeDamage(30.0f);
+
+        std::cout << "Character Health left: " << HealthComp.GetHealth() << std::endl;
+
+    }
+}
+
+void Character::OnCharacterDeath()
+{
+    std::cout << "Character is dead" << std::endl;
+
+    characterSprite.spriteAnimator->SetCurrentAnim("DEATH");
+}
+
+void Character::OnAnimationMontageComplete(std::string Anim)
+{
+    if (Anim == "DEATH")
+    {
+        std::cout << "Death Animation is complete" << std::endl;
+
+        this->Destroy();
+    }
+}
+
+// everything that we spawn in classes like these where it has its variable an objects that also updates...we need to override and then markpending for destory for its variables too...find a better way...
+void Character::Destroy()
+{
+    this->isPendingDestroy = true;
+    Collidor->isPendingDestroy = true;
 }

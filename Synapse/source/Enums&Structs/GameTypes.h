@@ -50,4 +50,19 @@ struct KeyState {
 
 struct CollisionInfo {
 	Actor* Collidor;
+	bool isDamageCollidor = false;
+	std::vector<Actor*> ignoreActors;
+};
+
+// This should also inlcude the time offsets start and end
+struct AbilityCollisionInfo {
+
+	AbilityCollisionInfo() 
+	{
+		collidorSize   = {0, 0};
+		collidorOffset = {0, 0};
+	}
+
+	glm::vec2 collidorSize;
+	glm::vec2 collidorOffset;
 };

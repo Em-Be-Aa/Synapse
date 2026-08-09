@@ -11,9 +11,10 @@ public:
 
 
 	void RegisterCollisionComponent(CollisionComponent* Coll);
+	void UnregisterCollisionComponent(CollisionComponent* Coll);
 	void Update(double deltaTime) override;
 	static CollisionManager* GetCollisionManager();
-	void CheckCollision(CollisionComponent& Collidor);
+	void CheckCollision(CollisionComponent& SourceCollidor);
 	bool IsColliding(const CollisionBox& A, const CollisionBox& B)
 	{
 		return	A.min.x < B.max.x &&

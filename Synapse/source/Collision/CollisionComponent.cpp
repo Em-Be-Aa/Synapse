@@ -5,10 +5,32 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// Add visible rectangle for owners.
-CollisionComponent::CollisionComponent() : collisionSprite("Assets/Map/Tiles/Boundary.png")
+// Add visible rectangle for owners....also i dont know but moving moves the boundary before actually moving so when colliding with someone...the boundary moves a bit...
+
+CollisionComponent::CollisionComponent() : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
+{
+    CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
+}
+
+CollisionComponent::CollisionComponent(bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
 {
 	CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
+
+    isDamageCollidor = isDamage;
+}
+
+CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
+{
+    CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
+
+    isDamageCollidor = isDamage;
+
+    owner = Owner;
+}
+
+CollisionComponent::~CollisionComponent()
+{
+    CollisionManager::GetCollisionManager()->UnregisterCollisionComponent(this);
 }
 
 void CollisionComponent::Update(double deltaTime)

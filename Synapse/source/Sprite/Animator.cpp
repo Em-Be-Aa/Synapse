@@ -44,9 +44,10 @@ void Animator::Update(double deltaTime)
 
 		if (uvOffset.x >= 1.0f) {
 
-			// If montage plays, at the end swtich back to previous state
+			// If montage plays, at the end swtich back to previous state...also this might not work correctly for spritesheets with more rows than 1..
 			if (currentMontage.isMontage)
 			{
+				onMontageComplete.Broadcast(currentAnim);
 				SetCurrentAnim(prevAnim);
 			}
 

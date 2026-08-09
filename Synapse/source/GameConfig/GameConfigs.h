@@ -1,7 +1,7 @@
 #pragma once
 
-#include "json.hpp"
 #include "../Characters/Character.h"
+#include "json.hpp"
 
 class GameConfigs
 {
@@ -15,6 +15,7 @@ public:
 
 	// Load Data
 	std::map<std::string, Anim_Clip> GetCharacterData(std::string characterName);
+	AbilityCollisionInfo GetCharacterAbilityData(std::string abilityName);
 
 	nlohmann::json Config;
 

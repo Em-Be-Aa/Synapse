@@ -12,7 +12,10 @@ public:
 
 	virtual void Update(double deltaTime) = 0;
 	virtual void Init() {};
-	virtual void Destroy() {};
+	virtual void Destroy() 
+	{
+		isPendingDestroy = true;
+	};
 
 	bool isPendingDestroy = false;
 };

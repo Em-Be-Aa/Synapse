@@ -2,6 +2,7 @@
 #include "Camera/Camera.h"
 #include "Characters/Enemy.h"
 #include "Characters/Player.h"
+#include "GameConfig/GameConfigs.h"
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
 #include "Managers/TickManager.h"
@@ -44,6 +45,9 @@ int main()
 
     // you dont even understand it...make it your self..the namespace thing remove it
     Renderer2D::Init("Shaders/shader.vs", "Shaders/shader.fs");
+
+    //find a better way...right now im doing this so it is before ability is initialized
+    GameConfigs::GetGameConfig();
 
     // Actors
     Player* SynapsePlayer = SpawnActor<Player>();
@@ -95,6 +99,9 @@ int main()
 
         // Start renderer scene for Renderer2D (this will set view/projection uniforms)
         Renderer2D::BeginScene(view, projection);
+
+        // Add pending actors spawned during the previous frame
+        UpdateManager::GetUpdateManager().FlushPending();
         
         // Update World...this should work for things we need updated before we tick world
         for (auto& O : UpdateManager::GetUpdateManager().RegisteredObjects)

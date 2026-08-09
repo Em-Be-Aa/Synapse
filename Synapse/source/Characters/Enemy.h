@@ -9,5 +9,6 @@ public:
 
 	Enemy();
 
+	void Tick(double deltaTime) override;
 };
 

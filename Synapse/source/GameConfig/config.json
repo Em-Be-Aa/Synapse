@@ -10,7 +10,7 @@
       "IDLE": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Idle-Sheet.png",
         "frames": 6,
-        "isMontage" : false
+        "isMontage": false
       },
       "WALK": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Walk-Sheet.png",
@@ -20,7 +20,7 @@
       "JUMP": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Jump_Fall-Sheet.png",
         "frames": 6,
-        "isMontage": false
+        "isMontage": true
       },
       "LIGHT ATTACK": {
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Attack1-Sheet.png",
@@ -31,9 +31,40 @@
         "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Attack2-Sheet.png",
         "frames": 8,
         "isMontage": true
+      },
+      "DEATH": {
+        "path": "Assets/Player/Human/With_Shadows/Human_Soldier_Sword_Shield_Death-Sheet.png",
+        "frames": 10,
+        "isMontage": true
+      }
+    },
+
+    "abilities": {
+      "LIGHT ATTACK": {
+        "collidorSize": {
+          "x": 0.15,
+          "y": 0.2
+        },
+        "collidorOffset": {
+          "x": 0.19,
+          "y": 0.0
+        }
+      },
+      "HEAVY ATTACK": {
+        "collidorSize": {
+          "x": 0.15,
+          "y": 0.28
+        },
+        "collidorOffset": {
+          "x": 0.19,
+          "y": 0.0
+        }
       }
     }
+
   },
+
+
   "slime": {
     "animations": {
       "IDLE": {
@@ -49,8 +80,15 @@
       "JUMP": {
         "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Jump_Fall-Sheet.png",
         "frames": 6,
-        "isMontage": false
+        "isMontage": true
+      },
+      "DEATH": {
+        "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Death-Sheet.png",
+        "frames": 10,
+        "isMontage": true
       }
     }
   }
+
+
 }
