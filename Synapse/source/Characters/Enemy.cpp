@@ -1,4 +1,6 @@
+#include "../AI/StateMachine/ChaseState.h"
 #include "../GameConfig/GameConfigs.h"
+#include "../Templates/Templates.h"
 #include "Enemy.h"
 #include <iostream>
  
@@ -11,6 +13,7 @@ Enemy::Enemy()
 
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData("slime");
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE");
+
 }
 
 void Enemy::Tick(double deltaTime)

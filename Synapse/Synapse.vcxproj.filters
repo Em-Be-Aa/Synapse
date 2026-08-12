@@ -105,6 +105,18 @@
     <ClCompile Include="source\Managers\UpdateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\AI\StateMachine\AIState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AI\StateMachine\ChaseState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AI\StateMachine\StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AI\StateMachine\AttackState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader\Shader.h">
@@ -204,6 +216,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Templates\Templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AI\StateMachine\AIState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AI\StateMachine\ChaseState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AI\StateMachine\StateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AI\StateMachine\AttackState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

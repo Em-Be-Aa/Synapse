@@ -104,6 +104,10 @@ void Character::OnCollision(CollisionInfo Info)
         std::cout << "Character Health left: " << HealthComp.GetHealth() << std::endl;
 
     }
+    else
+    {
+        std::cout << "Collided with another object in the world" << std::endl;
+    }
 }
 
 void Character::OnCharacterDeath()

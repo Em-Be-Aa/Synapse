@@ -14,6 +14,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "AI/StateMachine/ChaseState.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
@@ -35,6 +36,11 @@ TODO:
 
 int main()
 {
+
+
+    // There should be World, Game mode and other classes to manage these...ask AI on how not to copy unreal structure and make your own....
+
+
     Window DefaultWindow;
 
     // Managers
@@ -56,6 +62,10 @@ int main()
     // duplicates should not be added.
     SynapsePlayer->GetAbilityComponent().AddAbility("LIGHT ATTACK", SynapsePlayer);
     SynapsePlayer->GetAbilityComponent().AddAbility("HEAVY ATTACK", SynapsePlayer);
+
+    SlimeEnemy->GetAbilityComponent().AddAbility("LIGHT ATTACK", SlimeEnemy);
+
+    SlimeEnemy->AIStateMachine = SpawnActor<StateMachine>(SlimeEnemy, SynapsePlayer);
 
     Camera DefaultCamera(SynapsePlayer);
 

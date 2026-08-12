@@ -83,8 +83,6 @@ public:
 			auto iterator = std::find(currentCollidors.begin(), currentCollidors.end(), CC);
 			return (!currentCollidors.empty() && iterator != currentCollidors.end());
 		}
-
-
 	}
 };
 

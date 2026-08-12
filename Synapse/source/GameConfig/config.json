@@ -82,13 +82,31 @@
         "frames": 6,
         "isMontage": true
       },
+      "LIGHT ATTACK": {
+        "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Attack1-Sheet.png",
+        "frames": 8,
+        "isMontage": true
+      },
       "DEATH": {
         "path": "Assets/Player/Monster/With_Shadows/Monster_Slime_Death-Sheet.png",
         "frames": 10,
         "isMontage": true
       }
+    },
+
+
+    "abilities": {
+      "LIGHT ATTACK": {
+        "collidorSize": {
+          "x": 0.15,
+          "y": 0.2
+        },
+        "collidorOffset": {
+          "x": 0.19,
+          "y": 0.0
+        }
+      }
+
     }
   }
-
-
 }

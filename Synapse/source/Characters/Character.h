@@ -36,7 +36,6 @@ protected:
 
 
 
-// Getters and Setters
 public:
 
 	AbilityComponent& GetAbilityComponent()
@@ -48,5 +47,10 @@ public:
 	{
 		return characterSprite;
 	};
+
+	CollisionComponent& GetCollisionComponent()
+	{
+		return *Collidor;
+	}
 
 };

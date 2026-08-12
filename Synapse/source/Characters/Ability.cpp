@@ -41,8 +41,6 @@ void Ability::Update(double deltaTime)
 		isActivated = false;
 
 	}
-
-	
 }
 
 void Ability::Activate(Character* instigator)

@@ -141,6 +141,9 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\AI\StateMachine\AttackState.cpp" />
+    <ClCompile Include="source\AI\StateMachine\ChaseState.cpp" />
+    <ClCompile Include="source\AI\StateMachine\AIState.cpp" />
     <ClCompile Include="source\Characters\Ability.cpp" />
     <ClCompile Include="source\Characters\AbilityComponent.cpp" />
     <ClCompile Include="source\Characters\HealthComponent.cpp" />
@@ -171,8 +174,12 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Managers\StatManager.cpp" />
     <ClCompile Include="source\Managers\SynapseFunctionLibrary.cpp" />
     <ClCompile Include="source\Managers\UpdateManager.cpp" />
+    <ClCompile Include="source\AI\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AI\StateMachine\AttackState.h" />
+    <ClInclude Include="source\AI\StateMachine\ChaseState.h" />
+    <ClInclude Include="source\AI\StateMachine\AIState.h" />
     <ClInclude Include="source\Characters\Ability.h" />
     <ClInclude Include="source\Characters\AbilityComponent.h" />
     <ClInclude Include="source\Characters\HealthComponent.h" />
@@ -206,6 +213,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Interfaces\ITicker.h" />
     <ClInclude Include="source\Managers\SynapseFunctionLibrary.h" />
     <ClInclude Include="source\Managers\UpdateManager.h" />
+    <ClInclude Include="source\AI\StateMachine\StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
