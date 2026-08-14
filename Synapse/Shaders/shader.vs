@@ -9,6 +9,7 @@ out vec2 TexCoord;
 uniform mat4 transform;
 uniform vec2 uvScale = vec2(1.0, 1.0);
 uniform vec2 uvOffset = vec2(0.0, 0.0);
+uniform bool xFlip = false;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -20,4 +21,8 @@ void main()
     gl_Position = projection * view * model * vec4 (aPos, 1.0f);
     ourColor = aPos;
     TexCoord = aTexCoord * uvScale + uvOffset;
+    if(xFlip)
+    {
+        TexCoord.x = (TexCoord.x * -1) + 1;
+    }
 }

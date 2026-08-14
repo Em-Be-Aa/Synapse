@@ -25,7 +25,7 @@ void ChaseState::Update(double deltaTime)
     if (!(distance <= stepSize))
     {
         glm::vec3 direction = difference / distance;
-        owner->Position += direction * stepSize;
+        owner->SetDeltaPosition(direction * stepSize);
     }
 
 

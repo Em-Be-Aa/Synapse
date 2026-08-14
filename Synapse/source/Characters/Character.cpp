@@ -53,12 +53,16 @@ void Character::Tick(double deltaTime)
    
     // Send info to render
     RenderComp.model = glm::translate(glm::mat4(1.0f), Position);
+    RenderComp.textureXFlip = !isFacingRight;
     RenderComp.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator->uvScale.x, characterSprite.spriteAnimator->uvScale.y,
                                          characterSprite.spriteAnimator->uvOffset.x, characterSprite.spriteAnimator->uvOffset.y);
     if (characterSprite.spriteAnimator->currentMontage.spriteSheet)
     {
         RenderComp.textureID = characterSprite.spriteAnimator->currentMontage.spriteSheet->ID;
     }
+
+        
+
 }
 
 void Character::Update(double deltaTime)
@@ -80,6 +84,8 @@ void Character::Update(double deltaTime)
         //std::cout << "Character is not colliding so movement can be added" << std::endl;
 
         Position = Position + deltaPosition;
+
+        isFacingRight = (deltaPosition.x >= 0) ? true : false;
     }
 
     deltaPosition = { 0.0f, 0.0f, 0.0f };

@@ -26,6 +26,11 @@ public:
 	unsigned int ID;
 	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0003f);
 
+	void SetDeltaPosition(glm::vec3 dP)
+	{
+		deltaPosition = dP;
+	}
+
 
 protected:
 

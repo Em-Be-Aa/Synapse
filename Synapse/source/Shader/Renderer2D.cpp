@@ -1,16 +1,16 @@
+#include "../Managers/RenderManager.h"
 #include "Renderer2D.h"
 #include "Shader.h"
-#include "../Managers/RenderManager.h"
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
-#include <vector>
 #include <iostream>
+#include <vector>
 
 
 // Simplify this
 namespace
 {
-    struct Submission { unsigned int textureID; glm::mat4 model; glm::vec4 uv; glm::vec4 tint; int layer; };
+    struct Submission { unsigned int textureID; glm::mat4 model; glm::vec4 uv; glm::vec4 tint; int layer; bool textureXFlip; };
     static std::vector<Submission> submissions;
 
     // GL resources
@@ -77,6 +77,7 @@ void Renderer2D::Submit(const RenderComponent& rc)
     s.uv = rc.uvScaleOffset;
     s.tint = glm::vec4(1.0f);
     s.layer = rc.layer;
+    s.textureXFlip = rc.textureXFlip;
     submissions.push_back(s);
 }
 
@@ -126,8 +127,10 @@ void Renderer2D::Flush()
 
         int uvLoc = glGetUniformLocation(spriteShader->ID, "uvScale");
         int uvOffLoc = glGetUniformLocation(spriteShader->ID, "uvOffset");
+        int xFlip = glGetUniformLocation(spriteShader->ID, "xFlip");
         if (uvLoc != -1) glUniform2f(uvLoc, s.uv.x, s.uv.y);
         if (uvOffLoc != -1) glUniform2f(uvOffLoc, s.uv.z, s.uv.w);
+        if (xFlip) glUniform1i(xFlip, s.textureXFlip);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }

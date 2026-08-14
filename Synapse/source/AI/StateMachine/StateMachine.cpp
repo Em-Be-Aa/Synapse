@@ -7,8 +7,6 @@ StateMachine::StateMachine(Enemy* Owner, Player* Player)
 {
 	owner = Owner;
 	player = Player;
-
-	SetState<ChaseState>(this);
 }
 
 void StateMachine::Update(double dt)
@@ -18,6 +16,10 @@ void StateMachine::Update(double dt)
 	if(isOverlapping)
 	{
 		SetState<AttackState>(this);
+	}
+	else
+	{
+		SetState<ChaseState>(this);
 	}
 	
 }

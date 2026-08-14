@@ -18,6 +18,7 @@ public:
 	int layer = 0;
 	glm::vec4 uvScaleOffset;
 	unsigned int textureID;
+	bool textureXFlip = false;
 
 
 };
