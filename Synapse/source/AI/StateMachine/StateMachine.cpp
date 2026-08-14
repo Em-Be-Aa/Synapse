@@ -24,3 +24,10 @@ void StateMachine::Update(double dt)
 	
 }
 
+void StateMachine::Destroy()
+{
+	Object::Destroy();
+
+	GetCurrentState()->Destroy();
+}
+

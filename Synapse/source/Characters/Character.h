@@ -34,6 +34,8 @@ protected:
 	glm::vec3 characterUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 previousPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
 
+private:
+
 	bool isFacingRight = true;
 
 public:
@@ -53,4 +55,8 @@ public:
 		return *Collidor;
 	}
 
+	int GetCharacterDirection()
+	{
+		return isFacingRight ? 1 : -1;
+	}
 };

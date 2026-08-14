@@ -23,6 +23,6 @@ void main()
     TexCoord = aTexCoord * uvScale + uvOffset;
     if(xFlip)
     {
-        TexCoord.x = (TexCoord.x * -1) + 1;
+        TexCoord.x = (2.0 * uvOffset.x + uvScale.x) - TexCoord.x;
     }
 }

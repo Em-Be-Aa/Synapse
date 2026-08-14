@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
+#include "../Actor/Object.h"
 #include "../Shader/RenderComponent.h"
+#include <vector>
 
 
 class RenderManager
@@ -16,6 +17,11 @@ public:
 
 	static RenderManager& GetRenderManager();
 	std::vector<RenderComponent*> RenderComps;
+
+	void DestoryPendingRenders()
+	{
+		std::erase_if(RenderComps, [](const RenderComponent* RC) { return RC->GetOwner()->isPendingDestroy; });
+	};
 
 };
 

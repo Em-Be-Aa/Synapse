@@ -7,19 +7,21 @@
 
 // Add visible rectangle for owners....also i dont know but moving moves the boundary before actually moving so when colliding with someone...the boundary moves a bit...
 
-CollisionComponent::CollisionComponent() : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
+CollisionComponent::CollisionComponent(Actor* Owner) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
 {
     CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
+
+    owner = Owner;
 }
 
-CollisionComponent::CollisionComponent(bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
+CollisionComponent::CollisionComponent(bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
 {
 	CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
 
     isDamageCollidor = isDamage;
 }
 
-CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png")
+CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
 {
     CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
 

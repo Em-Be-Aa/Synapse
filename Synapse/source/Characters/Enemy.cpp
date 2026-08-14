@@ -19,7 +19,11 @@ Enemy::Enemy()
 void Enemy::Tick(double deltaTime)
 {
     Character::Tick(deltaTime);
+}
 
-    //std::cout << "The collision status is: " << Collidor->GetCollisionState() << std::endl;
+void Enemy::Destroy()
+{
+    Character::Destroy();
 
+   AIStateMachine->Destroy();
 }

@@ -34,6 +34,7 @@ private:
 	float targetActivationTime = 1.0f;
 	float currentActivationTime = 0.0f;
 	bool isActivated = false;
+	Character* owner;
 
 	AbilityCollisionInfo abilInfo;
 

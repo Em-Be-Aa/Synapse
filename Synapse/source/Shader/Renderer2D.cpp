@@ -130,7 +130,7 @@ void Renderer2D::Flush()
         int xFlip = glGetUniformLocation(spriteShader->ID, "xFlip");
         if (uvLoc != -1) glUniform2f(uvLoc, s.uv.x, s.uv.y);
         if (uvOffLoc != -1) glUniform2f(uvOffLoc, s.uv.z, s.uv.w);
-        if (xFlip) glUniform1i(xFlip, s.textureXFlip);
+        if (xFlip != -1) glUniform1i(xFlip, s.textureXFlip);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }

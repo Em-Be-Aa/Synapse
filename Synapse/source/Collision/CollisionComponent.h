@@ -13,7 +13,7 @@ class CollisionComponent : public Object
 {
 
 public:
-	CollisionComponent();
+	CollisionComponent(Actor* Owner);
 	CollisionComponent(bool isDamage);
 	CollisionComponent(Actor* Owner, bool isDamage);
 
@@ -62,14 +62,23 @@ public:
 		
 		if (CCS.empty())
 		{
-			SetCollisionState(false);
 			currentCollidors = {};
 		}
 		else
 		{
-			SetCollisionState(true);
 			currentCollidors = CCS;
 		}
+
+		for (auto CC : CCS)
+		{
+			if (!CC->isDamageCollidor)
+			{
+				SetCollisionState(true);
+				return;
+			}
+		}
+
+		SetCollisionState(false);
 	}
 
 	bool IsCurrentCollidor(CollisionComponent* CC)

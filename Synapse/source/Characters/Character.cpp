@@ -5,7 +5,7 @@
 #include <iostream>
 
 // make these hard coded things better
-Character::Character()
+Character::Character() : RenderComp(this), HealthComp(this)
 { 
 
     Collidor = SpawnActor<CollisionComponent>(this, false);
@@ -60,9 +60,6 @@ void Character::Tick(double deltaTime)
     {
         RenderComp.textureID = characterSprite.spriteAnimator->currentMontage.spriteSheet->ID;
     }
-
-        
-
 }
 
 void Character::Update(double deltaTime)
@@ -81,11 +78,16 @@ void Character::Update(double deltaTime)
 
     if (!Collidor->isColliding)
     {
-        //std::cout << "Character is not colliding so movement can be added" << std::endl;
-
         Position = Position + deltaPosition;
+    }
 
-        isFacingRight = (deltaPosition.x >= 0) ? true : false;
+    if (deltaPosition.x > 0)
+    {
+        isFacingRight = true;
+    }
+    else if (deltaPosition.x < 0)
+    {
+        isFacingRight = false;
     }
 
     deltaPosition = { 0.0f, 0.0f, 0.0f };
@@ -136,6 +138,7 @@ void Character::OnAnimationMontageComplete(std::string Anim)
 // everything that we spawn in classes like these where it has its variable an objects that also updates...we need to override and then markpending for destory for its variables too...find a better way...
 void Character::Destroy()
 {
-    this->isPendingDestroy = true;
-    Collidor->isPendingDestroy = true;
+    Actor::Destroy();
+
+    Collidor->Destroy();
 }

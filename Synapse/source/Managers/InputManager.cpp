@@ -15,7 +15,7 @@ InputManager::InputManager(GLFWwindow* window)
 
 void InputManager::ProcessInputs()
 {
-	for (IInputObserver* observer: observers)
+	for (auto observer: observers)
 	{
 		for (auto& inputAction : inputActions)
 		{

@@ -34,7 +34,7 @@ void Animator::Update(double deltaTime)
 	//std::cout << "current state: " << currentAnim << std::endl;
 
 	// Animation Speed
-	timer += 0.021;
+	timer += deltaTime;
 
 	if (timer >= frameTime) {
 		timer = 0.0f;

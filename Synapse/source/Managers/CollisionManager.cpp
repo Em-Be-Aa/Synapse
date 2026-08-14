@@ -52,6 +52,8 @@ void CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
         if (IsColliding(boxA, boxB))
         {
             currentCollidors.push_back(OtherCollidor);
+
+            // This will fire once on overlap
             if (!SourceCollidor.IsCurrentCollidor(OtherCollidor))
             {
                 SourceCollidor.CollisionDelegate.Broadcast({OtherCollidor->GetOwner(), OtherCollidor->isDamageCollidor, {} });

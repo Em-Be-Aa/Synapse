@@ -34,17 +34,29 @@ void Ability::Update(double deltaTime)
 	}
 	else
 	{
-		if(currentActivationTime > targetActivationTime)
+		if (currentActivationTime > targetActivationTime)
 			abilityCollidor->Destroy();
+
 
 		currentActivationTime = 0.0f;
 		isActivated = false;
 
 	}
+
+	if (owner && abilityCollidor)
+	{
+		float halfX = abilityCollidor->BoxSize.x * 0.5f;
+		float halfY = abilityCollidor->BoxSize.y * 0.5f;
+		abilityCollidor->Box.min = { owner->Position.x - halfX + (abilInfo.collidorOffset.x * owner->GetCharacterDirection()), owner->Position.y - halfY + abilInfo.collidorOffset.y };
+		abilityCollidor->Box.max = { owner->Position.x + halfX + (abilInfo.collidorOffset.x * owner->GetCharacterDirection()), owner->Position.y + halfY + abilInfo.collidorOffset.y };
+	}
+
 }
 
 void Ability::Activate(Character* instigator)
 {
+	owner = instigator;
+
 	if (!isOnCooldown)
 	{
 		isOnCooldown = !isOnCooldown;
@@ -59,8 +71,8 @@ void Ability::Activate(Character* instigator)
 			abilityCollidor->BoxSize = abilInfo.collidorSize;
 			float halfX = abilityCollidor->BoxSize.x * 0.5f;
 			float halfY = abilityCollidor->BoxSize.y * 0.5f;
-			abilityCollidor->Box.min = { instigator->Position.x - halfX + abilInfo.collidorOffset.x, instigator->Position.y - halfY + abilInfo.collidorOffset.y };
-			abilityCollidor->Box.max = { instigator->Position.x + halfX + abilInfo.collidorOffset.x, instigator->Position.y + halfY + abilInfo.collidorOffset.y };
+			abilityCollidor->Box.min = { instigator->Position.x - halfX + (abilInfo.collidorOffset.x * instigator->GetCharacterDirection()), instigator->Position.y - halfY + abilInfo.collidorOffset.y };
+			abilityCollidor->Box.max = { instigator->Position.x + halfX + (abilInfo.collidorOffset.x * instigator->GetCharacterDirection()), instigator->Position.y + halfY + abilInfo.collidorOffset.y };
 		}
 	}
 	

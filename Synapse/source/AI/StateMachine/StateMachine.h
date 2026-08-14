@@ -26,13 +26,22 @@ public:
 
 		if (currentState)
 		{
+			currentState->Exit();
 			currentState->Destroy();
 		}
 
 		auto CS = SpawnActor<T>(SM);
 		currentState = CS;
+		currentState->Enter();
 	
 	}
+
+	AIState* GetCurrentState()
+	{
+		return currentState;
+	}
+
+	void Destroy() override;
 
 
 	Player* GetPlayer() { return player; }

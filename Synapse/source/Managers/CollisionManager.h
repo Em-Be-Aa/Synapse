@@ -23,6 +23,11 @@ public:
 				A.max.y > B.min.y;
 	};
 
+	void DestoryPendingCollidors()
+	{
+		std::erase_if(CollisionComponents, [](const CollisionComponent* CC) { return CC->isPendingDestroy; });
+	};
+
 private:
 	std::vector<CollisionComponent*> CollisionComponents;
 	CollisionManager() {};

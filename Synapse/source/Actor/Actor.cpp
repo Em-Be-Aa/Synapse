@@ -17,6 +17,6 @@ void Actor::Init()
 
 void Actor::Destroy()
 {
-
+	Object::Destroy();
 }
 

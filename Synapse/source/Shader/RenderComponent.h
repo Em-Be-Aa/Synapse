@@ -1,13 +1,16 @@
 #pragma once
 
+#include "../Actor/Object.h"
 #include <glm/glm.hpp>
+
+class Object;
 
 class RenderComponent
 {
 
 public:
 
-	RenderComponent();
+	RenderComponent(Object* Owner);
 	~RenderComponent();
 
 	// non-copyable to avoid double registration
@@ -19,6 +22,12 @@ public:
 	glm::vec4 uvScaleOffset;
 	unsigned int textureID;
 	bool textureXFlip = false;
+
+	Object* GetOwner() const { return owner; }
+
+private:
+
+	Object* owner;
 
 
 };

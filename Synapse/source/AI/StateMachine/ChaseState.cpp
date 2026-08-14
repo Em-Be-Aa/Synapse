@@ -2,6 +2,7 @@
 #include "../../Characters/Character.h"
 #include "ChaseState.h"
 #include <glm/glm.hpp>
+#include <iostream>
 
 void ChaseState::Enter()
 {
@@ -15,6 +16,10 @@ void ChaseState::Update(double deltaTime)
     Character* player =  SM->GetPlayer();
     Character* owner = SM->GetOwner();
 
+    if (!player || !owner)
+    {
+        return;
+    }
 
     glm::vec3 difference = player->Position - owner->Position;
 
@@ -22,13 +27,12 @@ void ChaseState::Update(double deltaTime)
 
     float stepSize = 0.01f;
 
+
     if (!(distance <= stepSize))
     {
         glm::vec3 direction = difference / distance;
         owner->SetDeltaPosition(direction * stepSize);
     }
-
-
 }
 
 void ChaseState::Exit()

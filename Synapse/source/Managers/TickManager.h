@@ -15,6 +15,8 @@ public:
 	static TickManager* GetTickManager();
 	void RegisterObject(Actor* O);
 
+	void RemovePendingDestroyActors();
+
 	std::vector<Actor*> RegisteredActors;
 
 };

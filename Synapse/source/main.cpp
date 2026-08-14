@@ -15,6 +15,7 @@
 #include <GLFW/glfw3.h>
 
 #include "AI/StateMachine/ChaseState.h"
+#include "Managers/CollisionManager.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
@@ -67,10 +68,11 @@ int main()
 
     SlimeEnemy->AIStateMachine = SpawnActor<StateMachine>(SlimeEnemy, SynapsePlayer);
 
+    // If the player dies...this behaves weird..fix this so it can act independent if there is no owner
     Camera DefaultCamera(SynapsePlayer);
 
     // Setting Input Actor
-    DefaultInputManager.observers.push_back(SynapsePlayer);
+    DefaultInputManager.EnableActorInput(SynapsePlayer);
     DefaultInputManager.onMouseMove = ([&DefaultWindow, &DefaultCamera](double xpos, double ypos) { DefaultCamera.CameraMove(DefaultWindow.window, xpos, ypos); });
 
     
@@ -143,6 +145,10 @@ int main()
 
         // Remove Pending Destroy Objects
         UpdateManager::GetUpdateManager().RemovePendingDestroyObjects();
+        TickManager::GetTickManager()->RemovePendingDestroyActors();
+        RenderManager::GetRenderManager().DestoryPendingRenders();
+        CollisionManager::GetCollisionManager()->DestoryPendingCollidors();
+        DefaultInputManager.DisableInputforPendingDestoryed();
 
         glfwSwapBuffers(DefaultWindow.window);
         glfwPollEvents();

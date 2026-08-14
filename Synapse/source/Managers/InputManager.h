@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../Actor/Actor.h"
 #include "../Enums&Structs/GameTypes.h"
-#include "../Interfaces/IInputObserver.h"
 #include <functional>
 #include <GLFW/glfw3.h>
 #include <map>
@@ -20,8 +20,15 @@ public:
 	std::function<void(double, double)> onMouseMove;
 	GLFWwindow* InputWindow;
 
-	std::vector<IInputObserver*> observers = {};
+	void EnableActorInput(Actor* actor)
+	{
+		observers.push_back(actor);
+	}
 
+	void DisableInputforPendingDestoryed()
+	{
+		std::erase_if(observers, [](const Actor* actor) { return actor->isPendingDestroy; });
+	}
 
 private:
 
@@ -60,4 +67,5 @@ private:
 		{GLFW_MOUSE_BUTTON_2, { false, false }}
 	};
 
+	std::vector<Actor*> observers = {};
 };

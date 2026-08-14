@@ -12,6 +12,8 @@ public:
 
 	void Tick(double deltaTime) override;
 
+	void Destroy() override;
+
 	StateMachine* AIStateMachine;
 };
 

@@ -14,4 +14,9 @@ void TickManager::RegisterObject(Actor* O)
 	RegisteredActors.push_back(O);
 }
 
+void TickManager::RemovePendingDestroyActors()
+{
+	std::erase_if(RegisteredActors, [](const Actor* A) { return A->isPendingDestroy; });
+}
+
 
