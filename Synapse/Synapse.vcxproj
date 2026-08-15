@@ -141,6 +141,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Game\Session.cpp" />
+    <ClCompile Include="source\Game\Game.cpp" />
     <ClCompile Include="source\AI\StateMachine\AttackState.cpp" />
     <ClCompile Include="source\AI\StateMachine\ChaseState.cpp" />
     <ClCompile Include="source\AI\StateMachine\AIState.cpp" />
@@ -177,6 +179,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\AI\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Game\Session.h" />
+    <ClInclude Include="source\Game\Game.h" />
     <ClInclude Include="source\AI\StateMachine\AttackState.h" />
     <ClInclude Include="source\AI\StateMachine\ChaseState.h" />
     <ClInclude Include="source\AI\StateMachine\AIState.h" />
