@@ -9,11 +9,11 @@ class AbilityComponent
 
 public:
 
-	AbilityComponent();
+	AbilityComponent(Character* C);
 
 	Ability* GetAbility(std::string Tag);
 
-	void AddAbility(std::string Tag, Character* owner);
+	void AddAbility(std::string Tag);
 
 	void ActivateAbility(std::string Tag);
 

@@ -3,6 +3,8 @@
 #include "../GameConfig/GameConfigs.h"
 #include "../Templates/Templates.h"
 #include "Ability.h"
+#include "Enemy.h"
+#include "Player.h"
 #include <iostream>
 
 
@@ -35,7 +37,10 @@ void Ability::Update(double deltaTime)
 	else
 	{
 		if (currentActivationTime > targetActivationTime)
+		{
 			abilityCollidor->Destroy();
+			abilityCollidor = nullptr;
+		}
 
 
 		currentActivationTime = 0.0f;
@@ -50,7 +55,6 @@ void Ability::Update(double deltaTime)
 		abilityCollidor->Box.min = { owner->Position.x - halfX + (abilInfo.collidorOffset.x * owner->GetCharacterDirection()), owner->Position.y - halfY + abilInfo.collidorOffset.y };
 		abilityCollidor->Box.max = { owner->Position.x + halfX + (abilInfo.collidorOffset.x * owner->GetCharacterDirection()), owner->Position.y + halfY + abilInfo.collidorOffset.y };
 	}
-
 }
 
 void Ability::Activate(Character* instigator)

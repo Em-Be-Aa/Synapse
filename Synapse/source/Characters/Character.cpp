@@ -5,7 +5,7 @@
 #include <iostream>
 
 // make these hard coded things better
-Character::Character() : RenderComp(this), HealthComp(this)
+Character::Character() : RenderComp(this), HealthComp(this), AbilComp(this)
 { 
 
     Collidor = SpawnActor<CollisionComponent>(this, false);
@@ -141,4 +141,6 @@ void Character::Destroy()
     Actor::Destroy();
 
     Collidor->Destroy();
+
+    characterSprite.spriteAnimator->Destroy();
 }

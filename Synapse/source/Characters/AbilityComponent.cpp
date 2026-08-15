@@ -2,18 +2,16 @@
 #include "Character.h"
 #include <string>
 
-AbilityComponent::AbilityComponent()
+AbilityComponent::AbilityComponent(Character* C)
 {
-
+	componentOwner = C;
 }
 
 
 // We are assuming characters can have and use abilities....look into this if this is the right approach
-void AbilityComponent::AddAbility(std::string Tag, Character* owner)
+void AbilityComponent::AddAbility(std::string Tag)
 {
-	componentOwner = owner;
-
-	std::unique_ptr<Ability> ability(new Ability(Tag, owner->GetSpriteComponent().spriteAnimator));
+	std::unique_ptr<Ability> ability(new Ability(Tag, componentOwner->GetSpriteComponent().spriteAnimator));
 	Ability* newAbility = ability.get();
 	UpdateManager::GetUpdateManager().Register(std::move(ability));
 	newAbility->Init();

@@ -61,11 +61,10 @@ int main()
     Enemy* SlimeEnemy = SpawnActor<Enemy>();
 
     // duplicates should not be added.
-    SynapsePlayer->GetAbilityComponent().AddAbility("LIGHT ATTACK", SynapsePlayer);
-    SynapsePlayer->GetAbilityComponent().AddAbility("HEAVY ATTACK", SynapsePlayer);
+    SynapsePlayer->GetAbilityComponent().AddAbility("LIGHT ATTACK");
+    SynapsePlayer->GetAbilityComponent().AddAbility("HEAVY ATTACK");
 
-    SlimeEnemy->GetAbilityComponent().AddAbility("LIGHT ATTACK", SlimeEnemy);
-
+    SlimeEnemy->GetAbilityComponent().AddAbility("LIGHT ATTACK");
     SlimeEnemy->AIStateMachine = SpawnActor<StateMachine>(SlimeEnemy, SynapsePlayer);
 
     // If the player dies...this behaves weird..fix this so it can act independent if there is no owner
