@@ -48,7 +48,8 @@
         "collidorOffset": {
           "x": 0.19,
           "y": 0.0
-        }
+        },
+        "collidorDamage": 30.0
       },
       "HEAVY ATTACK": {
         "collidorSize": {
@@ -58,7 +59,8 @@
         "collidorOffset": {
           "x": 0.19,
           "y": 0.0
-        }
+        },
+        "collidorDamage": 50.0
       }
     }
 
@@ -104,7 +106,8 @@
         "collidorOffset": {
           "x": 0.19,
           "y": 0.0
-        }
+        },
+        "collidorDamage": 10.0
       }
 
     }

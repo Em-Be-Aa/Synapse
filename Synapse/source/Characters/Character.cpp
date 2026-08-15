@@ -8,7 +8,7 @@
 Character::Character() : RenderComp(this), HealthComp(this), AbilComp(this)
 { 
 
-    Collidor = SpawnActor<CollisionComponent>(this, false);
+    Collidor = SpawnActor<CollisionComponent>(this, false, 0.0f);
 
     // Bind to Collision Delegate(try to find a better way so each class doesn't have to bind in their begin play or constructor....research if this is the only option as Unreal does this too i think.......)
     Collidor->CollisionDelegate.Subscribe
@@ -42,11 +42,11 @@ void Character::Tick(double deltaTime)
 
         if (Speed == 0 && characterSprite.spriteAnimator->GetCurrentAnim() != "IDLE" && !characterSprite.spriteAnimator->currentMontage.isMontage)
         {
-            characterSprite.spriteAnimator->SetCurrentAnim("IDLE");
+            characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
         }
         else if (Speed != 0 && characterSprite.spriteAnimator->GetCurrentAnim() != "WALK" && !characterSprite.spriteAnimator->currentMontage.isMontage)
         {
-            characterSprite.spriteAnimator->SetCurrentAnim("WALK");
+            characterSprite.spriteAnimator->SetCurrentAnim("WALK", false);
 
         }
     }
@@ -107,7 +107,7 @@ void Character::OnCollision(CollisionInfo Info)
     {
 
         // Don't hardcode it, this should come from the ability or attack the character overlapped....
-        HealthComp.TakeDamage(30.0f);
+        HealthComp.TakeDamage(Info.damageCount);
 
         std::cout << "Character Health left: " << HealthComp.GetHealth() << std::endl;
 
@@ -122,7 +122,7 @@ void Character::OnCharacterDeath()
 {
     std::cout << "Character is dead" << std::endl;
 
-    characterSprite.spriteAnimator->SetCurrentAnim("DEATH");
+    characterSprite.spriteAnimator->SetCurrentAnim("DEATH", true);
 }
 
 void Character::OnAnimationMontageComplete(std::string Anim)

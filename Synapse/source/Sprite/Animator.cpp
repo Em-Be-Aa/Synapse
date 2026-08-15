@@ -48,7 +48,7 @@ void Animator::Update(double deltaTime)
 			if (currentMontage.isMontage)
 			{
 				onMontageComplete.Broadcast(currentAnim);
-				SetCurrentAnim(prevAnim);
+				SetCurrentAnim(prevAnim, true);
 			}
 
 			uvOffset.x = 0;

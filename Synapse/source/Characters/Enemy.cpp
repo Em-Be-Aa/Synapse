@@ -4,15 +4,16 @@
 #include "Enemy.h"
 #include <iostream>
  
-Enemy::Enemy()
+Enemy::Enemy(glm::vec3 spawnPosition)
 {
 
     // this should be cleaner to specify for instances....the collidor box specification specially
-    Position = {1.0f, 2.0f, 0.0003f};
+    Position = spawnPosition;
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
-    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData("slime");
-    characterSprite.spriteAnimator->SetCurrentAnim("IDLE");
+    tag = "slime";
+    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
+    characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 
 }
 

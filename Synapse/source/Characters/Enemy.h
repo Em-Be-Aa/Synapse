@@ -8,7 +8,7 @@ class Enemy: public Character
 
 public:
 
-	Enemy();
+	Enemy(glm::vec3 spawnPosition);
 
 	void Tick(double deltaTime) override;
 

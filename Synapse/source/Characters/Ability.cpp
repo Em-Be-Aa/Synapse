@@ -8,13 +8,13 @@
 #include <iostream>
 
 
-Ability::Ability(std::string abilTag, Animator* animator)
+Ability::Ability(std::string abilTag, Animator* animator, std::string charTag)
 {
 	tag = abilTag;
 	targetAnimator = animator;
 
 	//there is a chance that this is not loaded and null...so be careful
-	abilInfo = GameConfigs::GetGameConfig().GetCharacterAbilityData(abilTag);
+	abilInfo = GameConfigs::GetGameConfig().GetCharacterAbilityData(charTag, abilTag);
 }
 
 void Ability::Update(double deltaTime)
@@ -68,8 +68,8 @@ void Ability::Activate(Character* instigator)
 
 		if (targetAnimator)
 		{
-			targetAnimator->SetCurrentAnim(tag);
-			abilityCollidor = SpawnActor<CollisionComponent>(instigator, true);
+			targetAnimator->SetCurrentAnim(tag, false);
+			abilityCollidor = SpawnActor<CollisionComponent>(instigator, true, abilInfo.collidorDamage);
 
 			//ability collision box size and offset should be saved with ability info so we dont have to hardcode it in this function.... also things like activation time and stuff like that
 			abilityCollidor->BoxSize = abilInfo.collidorSize;

@@ -16,11 +16,28 @@ void Game::Init()
 
     StartGame();
 
+
+    double currentTime;
+    double initialTime = glfwGetTime();
+    double deltaTime = 0.0f;   
+    
+
+
+    while (!glfwWindowShouldClose(gameWindow->window))
+    {
+
+        currentTime = glfwGetTime();
+        deltaTime = currentTime - initialTime;
+        initialTime = currentTime;
+
+        gameSession->Update(deltaTime);
+    }
+
 }
 
 void Game::StartGame()
 {
-    if (!gameSession)
+    if (gameSession)
     {
         delete gameSession;
     }

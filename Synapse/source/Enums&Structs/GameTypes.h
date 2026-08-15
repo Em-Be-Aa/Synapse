@@ -51,6 +51,7 @@ struct KeyState {
 struct CollisionInfo {
 	Actor* Collidor;
 	bool isDamageCollidor = false;
+	float damageCount = 0;
 	std::vector<Actor*> ignoreActors;
 };
 
@@ -61,8 +62,15 @@ struct AbilityCollisionInfo {
 	{
 		collidorSize   = {0, 0};
 		collidorOffset = {0, 0};
+		collidorDamage = 0;
 	}
 
 	glm::vec2 collidorSize;
 	glm::vec2 collidorOffset;
+	float collidorDamage;
+};
+
+struct WaveInfo
+{
+	int enemyCount = 0;
 };

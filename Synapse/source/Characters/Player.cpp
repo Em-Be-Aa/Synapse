@@ -9,9 +9,9 @@ Player::Player()
     // make the player's collision box smaller than the full sprite
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
-    // Do all config in the game class not all player will need to load the same config...
-    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData("player");
-    characterSprite.spriteAnimator->SetCurrentAnim("IDLE");
+    tag = "player";
+    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
+    characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 }
 
 

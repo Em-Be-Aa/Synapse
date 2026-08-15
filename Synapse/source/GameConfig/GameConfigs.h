@@ -15,7 +15,7 @@ public:
 
 	// Load Data
 	std::map<std::string, Anim_Clip> GetCharacterData(std::string characterName);
-	AbilityCollisionInfo GetCharacterAbilityData(std::string abilityName);
+	AbilityCollisionInfo GetCharacterAbilityData(std::string characterTag, std::string abilityName);
 
 	nlohmann::json Config;
 

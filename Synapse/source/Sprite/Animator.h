@@ -30,8 +30,13 @@ public:
 		UpdateAnim(Mode);
 	};
 
-	void SetCurrentAnim(std::string Mode) 
+	void SetCurrentAnim(std::string Mode, bool interruptMontage) 
 	{
+		if (!interruptMontage && currentMontage.isMontage)
+		{
+			return;
+		}
+
 		prevAnim = currentAnim;
 		currentAnim = Mode;
 		UpdateAnim(Mode);

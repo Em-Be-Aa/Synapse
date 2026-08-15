@@ -56,7 +56,7 @@ void CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
             // This will fire once on overlap
             if (!SourceCollidor.IsCurrentCollidor(OtherCollidor))
             {
-                SourceCollidor.CollisionDelegate.Broadcast({OtherCollidor->GetOwner(), OtherCollidor->isDamageCollidor, {} });
+                SourceCollidor.CollisionDelegate.Broadcast({OtherCollidor->GetOwner(), OtherCollidor->isDamageCollidor, OtherCollidor->damageCount,{} });
             }
         }
     }

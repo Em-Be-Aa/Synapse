@@ -14,19 +14,20 @@ CollisionComponent::CollisionComponent(Actor* Owner) : collisionSprite("Assets/M
     owner = Owner;
 }
 
-CollisionComponent::CollisionComponent(bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
+CollisionComponent::CollisionComponent(bool isDamage, float damageAmount) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
 {
 	CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
 
     isDamageCollidor = isDamage;
+    damageCount = damageAmount;
 }
 
-CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
+CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage, float damageAmount) : collisionSprite("Assets/Map/Tiles/Debugging_Boundary.png"), RenderComp(this)
 {
     CollisionManager::GetCollisionManager()->RegisterCollisionComponent(this);
 
     isDamageCollidor = isDamage;
-
+    damageCount = damageAmount;
     owner = Owner;
 }
 

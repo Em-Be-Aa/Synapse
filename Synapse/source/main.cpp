@@ -4,8 +4,7 @@
 
 int main()
 {
-
-    Game defaultGame;
+    Game defaultGame = Game::GetGame();
     defaultGame.Init();
 
     return 0;

@@ -177,6 +177,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Managers\SynapseFunctionLibrary.cpp" />
     <ClCompile Include="source\Managers\UpdateManager.cpp" />
     <ClCompile Include="source\AI\StateMachine\StateMachine.cpp" />
+    <ClCompile Include="source\Game\WaveSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Game\Session.h" />
@@ -218,6 +219,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Managers\SynapseFunctionLibrary.h" />
     <ClInclude Include="source\Managers\UpdateManager.h" />
     <ClInclude Include="source\AI\StateMachine\StateMachine.h" />
+    <ClInclude Include="source\Game\WaveSpawner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />

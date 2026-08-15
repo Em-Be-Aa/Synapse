@@ -35,20 +35,22 @@ std::map<std::string, Anim_Clip> GameConfigs::GetCharacterData(std::string chara
 }
 
 // Loads Character Abilities...check if ref is necessary and what wrong are we doing using simple struct...is copy bad here
-AbilityCollisionInfo GameConfigs::GetCharacterAbilityData(std::string abilityName)
+AbilityCollisionInfo GameConfigs::GetCharacterAbilityData(std::string characterTag, std::string abilityName)
 {
     AbilityCollisionInfo characterAbility;
 
     if (Config != nullptr)
     {
-        auto& ability = Config["player"]["abilities"][abilityName];
+        auto& ability = Config[characterTag]["abilities"][abilityName];
 
         if (!ability.is_null())
         {
             glm::vec2 collidorSize = { ability["collidorSize"]["x"].get<float>(), ability["collidorSize"]["y"].get<float>()};
             glm::vec2 collidorOffset = { ability["collidorOffset"]["x"].get<float>(), ability["collidorOffset"]["y"].get<float>() };
+            float collidorDamage = ability["collidorDamage"].get<float>();
             characterAbility.collidorSize = collidorSize;
             characterAbility.collidorOffset = collidorOffset;
+            characterAbility.collidorDamage = collidorDamage;
         }
         else
         {

@@ -59,4 +59,10 @@ public:
 	{
 		return isFacingRight ? 1 : -1;
 	}
+
+	std::string GetCharacterTag() { return tag; }
+
+protected:
+
+	std::string tag = "character";
 };

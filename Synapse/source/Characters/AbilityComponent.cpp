@@ -11,7 +11,7 @@ AbilityComponent::AbilityComponent(Character* C)
 // We are assuming characters can have and use abilities....look into this if this is the right approach
 void AbilityComponent::AddAbility(std::string Tag)
 {
-	std::unique_ptr<Ability> ability(new Ability(Tag, componentOwner->GetSpriteComponent().spriteAnimator));
+	std::unique_ptr<Ability> ability(new Ability(Tag, componentOwner->GetSpriteComponent().spriteAnimator, componentOwner->GetCharacterTag()));
 	Ability* newAbility = ability.get();
 	UpdateManager::GetUpdateManager().Register(std::move(ability));
 	newAbility->Init();

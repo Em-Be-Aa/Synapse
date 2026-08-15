@@ -14,8 +14,8 @@ class CollisionComponent : public Object
 
 public:
 	CollisionComponent(Actor* Owner);
-	CollisionComponent(bool isDamage);
-	CollisionComponent(Actor* Owner, bool isDamage);
+	CollisionComponent(bool isDamage, float damageAmount);
+	CollisionComponent(Actor* Owner, bool isDamage, float damageAmount);
 
 	~CollisionComponent();
 
@@ -26,6 +26,7 @@ public:
 	bool isColliding = false;
 	glm::vec2 BoxSize = glm::vec2(1.0f, 1.0f);
 	bool isDamageCollidor = false;
+	float damageCount = 0.0f;
 
 	Delegate<CollisionInfo> CollisionDelegate;
 

@@ -12,7 +12,7 @@ class Ability : public Object
 
 public:
 
-	Ability(std::string abilTag, Animator* animator);
+	Ability(std::string abilTag, Animator* animator, std::string charTag);
 	void Update(double deltaTime) override;
 	void Activate(Character* instigator);
 
