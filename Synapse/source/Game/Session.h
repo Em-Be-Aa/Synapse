@@ -1,4 +1,5 @@
 #pragma once
+#include "../UI/Base/HUD.h"
 #include "Game.h"
 
 class TileMap;
@@ -32,7 +33,9 @@ private:
 	TileMap* Landscape ;
 	Player* SynapsePlayer;
 	Camera* defaultCamera;
+	HUD* sessionHUD;
 	WaveSpawner* waveSpawner;
+	Font defaultFont;
 
 	Game* game;
 

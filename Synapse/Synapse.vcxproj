@@ -141,6 +141,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Text\Font.cpp" />
+    <ClCompile Include="source\UI\Base\HUD.cpp" />
     <ClCompile Include="source\Game\Session.cpp" />
     <ClCompile Include="source\Game\Game.cpp" />
     <ClCompile Include="source\AI\StateMachine\AttackState.cpp" />
@@ -178,8 +180,13 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\Managers\UpdateManager.cpp" />
     <ClCompile Include="source\AI\StateMachine\StateMachine.cpp" />
     <ClCompile Include="source\Game\WaveSpawner.cpp" />
+    <ClCompile Include="source\UI\Base\Widget.cpp" />
+    <ClCompile Include="source\UI\Base\TextWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Text\Font.h" />
+    <ClInclude Include="source\Text\stb_truetype.h" />
+    <ClInclude Include="source\UI\Base\HUD.h" />
     <ClInclude Include="source\Game\Session.h" />
     <ClInclude Include="source\Game\Game.h" />
     <ClInclude Include="source\AI\StateMachine\AttackState.h" />
@@ -220,6 +227,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\Managers\UpdateManager.h" />
     <ClInclude Include="source\AI\StateMachine\StateMachine.h" />
     <ClInclude Include="source\Game\WaveSpawner.h" />
+    <ClInclude Include="source\UI\Base\Widget.h" />
+    <ClInclude Include="source\UI\Base\TextWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />
@@ -279,9 +288,13 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.jpg" />
     <Image Include="Assets\Map\Tiles\Ground_Tile_02_C.png" />
     <Image Include="Assets\Textures\Grass_Tile.png" />
+    <Image Include="Assets\Textures\HealthBar.png" />
     <Image Include="Assets\Textures\LightWallpaper.jpg" />
     <Image Include="Assets\Textures\Wallpaper.jpg" />
     <Image Include="Assets\Textures\WoodenBox.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="source\Text\UnifrakturCook.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

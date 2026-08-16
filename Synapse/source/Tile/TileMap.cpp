@@ -1,3 +1,4 @@
+#include "../Enums&Structs/GameTypes.h"
 #include "../Managers/StatManager.h"
 #include "../Shader/Renderer2D.h"
 #include "TileMap.h"
@@ -22,10 +23,9 @@ void TileMap::Update(double deltaTime)
 	for (glm::vec2 Translation : backgroundTiles)
 	{ 
 
-        // Submit tile to Renderer2D instead of issuing GL calls here
         glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(Translation, 0.0f));
         glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
-        Renderer2D::Submit(basicTile->DefaultImage->ID, model, uv);
+        Renderer2D::GetRenderer()->Submit(basicTile->DefaultImage->ID, model, uv, RenderSpace::World);
 
 	}
 }

@@ -1,25 +1,11 @@
+#include "../Enums&Structs/GameTypes.h"
 #include "../Managers/RenderManager.h"
 #include "Renderer2D.h"
 #include "Shader.h"
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
-#include <vector>
 
 
-// Simplify this
-namespace
-{
-    struct Submission { unsigned int textureID; glm::mat4 model; glm::vec4 uv; glm::vec4 tint; int layer; bool textureXFlip; };
-    static std::vector<Submission> submissions;
-
-    // GL resources
-    static unsigned int quadVAO = 0, quadVBO = 0;
-    static Shader* spriteShader = nullptr;
-    static glm::mat4 viewProjMatrix = glm::mat4(1.0f);
-    static glm::mat4 viewMatrix = glm::mat4(1.0f);
-    static glm::mat4 projectionMatrix = glm::mat4(1.0f);
-}
 
 void Renderer2D::Init(const char* spriteVertexShaderPath, const char* spriteFragmentShaderPath)
 {
@@ -47,6 +33,10 @@ void Renderer2D::Init(const char* spriteVertexShaderPath, const char* spriteFrag
 
     glBindVertexArray(0);
 
+    glGenTextures(1, &whiteTextureID);
+    glBindTexture(GL_TEXTURE_2D, whiteTextureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, whitePixel);
+
     // create shader
     spriteShader = new Shader(spriteVertexShaderPath, spriteFragmentShaderPath);
 }
@@ -58,15 +48,15 @@ void Renderer2D::Shutdown()
     if (quadVAO) { glDeleteVertexArrays(1, &quadVAO); quadVAO = 0; }
 }
 
-void Renderer2D::BeginScene(const glm::mat4& view, const glm::mat4& projection)
+void Renderer2D::BeginScene(const glm::mat4& worldView, const glm::mat4& worldProjection, const glm::mat4& screenView, const glm::mat4& screenProjection)
 {
-    viewMatrix = view;
-    projectionMatrix = projection;
-    // store view in first matrix and projection in second via globals
-    submissions.clear();
-    // store view/projection in shader uniforms at Flush time
-    // (we keep them as globals here for Flush)
-    // Use static variables on top of file if needed; but we'll just set uniforms in Flush using passed matrices
+    worldViewMatrix = worldView;
+    worldProjectionMatrix = worldProjection;
+    screenViewMatrix = screenView;
+    screenProjectionMatrix = screenProjection;
+
+    worldSubmissions.clear();
+    screenSubmissions.clear();
 }
 
 void Renderer2D::Submit(const RenderComponent& rc)
@@ -75,13 +65,22 @@ void Renderer2D::Submit(const RenderComponent& rc)
     s.textureID = rc.textureID;
     s.model = rc.model;
     s.uv = rc.uvScaleOffset;
-    s.tint = glm::vec4(1.0f);
+    s.tint = rc.tint;
     s.layer = rc.layer;
     s.textureXFlip = rc.textureXFlip;
-    submissions.push_back(s);
+    s.space = rc.space;
+
+    if (s.space == RenderSpace::World)
+    {
+        worldSubmissions.push_back(s);
+    }
+    else
+    {
+        screenSubmissions.push_back(s);
+    }
 }
 
-void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const glm::vec4& uvScaleOffset)
+void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const glm::vec4& uvScaleOffset, const RenderSpace space)
 {
     Submission s;
     s.textureID = textureID;
@@ -89,29 +88,21 @@ void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const gl
     s.uv = uvScaleOffset;
     s.tint = glm::vec4(1.0f);
     s.layer = 0;
-    submissions.push_back(s);
+    s.space = space;
+
+    if (s.space == RenderSpace::World)
+    {
+        worldSubmissions.push_back(s);
+    }
+    else
+    {
+        screenSubmissions.push_back(s);
+    }
 }
 
-void Renderer2D::EndScene()
+void Renderer2D::DrawSubmissions(const std::vector<Submission>& subs, unsigned int& currentTex)
 {
-    Flush();
-}
-
-void Renderer2D::Flush()
-{
-    if (!spriteShader) return;
-
-    // simple immediate-mode: bind shader and draw each submission (no batching yet)
-    spriteShader->use();
-    int viewLoc = glGetUniformLocation(spriteShader->ID, "view");
-    if (viewLoc != -1) glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-    int projLoc = glGetUniformLocation(spriteShader->ID, "projection");
-    if (projLoc != -1) glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-
-    glBindVertexArray(quadVAO);
-
-    unsigned int currentTex = 0;
-    for (const auto &s : submissions)
+    for (const auto& s : subs)
     {
         if (s.textureID != currentTex)
         {
@@ -121,6 +112,9 @@ void Renderer2D::Flush()
             if (texLoc != -1) glUniform1i(texLoc, 0);
             currentTex = s.textureID;
         }
+
+        int tintLoc = glGetUniformLocation(spriteShader->ID, "tint");
+        if (tintLoc != -1) glUniform4f(tintLoc, s.tint.x, s.tint.y, s.tint.z, s.tint.w);
 
         int modelLoc = glGetUniformLocation(spriteShader->ID, "model");
         if (modelLoc != -1) glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(s.model));
@@ -134,8 +128,38 @@ void Renderer2D::Flush()
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
+}
+
+void Renderer2D::EndScene()
+{
+    Flush();
+}
+
+void Renderer2D::Flush()
+{
+    if (!spriteShader) return;
+
+    spriteShader->use();
+    glBindVertexArray(quadVAO);
+    unsigned int currentTex = 0;
+
+    int viewLoc = glGetUniformLocation(spriteShader->ID, "view");
+    if (viewLoc != -1) glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(worldViewMatrix));
+    int projLoc = glGetUniformLocation(spriteShader->ID, "projection");
+    if (projLoc != -1) glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(worldProjectionMatrix));
+
+    DrawSubmissions(worldSubmissions, currentTex);
+
+
+    viewLoc = glGetUniformLocation(spriteShader->ID, "view");
+    if (viewLoc != -1) glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(screenViewMatrix));
+    projLoc = glGetUniformLocation(spriteShader->ID, "projection");
+    if (projLoc != -1) glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(screenProjectionMatrix));
+
+    DrawSubmissions(screenSubmissions, currentTex);
 
     glBindVertexArray(0);
-    submissions.clear();
+    worldSubmissions.clear();
+    screenSubmissions.clear();
 }
 

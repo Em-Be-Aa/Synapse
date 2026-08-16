@@ -11,7 +11,7 @@ void Game::Init()
 
     gameWindow = new Window();
     defaultInputManager = new InputManager(gameWindow->window);
-    Renderer2D::Init("Shaders/shader.vs", "Shaders/shader.fs");
+    Renderer2D::GetRenderer()->Init("Shaders/shader.vs", "Shaders/shader.fs");
     GameConfigs::GetGameConfig();
 
     StartGame();
@@ -49,7 +49,7 @@ void Game::StartGame()
 
 void Game::End()
 {
-    Renderer2D::Shutdown();
+    Renderer2D::GetRenderer()->Shutdown();
     glfwTerminate();
 }
 

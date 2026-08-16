@@ -1,7 +1,13 @@
+#include "../Shader/Renderer2D.h"
 #include "Image.h"
-#include <iostream>
-#include <glad/glad.h>
 #include "stb_image.h"
+#include <glad/glad.h>
+#include <iostream>
+
+Image::Image()
+{
+    ID = Renderer2D::GetRenderer()->GetDefaultTextureID();
+}
 
 Image::Image(const char* imagePath)
 {

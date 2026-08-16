@@ -1,0 +1,21 @@
+#pragma once
+
+#include "../../Actor/Object.h"
+#include "../../Text/Font.h"
+
+class HUD : public Object
+{
+
+public:
+
+	HUD(Font* font) : defaultFont(font) {};
+
+	void Update(double dT) override;
+
+	void Init();
+
+private:
+
+	Font* defaultFont;
+};
+

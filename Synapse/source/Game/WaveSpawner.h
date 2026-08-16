@@ -42,7 +42,10 @@ private:
 	std::map<int, WaveInfo> Wave = {
 	{ 1, {1} },
 	{ 2, {2} },
-	{ 3, {3} }
+	{ 3, {3} },
+	{ 4, {6} },
+	{ 5, {8} },
+	{ 6, {12} }
 	};
 
 	std::vector<Enemy*> currentEnemies;

@@ -6,6 +6,7 @@ class Image
 
 public:
 
+	Image();
 	Image(const char* imagePath);
 
 	int width = 0;

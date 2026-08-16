@@ -15,7 +15,13 @@ public:
 
 	GLFWwindow* window;
 
+	float GetWindowWidth() { return Width;}
+	float GetWindowHeight() { return Height;}
+
+private:
 	float Width	= 800.0f;
 	float Height = 600.0f;
+
+
 };
 

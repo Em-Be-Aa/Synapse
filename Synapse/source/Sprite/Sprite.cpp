@@ -6,6 +6,7 @@
 Sprite::Sprite()
 {
 	spriteAnimator = SpawnActor<Animator>();
+	DefaultImage = new Image();
 }
 
 // Actors or Tiles with static Image need to call this 

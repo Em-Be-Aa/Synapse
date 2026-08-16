@@ -74,3 +74,21 @@ struct WaveInfo
 {
 	int enemyCount = 0;
 };
+
+enum RenderSpace
+{
+	World, 
+	Screen
+};
+
+
+struct Submission 
+{
+	unsigned int textureID; 
+	glm::mat4 model; 
+	glm::vec4 uv; 
+	glm::vec4 tint; 
+	int layer; 
+	bool textureXFlip; 
+	RenderSpace space;
+};

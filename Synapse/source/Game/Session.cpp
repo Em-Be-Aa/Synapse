@@ -11,7 +11,9 @@
 #include "../Shader/RenderComponent.h"
 #include "../Shader/Renderer2D.h"
 #include "../Templates/Templates.h"
+#include "../Text/Font.h"
 #include "../Tile/TileMap.h"
+#include "../UI/Base/HUD.h"
 #include "../Window/Window.h"
 #include "Session.h"
 #include "WaveSpawner.h"
@@ -39,16 +41,19 @@ void Session::Init()
     IM->EnableActorInput(SynapsePlayer);
     IM->onMouseMove = ([GW, this](double xpos, double ypos) { defaultCamera->CameraMove(GW->window, xpos, ypos); });
 
+    defaultFont.Init("Assets/Fonts/UnifrakturCook.ttf", 36.0f);
 
-    //glEnable(GL_DEPTH_TEST);
-    srand(time(0));
+    sessionHUD = SpawnActor<HUD>(&defaultFont);
+    sessionHUD->Init();
+
 
     waveSpawner = SpawnActor<WaveSpawner>(this);
-
-
     waveSpawner->StartWave(1);
 
 
+
+    //glEnable(GL_DEPTH_TEST);
+    srand(time(0));
 }
 
 void Session::Update(double deltaTime)
@@ -56,6 +61,7 @@ void Session::Update(double deltaTime)
 
     InputManager* IM = game->GetInputManager();
     Window* GW = game->GetGameWindow();
+    Renderer2D* Renderer = Renderer2D::GetRenderer();
 
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -66,17 +72,19 @@ void Session::Update(double deltaTime)
     IM->ProcessInputs();
 
     // 3D Transformation, Camera and Projection
-    glm::mat4 model = glm::mat4(1.0f);
-
-    glm::mat4 view;
+    glm::mat4 worldView;
     glm::vec3 CameraPosition = { defaultCamera->attachedActor->Position.x, defaultCamera->attachedActor->Position.y, 6.0f };
-    view = glm::lookAt(CameraPosition, CameraPosition + defaultCamera->cameraFront, defaultCamera->cameraUp);
+    worldView = glm::lookAt(CameraPosition, CameraPosition + defaultCamera->cameraFront, defaultCamera->cameraUp);
 
-    glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), ((float)GW->Width / (float)GW->Height), 0.1f, 100.0f);
+    glm::mat4 worldProjection = glm::perspective(glm::radians(45.0f), ((float)GW->GetWindowWidth() / (float)GW->GetWindowHeight()), 0.1f, 100.0f);
 
+    glm::mat4 screenView = glm::mat4(1.0f);
+
+    glm::mat4 screenProjection = glm::ortho(0.0f, (float)GW->GetWindowWidth(), 0.0f, (float)GW->GetWindowHeight(), -1.0f, 1.0f);
+
+    
     // Start renderer scene for Renderer2D (this will set view/projection uniforms)
-    Renderer2D::BeginScene(view, projection);
+    Renderer->BeginScene(worldView, worldProjection, screenView, screenProjection);
 
     // Add pending actors spawned during the previous frame
     UpdateManager::GetUpdateManager().FlushPending();
@@ -103,11 +111,11 @@ void Session::Update(double deltaTime)
     for (RenderComponent* rc : RenderManager::GetRenderManager().RenderComps)
     {
         if (rc)
-            Renderer2D::Submit(*rc);
+            Renderer->Submit(*rc);
     }
 
     // End and flush renderer
-    Renderer2D::EndScene();
+    Renderer->EndScene();
 
     // Remove Pending Destroy Objects
     UpdateManager::GetUpdateManager().RemovePendingDestroyObjects();
