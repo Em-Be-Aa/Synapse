@@ -118,11 +118,13 @@ void Session::Update(double deltaTime)
     Renderer->EndScene();
 
     // Remove Pending Destroy Objects
-    UpdateManager::GetUpdateManager().RemovePendingDestroyObjects();
     TickManager::GetTickManager()->RemovePendingDestroyActors();
     RenderManager::GetRenderManager().DestoryPendingRenders();
     CollisionManager::GetCollisionManager()->DestoryPendingCollidors();
     IM->DisableInputforPendingDestoryed();
+
+    // This actually deleles all objects...research if this is the right approach..every other manager have just pointer to its components and they have to clear them so it is necessary here to use manager delete at the end
+    UpdateManager::GetUpdateManager().RemovePendingDestroyObjects();
 
     glfwSwapBuffers(GW->window);
     glfwPollEvents();

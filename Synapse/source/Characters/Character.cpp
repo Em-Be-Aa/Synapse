@@ -81,11 +81,11 @@ void Character::Update(double deltaTime)
         Position = Position + deltaPosition;
     }
 
-    if (deltaPosition.x > 0)
+    if (deltaPosition.x > 0 && !characterSprite.spriteAnimator->currentMontage.isMontage)
     {
         isFacingRight = true;
     }
-    else if (deltaPosition.x < 0)
+    else if (deltaPosition.x < 0 && !characterSprite.spriteAnimator->currentMontage.isMontage)
     {
         isFacingRight = false;
     }

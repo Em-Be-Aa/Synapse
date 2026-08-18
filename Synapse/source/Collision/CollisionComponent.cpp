@@ -33,7 +33,7 @@ CollisionComponent::CollisionComponent(Actor* Owner, bool isDamage, float damage
 
 CollisionComponent::~CollisionComponent()
 {
-    CollisionManager::GetCollisionManager()->UnregisterCollisionComponent(this);
+
 }
 
 void CollisionComponent::Update(double deltaTime)
