@@ -2,8 +2,8 @@
 
 int main()
 {
-    Game defaultGame = Game::GetGame();
-    defaultGame.Init();
+    Game* defaultGame = Game::GetGame();
+    defaultGame->Init();
 
     return 0;
 }

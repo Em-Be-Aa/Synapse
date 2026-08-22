@@ -138,6 +138,9 @@
     <ClCompile Include="source\UI\Base\TextWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\UI\Game\WaveWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader\Shader.h">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\UI\Base\TextWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Game\WaveWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -448,6 +454,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Textures\HealthBar.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\UI\WaveInfo.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

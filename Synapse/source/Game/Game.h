@@ -9,10 +9,10 @@ class Game
 
 public:
 
-	static Game& GetGame()
+	static Game* GetGame()
 	{
 		static Game game;
-		return game;
+		return &game;
 	};
 
 	void Init();
@@ -27,11 +27,12 @@ public:
 		return gameSession;
 	}
 
+	Window* gameWindow = nullptr;
+
 private:
 
 	Game() {};
 
-	Window* gameWindow = nullptr;
 	InputManager* defaultInputManager = nullptr;
 	Session* gameSession = nullptr;
 

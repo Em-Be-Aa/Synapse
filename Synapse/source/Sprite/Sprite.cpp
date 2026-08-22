@@ -15,3 +15,9 @@ Sprite::Sprite(const char* imagePath)
 	spriteAnimator = SpawnActor<Animator>();
 	DefaultImage = new Image(imagePath);
 }
+
+void Sprite::Init(const char* imagePath)
+{
+	spriteAnimator = SpawnActor<Animator>();
+	DefaultImage = new Image(imagePath);
+}

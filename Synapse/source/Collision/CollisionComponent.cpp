@@ -38,6 +38,10 @@ CollisionComponent::~CollisionComponent()
 
 void CollisionComponent::Update(double deltaTime)
 {
+
+    RenderComp.SetIsDisabled(!enableDebug);
+
+
     glm::vec2 center = (Box.min + Box.max) * 0.5f;
     glm::vec3 modelPosition = glm::vec3(center, 0); 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), modelPosition);

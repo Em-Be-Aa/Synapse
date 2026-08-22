@@ -1,6 +1,7 @@
 #pragma once
 #include "../Actor/Object.h"
 #include "../Enums&Structs/GameTypes.h"
+#include "../Templates/Templates.h"
 #include <map>
 #include <vector>
 
@@ -19,6 +20,8 @@ public:
 	void StartWave(int CurrentWaveCount);
 	void Update(double dT);
 
+
+	Delegate<int> OnWaveCompleted;
 
 private:
 

@@ -53,6 +53,8 @@ void WaveSpawner::Update(double dT)
     if (currentEnemies.empty())
     {
         currentWaveCount++;
+
+        OnWaveCompleted.Broadcast(currentWaveCount);
         StartWave(currentWaveCount);
     }
 }

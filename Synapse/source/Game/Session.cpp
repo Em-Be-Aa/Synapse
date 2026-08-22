@@ -41,16 +41,14 @@ void Session::Init()
     IM->EnableActorInput(SynapsePlayer);
     IM->onMouseMove = ([GW, this](double xpos, double ypos) { defaultCamera->CameraMove(GW->window, xpos, ypos); });
 
-    defaultFont.Init("Assets/Fonts/UnifrakturCook.ttf", 36.0f);
-
-    sessionHUD = SpawnActor<HUD>(&defaultFont);
-    sessionHUD->Init();
-
-
     waveSpawner = SpawnActor<WaveSpawner>(this);
     waveSpawner->StartWave(1);
 
 
+    defaultFont.Init("Assets/Fonts/alagard.ttf", 36.0f);
+
+    sessionHUD = SpawnActor<HUD>(&defaultFont);
+    sessionHUD->Init();
 
     //glEnable(GL_DEPTH_TEST);
     srand(time(0));
@@ -62,7 +60,7 @@ void Session::Update(double deltaTime)
     InputManager* IM = game->GetInputManager();
     Window* GW = game->GetGameWindow();
     Renderer2D* Renderer = Renderer2D::GetRenderer();
-
+\
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

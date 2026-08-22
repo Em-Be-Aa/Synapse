@@ -39,6 +39,10 @@ private:
 	RenderComponent RenderComp;
 
 	std::vector<CollisionComponent*> currentCollidors;
+
+private:
+
+	bool enableDebug = false;
 	
 
 public:

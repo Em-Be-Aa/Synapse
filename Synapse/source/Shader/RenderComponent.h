@@ -28,11 +28,13 @@ public:
 	bool textureXFlip = false;
 
 	Object* GetOwner() const { return owner; }
+	bool GetIsDisabled() const { return isDisabled; }
+	void SetIsDisabled(bool disable) { isDisabled = disable; }
 
 private:
 
 	Object* owner;
-
+	bool isDisabled = false;
 
 };
 

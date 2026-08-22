@@ -26,6 +26,15 @@ public:
 		return SynapsePlayer;
 	};
 
+	Font* GetDefaultFont() 
+	{
+		return &defaultFont;
+	}
+
+	WaveSpawner* GetWaveSpawner()
+	{
+		return waveSpawner;
+	}
 
 private:
 

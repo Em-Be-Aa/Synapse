@@ -92,3 +92,12 @@ struct Submission
 	bool textureXFlip; 
 	RenderSpace space;
 };
+
+enum class AnchorPoint {
+	TopLeft,
+	BottomLeft,
+	TopRight,
+	BottomRight,
+	Center,
+	None
+};

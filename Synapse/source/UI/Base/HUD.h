@@ -12,7 +12,7 @@ public:
 
 	void Update(double dT) override;
 
-	void Init();
+	void Init() override;
 
 private:
 

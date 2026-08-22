@@ -16,6 +16,8 @@ public:
 	Sprite();
 	Sprite(const char* imagePath);
 
+	void Init(const char* imagePath);
+
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;

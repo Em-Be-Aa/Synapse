@@ -2,6 +2,7 @@
 #include "../Managers/RenderManager.h"
 #include "Renderer2D.h"
 #include "Shader.h"
+#include <algorithm>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -70,6 +71,11 @@ void Renderer2D::Submit(const RenderComponent& rc)
     s.textureXFlip = rc.textureXFlip;
     s.space = rc.space;
 
+    if (rc.GetIsDisabled())
+    {
+        return;
+    }
+
     if (s.space == RenderSpace::World)
     {
         worldSubmissions.push_back(s);
@@ -100,8 +106,14 @@ void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const gl
     }
 }
 
-void Renderer2D::DrawSubmissions(const std::vector<Submission>& subs, unsigned int& currentTex)
+void Renderer2D::DrawSubmissions(std::vector<Submission>& subs, unsigned int& currentTex)
 {
+    std::sort(subs.begin(), subs.end(),
+        [](const Submission& a, const Submission& b)
+        {
+            return a.layer < b.layer;
+        });
+
     for (const auto& s : subs)
     {
         if (s.textureID != currentTex)
