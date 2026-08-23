@@ -2,6 +2,8 @@
 
 #include "../Base/Widget.h"
 
+class TextWidget;
+
 class WaveWidget : public Widget
 {
 
@@ -11,6 +13,10 @@ public:
 
 	void Init() override;
 
+
+private:
+
+	TextWidget* WaveText;
 
 };
 

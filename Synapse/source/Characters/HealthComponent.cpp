@@ -10,11 +10,30 @@ HealthComponent::HealthComponent(Actor* Owner)
 	owner = Owner;
 }
 
-void HealthComponent::SetHealth(float healthValue)
+void HealthComponent::SetArmorHealth(float healthValue)
 {
-	health = healthValue;
+	if (armorHealth == healthValue)
+	{
+		return;
+	}
 
-	if (health <= 0.0f)
+	armorHealth = healthValue;
+
+	onHealthChanged.Broadcast(baseHealth / maxBaseHealth, armorHealth / maxArmorHealth);
+}
+
+void HealthComponent::SetBaseHealth(float healthValue)
+{
+	if (baseHealth == healthValue)
+	{
+		return;
+	}
+
+	baseHealth = healthValue;
+
+	onHealthChanged.Broadcast(baseHealth/maxBaseHealth, armorHealth/maxArmorHealth);
+
+	if (baseHealth <= 0.0f)
 	{
 		onDeath.Broadcast();
 	}

@@ -109,7 +109,8 @@ void Character::OnCollision(CollisionInfo Info)
         // Don't hardcode it, this should come from the ability or attack the character overlapped....
         HealthComp.TakeDamage(Info.damageCount);
 
-        std::cout << "Character Health left: " << HealthComp.GetHealth() << std::endl;
+        std::cout << "Character Base Health left: " << HealthComp.GetBaseHealth() << std::endl;
+        std::cout << "Character Armor Health left: " << HealthComp.GetArmorHealth() << std::endl;
 
     }
     else

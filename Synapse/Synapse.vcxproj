@@ -141,6 +141,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\UI\Game\CharacterHealthBar.cpp" />
+    <ClCompile Include="source\UI\Game\HealthWidget.cpp" />
     <ClCompile Include="source\Text\Font.cpp" />
     <ClCompile Include="source\UI\Base\HUD.cpp" />
     <ClCompile Include="source\Game\Session.cpp" />
@@ -185,6 +187,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\UI\Game\WaveWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\UI\Game\CharacterHealthBar.h" />
+    <ClInclude Include="source\UI\Game\HealthWidget.h" />
     <ClInclude Include="source\Text\Font.h" />
     <ClInclude Include="source\Text\stb_truetype.h" />
     <ClInclude Include="source\UI\Base\HUD.h" />
@@ -294,6 +298,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <Image Include="Assets\Textures\LightWallpaper.jpg" />
     <Image Include="Assets\Textures\Wallpaper.jpg" />
     <Image Include="Assets\Textures\WoodenBox.jpg" />
+    <Image Include="Assets\UI\HealthBar.png" />
     <Image Include="Assets\UI\WaveInfo.png" />
   </ItemGroup>
   <ItemGroup>

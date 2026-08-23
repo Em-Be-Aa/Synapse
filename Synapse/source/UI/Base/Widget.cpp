@@ -5,24 +5,21 @@
 #include <glm/ext/matrix_transform.hpp>
 
 
-Widget::Widget(glm::vec2 widgetSize, glm::vec2 Position) : RenderComp(this), offset(Position)
+Widget::Widget(const char* imagePath) : RenderComp(this), widgetSprite(imagePath)
 {
 
-}
-
-Widget::Widget(const char* imagePath, glm::vec2 widgetSize, glm::vec2 Position) : RenderComp(this), widgetSprite(imagePath), offset(Position)
-{
-    pixelSize = widgetSize;
 }
 
 void Widget::Update(double dT)
 {
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(AnchorwithLocalOffset(widgetAnchor, offset), 0.0f));
-    model = glm::scale(model, glm::vec3(pixelSize, 1.0f));
+    widgetPosition = CalculateWidgetPosition();
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), widgetPosition);
+    model = glm::scale(model, glm::vec3(GetSize(), 1.0f));
     glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
 
     RenderComp.uvScaleOffset = uv;
-    RenderComp.space = RenderSpace::Screen;
+    RenderComp.space = widgetRenderSpace;
     RenderComp.model = model;
     RenderComp.tint = widgetColor;
     RenderComp.layer = zOrder;
@@ -34,6 +31,18 @@ void Widget::Update(double dT)
 
     Renderer2D::GetRenderer()->Submit(RenderComp);
 
+}
+
+glm::vec3 Widget::CalculateWidgetPosition()
+{
+    if (widgetRenderSpace == RenderSpace::Screen)
+    {
+        return glm::vec3(AnchorwithLocalOffset(widgetAnchor, offset), 0.0f);
+    }
+    else if (widgetRenderSpace == RenderSpace::World)
+    {
+        return  owner->Position + glm::vec3(offset, 0.0f);
+    }
 }
 
 
@@ -55,9 +64,9 @@ glm::vec2 Widget::AnchorwithLocalOffset(AnchorPoint anchor, glm::vec2 Offset)
                               break;
     case AnchorPoint::BottomRight: { return  { windowWidth - pixelSize.x * 0.5f - Offset.x, pixelSize.y * 0.5f + Offset.y }; }
                                  break;
-    case AnchorPoint::Center: { return  { windowWidth + Offset.y, windowHeight + Offset.y }; }
+    case AnchorPoint::Center: { return  { windowWidth/2 + Offset.y, windowHeight/2 + Offset.y }; }
                             break;
-    case AnchorPoint::None: { return  { windowWidth + pixelSize.x * 0.5f + Offset.y, windowHeight + pixelSize.y * 0.5f + Offset.y }; }
+    case AnchorPoint::None: { return  {  pixelSize.x * 0.5f + Offset.y, pixelSize.y * 0.5f + Offset.y }; }
                           break;
     default: { return  { windowWidth + pixelSize.x * 0.5f + Offset.y, windowHeight + pixelSize.y * 0.5f + Offset.y }; }
            break;

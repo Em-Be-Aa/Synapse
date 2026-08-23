@@ -14,13 +14,18 @@ void WaveWidget::Init()
 
 	Font* font = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
 
-	TextWidget* WaveText = SpawnActor<TextWidget>(font, "WAVE 1", glm::vec4{ 0.83f, 0.77f, 0.64f, 1.0f }, glm::vec2{30.0f, 30.0f }, glm::vec2{160.0f, 80.0f});
-	SetAnchor(AnchorPoint::TopRight);
+	// Wave Text
+	WaveText = SpawnActor<TextWidget>(font, "WAVE 1");
+	WaveText->SetColor({ 0.83f, 0.77f, 0.64f, 1.0f });
+	WaveText->SetSize({ 30.0f, 30.0f });
+	WaveText->SetOffset({ 160.0f, 80.0f });
+	WaveText->SetAnchor(AnchorPoint::TopRight);
 	WaveText->SetZOrder(1);
+
 	
 	Game::GetGame()->GetCurrentSession()->GetWaveSpawner()->OnWaveCompleted.Subscribe
 	(
-		[WaveText](int waveCount) { WaveText->SetText("WAVE " + std::to_string(waveCount)); }
+		[this](int waveCount) { WaveText->SetText("WAVE " + std::to_string(waveCount)); }
 	);
 	
 }

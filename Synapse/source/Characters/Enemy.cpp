@@ -1,6 +1,7 @@
 #include "../AI/StateMachine/ChaseState.h"
 #include "../GameConfig/GameConfigs.h"
 #include "../Templates/Templates.h"
+#include "../UI/Game/CharacterHealthBar.h"
 #include "Enemy.h"
 #include <iostream>
  
@@ -15,6 +16,9 @@ Enemy::Enemy(glm::vec3 spawnPosition)
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 
+    healthBar = SpawnActor<CharacterHealthBar>(this);
+
+
 }
 
 void Enemy::Tick(double deltaTime)
@@ -27,4 +31,5 @@ void Enemy::Destroy()
     Character::Destroy();
 
    AIStateMachine->Destroy();
+   healthBar->Destroy();
 }

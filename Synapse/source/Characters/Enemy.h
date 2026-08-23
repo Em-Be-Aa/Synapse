@@ -2,6 +2,7 @@
 #include "Character.h"
 
 class StateMachine;
+class CharacterHealthBar;
 
 class Enemy: public Character 
 {
@@ -15,5 +16,9 @@ public:
 	void Destroy() override;
 
 	StateMachine* AIStateMachine;
+
+private:
+
+	CharacterHealthBar* healthBar;
 };
 

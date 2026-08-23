@@ -55,6 +55,11 @@ public:
 		return *Collidor;
 	}
 
+	HealthComponent& GetHealthComponent()
+	{
+		return HealthComp;
+	}
+
 	int GetCharacterDirection()
 	{
 		return isFacingRight ? 1 : -1;

@@ -7,7 +7,7 @@
 class TextWidget : public Widget
 {
 public:
-    TextWidget(Font* font, std::string initialText, glm::vec4 Color, glm::vec2 Size, glm::vec2 offset);
+    TextWidget(Font* font, std::string initialText);
 
     void Update(double dT) override;
 

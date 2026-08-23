@@ -15,21 +15,44 @@ public:
 
 	void TakeDamage(float Damage) 
 	{
-		SetHealth(std::max(health - Damage, 0.0f));
+		if (isArmorEnabled && armorHealth > 0.0f)
+		{
+			SetArmorHealth(std::max(armorHealth - Damage, 0.0f));
+		}
+		else
+		{
+			SetBaseHealth(std::max(baseHealth - Damage, 0.0f));
+		}
 	};
 
-	void SetHealth(float healthValue);
+	void SetBaseHealth(float healthValue);
+	void SetArmorHealth(float healthValue);
 
-	float GetHealth()
+	float GetBaseHealth()
 	{
-		return health;
+		return baseHealth;
 	};
+
+	float GetArmorHealth()
+	{
+		return armorHealth;
+	};
+
+	void EnableArmor(bool Enable) { isArmorEnabled = Enable; }
 
 	Delegate<> onDeath;
+	Delegate<float, float> onHealthChanged;
 
 private:
 
-	float health = 100;
+	float baseHealth = 100;
+	float armorHealth = 50;
+
+	float maxBaseHealth = 100;
+	float maxArmorHealth = 50;
+
+	bool isArmorEnabled = false;
+
 	Actor* owner = nullptr;
 };
 

@@ -5,10 +5,9 @@
 #include "TextWidget.h"
 #include <glm/ext/matrix_transform.hpp>
 
-TextWidget::TextWidget(Font* font, std::string initialText, glm::vec4 Color, glm::vec2 Size, glm::vec2 offset)
-    : Widget(Size, offset), fontRef(font), text(initialText)
+TextWidget::TextWidget(Font* font, std::string initialText) : fontRef(font), text(initialText)
 {
-    widgetColor = Color;
+
 }
 
 void TextWidget::Update(double dT)

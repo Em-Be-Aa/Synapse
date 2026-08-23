@@ -1,5 +1,7 @@
+#include "../Game/Game.h"
 #include "../GameConfig/GameConfigs.h"
 #include "../Shader/Shader.h"
+#include "../Window/Window.h"
 #include "glm/glm.hpp"
 #include "Player.h"
 #include <iostream>
@@ -12,6 +14,8 @@ Player::Player()
     tag = "player";
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
+
+    GetHealthComponent().EnableArmor(true);
 }
 
 
@@ -57,6 +61,14 @@ void Player::onInputClicked(int Key)
     else if (Key == GLFW_KEY_Q)
     {
         AbilComp.ActivateAbility("HEAVY ATTACK");
+    }
+
+
+
+
+    if (Key == GLFW_KEY_ESCAPE)
+    {
+        glfwSetWindowShouldClose(Game::GetGame()->GetGameWindow()->window, GLFW_TRUE);
     }
 }
 
