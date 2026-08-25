@@ -44,7 +44,6 @@ void Session::Init()
     waveSpawner = SpawnActor<WaveSpawner>(this);
     waveSpawner->StartWave(1);
 
-
     defaultFont.Init("Assets/Fonts/alagard.ttf", 36.0f);
 
     sessionHUD = SpawnActor<HUD>(&defaultFont);
@@ -71,8 +70,7 @@ void Session::Update(double deltaTime)
 
     // 3D Transformation, Camera and Projection
     glm::mat4 worldView;
-    glm::vec3 CameraPosition = { defaultCamera->attachedActor->Position.x, defaultCamera->attachedActor->Position.y, 6.0f };
-    worldView = glm::lookAt(CameraPosition, CameraPosition + defaultCamera->cameraFront, defaultCamera->cameraUp);
+    worldView = glm::lookAt(defaultCamera->Position, defaultCamera->Position + defaultCamera->cameraFront, defaultCamera->cameraUp);
 
     glm::mat4 worldProjection = glm::perspective(glm::radians(45.0f), ((float)GW->GetWindowWidth() / (float)GW->GetWindowHeight()), 0.1f, 100.0f);
 
@@ -88,7 +86,21 @@ void Session::Update(double deltaTime)
     UpdateManager::GetUpdateManager().FlushPending();
 
     // Update World...this should work for things we need updated before we tick world
-    for (auto& O : UpdateManager::GetUpdateManager().RegisteredObjects)
+    for (auto& O : UpdateManager::GetUpdateManager().PreUpdateObjects)
+    {
+        if (!O->isPendingDestroy)
+        {
+            O->Update(deltaTime);
+        }
+    }
+    for (auto& O : UpdateManager::GetUpdateManager().UpdateObjects)
+    {
+        if (!O->isPendingDestroy)
+        {
+            O->Update(deltaTime);
+        }
+    }
+    for (auto& O : UpdateManager::GetUpdateManager().PostUpdateObjects)
     {
         if (!O->isPendingDestroy)
         {

@@ -46,7 +46,11 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
 
 void Camera::Update(double deltaTime)
 {
-
+    if (attachedActor)
+    {
+        Position = { attachedActor->Position.x, attachedActor->Position.y, 6.0f };
+    }
+    
 }
 
 

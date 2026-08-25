@@ -101,3 +101,10 @@ enum class AnchorPoint {
 	Center,
 	None
 };
+
+enum class Faction 
+{
+	Player,
+	Enemy,
+	None
+};

@@ -36,14 +36,9 @@ public:
 	
 	}
 
-	AIState* GetCurrentState()
-	{
-		return currentState;
-	}
-
 	void Destroy() override;
 
-
+	AIState* GetCurrentState() { return currentState; }
 	Player* GetPlayer() { return player; }
 	Enemy* GetOwner() { return owner; }
 
@@ -51,7 +46,6 @@ private:
 
 	Enemy* owner;
 	Player* player;
-
 	AIState* currentState;
 };
 

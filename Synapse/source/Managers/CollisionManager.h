@@ -14,13 +14,13 @@ public:
 	void UnregisterCollisionComponent(CollisionComponent* Coll);
 	void Update(double deltaTime) override;
 	static CollisionManager* GetCollisionManager();
-	void CheckCollision(CollisionComponent& SourceCollidor);
+	bool CheckCollision(CollisionComponent& SourceCollidor);
 	bool IsColliding(const CollisionBox& A, const CollisionBox& B)
 	{
-		return	A.min.x < B.max.x &&
-				A.max.x > B.min.x &&
-				A.min.y < B.max.y &&
-				A.max.y > B.min.y;
+		return	A.min.x <= B.max.x &&
+				A.max.x >= B.min.x &&
+				A.min.y <= B.max.y &&
+				A.max.y >= B.min.y;
 	};
 
 	void DestoryPendingCollidors()

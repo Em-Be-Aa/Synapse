@@ -12,11 +12,13 @@ public:
 	WaveWidget() {};
 
 	void Init() override;
+	void Update(double dT) override;
 
 
 private:
 
 	TextWidget* WaveText;
+	TextWidget* WaveInfoText;
 
 };
 

@@ -42,7 +42,7 @@ private:
 
 private:
 
-	bool enableDebug = false;
+	bool enableDebug = true;
 	
 
 public:
@@ -73,7 +73,7 @@ public:
 		{
 			currentCollidors = CCS;
 		}
-
+		// This is not good practice learn a better way and change this....
 		for (auto CC : CCS)
 		{
 			if (!CC->isDamageCollidor)

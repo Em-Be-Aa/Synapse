@@ -37,7 +37,7 @@ T* SpawnActor(Args&&... args)
 {
 	std::unique_ptr<T> actor(new T(std::forward<Args>(args)...));
 	T* rawPtr = actor.get(); 
-	UpdateManager::GetUpdateManager().Register(std::move(actor)); 
+	UpdateManager::GetUpdateManager().RegisterUpdateObject(std::move(actor));
 	rawPtr->Init(); 
 	return rawPtr; 
 }

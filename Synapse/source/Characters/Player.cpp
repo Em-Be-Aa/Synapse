@@ -12,6 +12,7 @@ Player::Player()
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
     tag = "player";
+    characterFaction = Faction::Player;
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 

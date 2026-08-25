@@ -1,13 +1,20 @@
+#include "../Characters/Character.h"
 #include "CollisionManager.h"
 #include <iostream>
 #include <memory>
 
 CollisionManager* CollisionManager::GetCollisionManager()
 {
-    std::unique_ptr<CollisionManager> actor(new CollisionManager());
-    static CollisionManager* DefaultCollisionManager = actor.get();
-    UpdateManager::GetUpdateManager().Register(std::move(actor));
-    DefaultCollisionManager->Init();
+    static CollisionManager* DefaultCollisionManager = nullptr;
+
+    if (!DefaultCollisionManager)
+    {
+        std::unique_ptr<CollisionManager> actor(new CollisionManager());
+        DefaultCollisionManager = actor.get();
+        UpdateManager::GetUpdateManager().RegisterPostUpdateObject(std::move(actor));
+        DefaultCollisionManager->Init();
+    }
+
     return DefaultCollisionManager;
 }
 
@@ -21,6 +28,7 @@ void CollisionManager::UnregisterCollisionComponent(CollisionComponent* Coll)
     std::erase(CollisionComponents, Coll);
 }
 
+
 void CollisionManager::Update(double deltaTime)
 {
 
@@ -30,7 +38,7 @@ void CollisionManager::Update(double deltaTime)
     }
 }
 
-void CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
+bool CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
 {
 
     std::vector<CollisionComponent*> currentCollidors = {};
@@ -42,8 +50,11 @@ void CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
         const auto& boxA = SourceCollidor.Box;
         const auto& boxB = OtherCollidor->Box;
 
+        Character* sourceCollidorOwner = dynamic_cast<Character*>(SourceCollidor.GetOwner());
+        Character* otherCollidorOwner = dynamic_cast<Character*>(OtherCollidor->GetOwner());
+
         //should make this part of the iscolliding function...
-        if (&SourceCollidor == OtherCollidor)
+        if (&SourceCollidor == OtherCollidor || sourceCollidorOwner->GetFaction() == otherCollidorOwner->GetFaction())
         {
             continue;
         }
@@ -63,5 +74,5 @@ void CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
 
     SourceCollidor.UpdateCollidors(currentCollidors);
 
-    return;
+    return SourceCollidor.GetCollisionState();
 }

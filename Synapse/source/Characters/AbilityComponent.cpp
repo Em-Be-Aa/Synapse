@@ -13,7 +13,7 @@ void AbilityComponent::AddAbility(std::string Tag)
 {
 	std::unique_ptr<Ability> ability(new Ability(Tag, componentOwner->GetSpriteComponent().spriteAnimator, componentOwner->GetCharacterTag()));
 	Ability* newAbility = ability.get();
-	UpdateManager::GetUpdateManager().Register(std::move(ability));
+	UpdateManager::GetUpdateManager().RegisterPostUpdateObject(std::move(ability));
 	newAbility->Init();
 	abilities.push_back(newAbility);
 }

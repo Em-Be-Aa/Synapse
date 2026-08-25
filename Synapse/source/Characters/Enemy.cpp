@@ -13,6 +13,7 @@ Enemy::Enemy(glm::vec3 spawnPosition)
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
     tag = "slime";
+    characterFaction = Faction::Enemy;
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 

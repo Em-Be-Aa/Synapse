@@ -20,8 +20,18 @@ public:
 	void StartWave(int CurrentWaveCount);
 	void Update(double dT);
 
-
 	Delegate<int> OnWaveCompleted;
+
+	int GetCurrentEnemyCount() 
+	{
+		return currentEnemies.size();
+	}
+
+	int GetTotalEnemyCount()
+	{
+		return currentWaveInfo.enemyCount;
+	}
+
 
 private:
 
@@ -54,6 +64,7 @@ private:
 	std::vector<Enemy*> currentEnemies;
 	Session* currentSession;
 	int currentWaveCount;
+	WaveInfo currentWaveInfo;
 
 
 };

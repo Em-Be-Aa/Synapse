@@ -15,14 +15,14 @@ void WaveSpawner::StartWave(int CurrentWaveCount)
 
     if (it != Wave.end())
     {
-        currentWave = it->second;
+        currentWaveInfo = it->second;
 
         Player* currentPlayer = currentSession->GetActivePlayer();
         currentEnemies.clear();
 
         currentWaveCount = CurrentWaveCount;
 
-        for (size_t i = 0; i < currentWave.enemyCount; i++)
+        for (size_t i = 0; i < currentWaveInfo.enemyCount; i++)
         {
 
             Enemy* newEnemy = SpawnActor<Enemy>(GetRandomSpawnPosition());

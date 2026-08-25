@@ -30,13 +30,17 @@ protected:
 	HealthComponent HealthComp;
 	AbilityComponent AbilComp;
 
+	std::string tag = "character";
 	glm::vec3 characterFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 characterUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 previousPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
+	Faction characterFaction = Faction::None;
 
 private:
 
 	bool isFacingRight = true;
+	bool isCharacterAlive = true;
+
 
 public:
 
@@ -65,9 +69,21 @@ public:
 		return isFacingRight ? 1 : -1;
 	}
 
+	bool GetAliveStatus()
+	{
+		return isCharacterAlive;
+	}
+
+	void SetAliveStatus(bool Status)
+	{
+		isCharacterAlive = Status;
+	}
+
+	Faction GetFaction()
+	{
+		return characterFaction;
+	}
+
 	std::string GetCharacterTag() { return tag; }
 
-protected:
-
-	std::string tag = "character";
 };
