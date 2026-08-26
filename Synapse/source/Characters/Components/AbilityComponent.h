@@ -1,5 +1,5 @@
 #pragma once
-#include "Ability.h"
+#include "../Ability.h"
 #include <vector>
 
 class Character;

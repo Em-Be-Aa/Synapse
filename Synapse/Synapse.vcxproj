@@ -141,6 +141,8 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Managers\CardManager.cpp" />
+    <ClCompile Include="source\Characters\Components\VitalsComponent.cpp" />
     <ClCompile Include="source\UI\Game\CharacterHealthBar.cpp" />
     <ClCompile Include="source\UI\Game\HealthWidget.cpp" />
     <ClCompile Include="source\Text\Font.cpp" />
@@ -151,8 +153,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\AI\StateMachine\ChaseState.cpp" />
     <ClCompile Include="source\AI\StateMachine\AIState.cpp" />
     <ClCompile Include="source\Characters\Ability.cpp" />
-    <ClCompile Include="source\Characters\AbilityComponent.cpp" />
-    <ClCompile Include="source\Characters\HealthComponent.cpp" />
+    <ClCompile Include="source\Characters\Components\AbilityComponent.cpp" />
     <ClCompile Include="source\GameConfig\GameConfigs.cpp" />
     <ClCompile Include="source\Interfaces\IUpdate.h" />
     <ClCompile Include="source\Managers\RenderManager.cpp" />
@@ -185,8 +186,11 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\UI\Base\Widget.cpp" />
     <ClCompile Include="source\UI\Base\TextWidget.cpp" />
     <ClCompile Include="source\UI\Game\WaveWidget.cpp" />
+    <ClCompile Include="source\UI\Game\StatupCard.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Managers\CardManager.h" />
+    <ClInclude Include="source\Characters\Components\VitalsComponent.h" />
     <ClInclude Include="source\UI\Game\CharacterHealthBar.h" />
     <ClInclude Include="source\UI\Game\HealthWidget.h" />
     <ClInclude Include="source\Text\Font.h" />
@@ -198,8 +202,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\AI\StateMachine\ChaseState.h" />
     <ClInclude Include="source\AI\StateMachine\AIState.h" />
     <ClInclude Include="source\Characters\Ability.h" />
-    <ClInclude Include="source\Characters\AbilityComponent.h" />
-    <ClInclude Include="source\Characters\HealthComponent.h" />
+    <ClInclude Include="source\Characters\Components\AbilityComponent.h" />
     <ClInclude Include="source\GameConfig\GameConfigs.h" />
     <ClInclude Include="source\GameConfig\json.hpp" />
     <ClInclude Include="source\Interfaces\IAnimate.h" />
@@ -235,6 +238,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\UI\Base\Widget.h" />
     <ClInclude Include="source\UI\Base\TextWidget.h" />
     <ClInclude Include="source\UI\Game\WaveWidget.h" />
+    <ClInclude Include="source\UI\Game\StatupCard.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />

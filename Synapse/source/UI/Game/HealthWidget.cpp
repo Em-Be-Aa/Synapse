@@ -12,32 +12,40 @@ void HealthWidget::Init()
 	widgetSprite.Init("Assets/UI/HealthBar.png");
 	SetZOrder(1);
 
-	HealthBar = SpawnActor<Widget>();
-	HealthBar->SetAnchor(AnchorPoint::TopLeft);
-	HealthBar->SetSize({ 600.0f, 40.0f });
-	HealthBar->SetOffset({ 20.0f, 20.0f });
-	HealthBar->SetColor({0.49f, 0.255f, 0.251f, 1.0f});
-	HealthBar->SetZOrder(0);
+	VigorBar = SpawnActor<Widget>();
+	VigorBar->SetAnchor(AnchorPoint::TopLeft);
+	VigorBar->SetSize({ 600.0f, 40.0f });
+	VigorBar->SetOffset({ 20.0f, 20.0f });
+	VigorBar->SetColor({0.49f, 0.255f, 0.251f, 1.0f});
+	VigorBar->SetZOrder(0);
 
-	ArmorBar = SpawnActor<Widget>();
-	ArmorBar->SetAnchor(AnchorPoint::TopLeft);
-	ArmorBar->SetSize({ 600.0f, 40.0f });
-	ArmorBar->SetOffset({ 20.0f, 60.0f });
-	ArmorBar->SetColor({ 0.145f, 0.294f, 0.396f, 1.0f });
-	ArmorBar->SetZOrder(0);
+	PlatingBar = SpawnActor<Widget>();
+	PlatingBar->SetAnchor(AnchorPoint::TopLeft);
+	PlatingBar->SetSize({ 600.0f, 40.0f });
+	PlatingBar->SetOffset({ 20.0f, 60.0f });
+	PlatingBar->SetColor({ 0.145f, 0.294f, 0.396f, 1.0f });
+	PlatingBar->SetZOrder(0);
 
 
-	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetHealthComponent().onHealthChanged.Subscribe
+	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onVigorChanged.Subscribe
 	(
-		[this](float BaseHealthPer, float ArmorHealthPer) { this->UpdateHealthBar(BaseHealthPer, ArmorHealthPer); }
+		[this](float VigorPer) { this->UpdateVigorBar(VigorPer);}
 	);
+
+
+	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onPlatingChanged.Subscribe
+	(
+		[this](float PlatingPer) { this->UpdatePlatingBar(PlatingPer); }
+	);
+
 }
 
-void HealthWidget::UpdateHealthBar(float BaseHealthPer, float ArmorHealthPer)
+void HealthWidget::UpdateVigorBar(float VigorPer)
 {
-	// why 2 times this is firing investigate....
-	std::cout << "The current health percentage is: " << BaseHealthPer << std::endl;
+	VigorBar->SetSize({ 600.0f * VigorPer, VigorBar->GetSize().y });
+}
 
-	ArmorBar->SetSize({ 600.0f * ArmorHealthPer, HealthBar->GetSize().y });
-	HealthBar->SetSize({ 600.0f * BaseHealthPer, HealthBar->GetSize().y });
+void HealthWidget::UpdatePlatingBar(float PlatingPer)
+{
+	PlatingBar->SetSize({ 600.0f * PlatingPer, PlatingBar->GetSize().y });
 }

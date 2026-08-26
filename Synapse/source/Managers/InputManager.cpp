@@ -6,8 +6,6 @@ InputManager::InputManager(GLFWwindow* window)
 {
 
 	InputWindow = window;
-	//glfwSetWindowUserPointer(window, this);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
 
 }

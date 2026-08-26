@@ -16,7 +16,7 @@ Player::Player()
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 
-    GetHealthComponent().EnableArmor(true);
+    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {50.0f, 50.0f}, 0.0f, 0.0f, 0});
 }
 
 

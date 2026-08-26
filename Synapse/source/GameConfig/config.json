@@ -1,4 +1,5 @@
 {
+
   "game_settings": {
     "resolution_X": 800,
     "resolution_Y": 600
@@ -96,7 +97,6 @@
       }
     },
 
-
     "abilities": {
       "LIGHT ATTACK": {
         "collidorSize": {
@@ -111,5 +111,124 @@
       }
 
     }
+  },
+
+
+  "cards": {
+    "VITALS": {
+      "pool": [
+        {
+          "id": "vitals_vigor_01",
+          "title": "Thicker Skin",
+          "description": "Increases Max Health by 20.",
+          "statTag": "VIGOR",
+          "value": 20.0,
+          "icon": "Assets/UI/Cards/vigor_icon.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_momentum_01",
+          "title": "Light Feet",
+          "description": "Increases Move Speed by 8%.",
+          "statTag": "MOMENTUM",
+          "value": 0.08,
+          "icon": "Assets/UI/Cards/momentum_icon.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_plating_01",
+          "title": "Iron Hide",
+          "description": "Reduces incoming damage by 5%.",
+          "statTag": "PLATING",
+          "value": 0.05,
+          "icon": "Assets/UI/Cards/plating_icon.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_focus_01",
+          "title": "Steady Aim",
+          "description": "Increases Crit Chance by 6%.",
+          "statTag": "FOCUS",
+          "value": 0.06,
+          "icon": "Assets/UI/Cards/focus_icon.png",
+          "vfxTag": ""
+        }
+      ]
+    },
+
+    "SLASH": {
+      "target": "LIGHT ATTACK",
+      "pool": [
+        {
+          "id": "reflex_damage_01",
+          "title": "Sharpened Edge",
+          "description": "Light Attack deals +8 damage.",
+          "statTag": "DAMAGE",
+          "value": 8.0,
+          "icon": "Assets/UI/Cards/reflex_dmg_icon.png",
+          "vfxTag": "SLASH_TRAIL"
+        },
+        {
+          "id": "reflex_cooldown_01",
+          "title": "Quick Hands",
+          "description": "Light Attack cooldown reduced by 10%.",
+          "statTag": "COOLDOWN",
+          "value": -0.10,
+          "icon": "Assets/UI/Cards/reflex_cd_icon.png",
+          "vfxTag": ""
+        }
+      ]
+    },
+
+    "IMPACT": {
+      "target": "HEAVY ATTACK",
+      "pool": [
+        {
+          "id": "impact_damage_01",
+          "title": "Crushing Blow",
+          "description": "Heavy Attack deals +15 damage.",
+          "statTag": "DAMAGE",
+          "value": 15.0,
+          "icon": "Assets/UI/Cards/impact_dmg_icon.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
+        },
+        {
+          "id": "impact_cooldown_01",
+          "title": "Heavy Momentum",
+          "description": "Heavy Attack cooldown reduced by 8%.",
+          "statTag": "COOLDOWN",
+          "value": -0.08,
+          "icon": "Assets/UI/Cards/impact_cd_icon.png",
+          "vfxTag": ""
+        }
+      ]
+    },
+
+    "SURGE": {
+      "target": "DASH",
+      "pool": [
+        {
+          "id": "surge_cooldown_01",
+          "title": "Fleet Step",
+          "description": "Dash cooldown reduced by 20%.",
+          "statTag": "COOLDOWN",
+          "value": -0.20,
+          "icon": "Assets/UI/Cards/surge_cd_icon.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "surge_distance_01",
+          "title": "Long Stride",
+          "description": "Dash distance increased by 25%.",
+          "statTag": "DISTANCE",
+          "value": 0.25,
+          "icon": "Assets/UI/Cards/surge_dist_icon.png",
+          "vfxTag": "DASH_STREAK"
+        }
+      ]
+    }
   }
+
+
+
 }

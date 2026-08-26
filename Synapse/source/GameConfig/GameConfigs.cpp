@@ -1,6 +1,7 @@
 #include "../Managers/SynapseFunctionLibrary.h"
 #include "GameConfigs.h"
 #include <iostream>
+#include <random>
 
 
 GameConfigs::GameConfigs()
@@ -64,4 +65,51 @@ AbilityCollisionInfo GameConfigs::GetCharacterAbilityData(std::string characterT
         //make a better logging system....warining, display and error..with colors...hahaha
         std::cout << "Config is null" << std::endl;
     }
+}
+
+std::vector<CardInfo> GameConfigs::GetCardsData(std::vector<std::string> categories)
+{
+    std::vector<CardInfo> cardsInfo;
+
+    if (Config == nullptr)
+    {
+        std::cout << "Config is null" << std::endl;
+        return cardsInfo;
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    const auto& cardsJson = Config["cards"];
+
+    for (const std::string& category : categories)
+    {
+        if (!cardsJson.contains(category))
+        {
+            std::cout << "Unknown card category: " << category << std::endl;
+            continue;
+        }
+
+        const auto& pool = cardsJson[category]["pool"];
+        std::uniform_int_distribution<> dist(0, static_cast<int>(pool.size()) - 1);
+        int pickIndex = dist(gen);
+
+        const auto& card = pool[pickIndex];
+
+        CardInfo info;
+        info.id = card["id"].get<std::string>();
+        info.title = card["title"].get<std::string>();
+        info.description = card["description"].get<std::string>();
+        info.statTag = card["statTag"].get<std::string>();
+        info.value = card["value"].get<float>();
+        info.icon = card["icon"].get<std::string>();
+        info.vfxTag = card["vfxTag"].get<std::string>();
+
+        if (cardsJson[category].contains("target"))
+            info.target = cardsJson[category]["target"].get<std::string>();
+
+        cardsInfo.push_back(info);
+    }
+
+    return cardsInfo;
 }

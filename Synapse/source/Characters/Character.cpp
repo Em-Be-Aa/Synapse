@@ -6,7 +6,7 @@
 #include <iostream>
 
 // make these hard coded things better
-Character::Character() : RenderComp(this), HealthComp(this), AbilComp(this)
+Character::Character() : RenderComp(this), VitalsComp(this), AbilComp(this)
 { 
     Collidor = SpawnActor<CollisionComponent>(this, false, 0.0f);
 
@@ -16,7 +16,7 @@ Character::Character() : RenderComp(this), HealthComp(this), AbilComp(this)
         [this](CollisionInfo Info){this->OnCollision(Info);}
     );
 
-    HealthComp.onDeath.Subscribe
+    VitalsComp.onDeath.Subscribe
     (
         [this]() {this->OnCharacterDeath();}
     );
@@ -129,7 +129,7 @@ void Character::OnCollision(CollisionInfo Info)
     {
 
         // Don't hardcode it, this should come from the ability or attack the character overlapped....
-        HealthComp.TakeDamage(Info.damageCount);
+        VitalsComp.TakeDamage(Info.damageCount);
 
         //std::cout << "Character Base Health left: " << HealthComp.GetBaseHealth() << std::endl;
         //std::cout << "Character Armor Health left: " << HealthComp.GetArmorHealth() << std::endl;

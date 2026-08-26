@@ -90,10 +90,7 @@
     <ClCompile Include="source\Managers\SynapseFunctionLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Characters\HealthComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Characters\AbilityComponent.cpp">
+    <ClCompile Include="source\Characters\Components\AbilityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Characters\Ability.cpp">
@@ -145,6 +142,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\UI\Game\CharacterHealthBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Components\VitalsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CardManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Game\StatupCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,10 +236,7 @@
     <ClInclude Include="source\Managers\SynapseFunctionLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Characters\HealthComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Characters\AbilityComponent.h">
+    <ClInclude Include="source\Characters\Components\AbilityComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Characters\Ability.h">
@@ -291,6 +294,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\UI\Game\CharacterHealthBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Components\VitalsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CardManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Game\StatupCard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

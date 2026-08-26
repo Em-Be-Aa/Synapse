@@ -108,3 +108,31 @@ enum class Faction
 	Enemy,
 	None
 };
+
+
+struct Resource {
+	float current;
+	float max;
+};
+
+struct Vitals
+{
+	Resource Vigor; // Health
+	float Momentum; // Speed
+	Resource Plating; // Armor
+	float Focus; // Crit Chance
+	float Recovery; // Health Recovery
+	int Insight; // Luck
+};
+
+struct CardInfo {
+
+	std::string target = "HEAVY ATTACK";
+	std::string id = "impact_damage_01";
+	std::string title = "Crushing Blow";
+	std::string description =  "Heavy Attack deals +15 damage.";
+	std::string statTag =  "DAMAGE";
+	float value =  15.0;
+	std::string icon = "Assets/UI/Cards/impact_dmg_icon.png";
+	std::string vfxTag = "IMPACT_SHOCKWAVE";
+};

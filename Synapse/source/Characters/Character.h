@@ -4,8 +4,8 @@
 #include "../Enums&Structs/GameTypes.h"
 #include "../Shader/RenderComponent.h"
 #include "../Sprite/Sprite.h"
-#include "AbilityComponent.h"
-#include "HealthComponent.h"
+#include "Components/AbilityComponent.h"
+#include "Components/VitalsComponent.h"
 
 
 class Character: public Actor
@@ -27,7 +27,7 @@ protected:
 	Sprite characterSprite;
 	CollisionComponent* Collidor;
 	RenderComponent RenderComp;
-	HealthComponent HealthComp;
+	VitalsComponent VitalsComp;
 	AbilityComponent AbilComp;
 
 	std::string tag = "character";
@@ -59,9 +59,9 @@ public:
 		return *Collidor;
 	}
 
-	HealthComponent& GetHealthComponent()
+	VitalsComponent& GetVitalsComponent()
 	{
-		return HealthComp;
+		return VitalsComp;
 	}
 
 	int GetCharacterDirection()

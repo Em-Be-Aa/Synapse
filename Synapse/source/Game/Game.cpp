@@ -10,6 +10,7 @@ void Game::Init()
 {
 
     gameWindow = new Window();
+    gameWindow->SetInputModeGame();
     defaultInputManager = new InputManager(gameWindow->window);
     Renderer2D::GetRenderer()->Init("Shaders/shader.vs", "Shaders/shader.fs");
     GameConfigs::GetGameConfig();

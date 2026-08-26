@@ -1,5 +1,5 @@
+#include "../Character.h"
 #include "AbilityComponent.h"
-#include "Character.h"
 #include <string>
 
 AbilityComponent::AbilityComponent(Character* C)

@@ -11,12 +11,13 @@ public:
 
 	void Init() override;
 
-	void UpdateHealthBar(float BaseHealthPer, float ArmorHealthPer);
+	void UpdateVigorBar(float VigorPer);
+	void UpdatePlatingBar(float PlatingPer);
 
 
 private:
 
-	Widget* HealthBar;
-	Widget* ArmorBar;
+	Widget* VigorBar;
+	Widget* PlatingBar;
 };
 

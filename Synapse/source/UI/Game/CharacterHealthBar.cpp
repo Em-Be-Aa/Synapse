@@ -21,14 +21,14 @@ void CharacterHealthBar::Init()
 	SetZOrder(0);
 
 	auto ownerCharacter = dynamic_cast<Character*>(owner);
-	ownerCharacter->GetHealthComponent().onHealthChanged.Subscribe
+	ownerCharacter->GetVitalsComponent().onVigorChanged.Subscribe
 	(
-		[this](float BaseHealthPer, float ArmorHealthPer) { this->UpdateHealthBar(BaseHealthPer, ArmorHealthPer); }
+		[this](float VigorPer) { this->UpdateVigorBar(VigorPer); }
 	);
 }
 
-void CharacterHealthBar::UpdateHealthBar(float BaseHealthPer, float ArmorHealthPer)
+void CharacterHealthBar::UpdateVigorBar(float VigorPer)
 {
 	// remove the hardcoded x value...save the initial and use that...
-	SetSize({ 0.3f * BaseHealthPer, GetSize().y });
+	SetSize({ 0.3f * VigorPer, GetSize().y });
 }
