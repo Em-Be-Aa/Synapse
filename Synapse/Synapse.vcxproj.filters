@@ -93,7 +93,7 @@
     <ClCompile Include="source\Characters\Components\AbilityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Characters\Ability.cpp">
+    <ClCompile Include="source\Characters\Abilities\Ability.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Interfaces\IUpdate.h">
@@ -151,6 +151,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\UI\Game\StatupCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Base\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Game\VitalsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Abilities\DashAbility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Characters\Abilities\AttackAbility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Game\AbilityWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,7 +254,7 @@
     <ClInclude Include="source\Characters\Components\AbilityComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Characters\Ability.h">
+    <ClInclude Include="source\Characters\Abilities\Ability.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Interfaces\IAnimate.h">
@@ -303,6 +318,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\UI\Game\StatupCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Base\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Game\VitalsWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Abilities\DashAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Templates\Delegate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Characters\Abilities\AttackAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Game\AbilityWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

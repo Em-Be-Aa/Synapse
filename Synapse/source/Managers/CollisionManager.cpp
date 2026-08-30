@@ -1,6 +1,6 @@
 #include "../Characters/Character.h"
+#include "../Templates/Templates.h"
 #include "CollisionManager.h"
-#include <iostream>
 #include <memory>
 
 

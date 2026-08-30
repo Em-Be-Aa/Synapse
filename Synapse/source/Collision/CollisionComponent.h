@@ -5,7 +5,6 @@
 #include "../Shader/RenderComponent.h"
 #include "../Shader/Shader.h"
 #include "../Sprite/Sprite.h"
-#include "../Templates/Templates.h"
 #include <glm/glm.hpp>
 
 
@@ -42,7 +41,7 @@ private:
 
 private:
 
-	bool enableDebug = true;
+	bool enableDebug = false;
 	
 
 public:

@@ -1,22 +1,18 @@
+#include "../Abilities/Ability.h"
+#include "AbilityComponent.h"
 #include "VitalsComponent.h"
+#include <iostream>
 
 VitalsComponent::VitalsComponent(Character* Owner)
 {
 
 }
 
-void VitalsComponent::SetVigor(float vigorValue, bool modify)
+void VitalsComponent::SetVigor(float vigorValue)
 {
-	if (modify)
-	{
-		ownerVitals.Vigor.current = ownerVitals.Vigor.current + vigorValue;
-	}
-	else
-	{
-		ownerVitals.Vigor.current = vigorValue;
-	}
 
-	onVigorChanged.Broadcast( GetVigor() / GetMaxVigor() );
+	ownerVitals.Vigor.current = vigorValue;
+	onVigorModified.Broadcast( GetVigor() / GetMaxVigor() );
 
 	if (GetVigor() <= 0.0f)
 	{
@@ -24,69 +20,117 @@ void VitalsComponent::SetVigor(float vigorValue, bool modify)
 	}
 }
 
-void VitalsComponent::SetPlating(float platingValue, bool modify)
+void VitalsComponent::SetPlating(float platingValue)
 {
-	if (modify)
-	{
-		ownerVitals.Plating.current = ownerVitals.Plating.current + platingValue;
-	}
-	else
-	{
-		ownerVitals.Plating.current = platingValue;
-	}
-
-	onPlatingChanged.Broadcast( GetPlating() / GetMaxPlating() );
+	ownerVitals.Plating.current = platingValue;
+	onPlatingModified.Broadcast( GetPlating() / GetMaxPlating() );
 }
 
-void VitalsComponent::SetMomentum(float moementumValue, bool modify)
+
+void VitalsComponent::ModifyVital(std::string category, std::string tag, float value, bool multiplier)
 {
-	if (modify)
+	std::cout << "[VitalsComponent] Current Stats -> " << value << std::endl;
+
+	auto ApplyStat = [value, multiplier](auto& statValue)
+		{
+			statValue = multiplier ? (1.0f + value) * statValue : value + statValue;
+		};
+
+	auto ApplyResource = [value, multiplier](auto& resourceValue)
+		{
+			resourceValue.current = multiplier ? (resourceValue.max * value) + resourceValue.current : value + resourceValue.current;
+			resourceValue.max = multiplier ? (1.0f + value) * resourceValue.max : value + resourceValue.max;
+		};
+
+
+	if (tag == "VIGOR")
 	{
-		ownerVitals.Momentum = ownerVitals.Momentum + moementumValue;
+		ApplyResource(ownerVitals.Vigor);
+		onVigorModified.Broadcast(GetVigor() / GetMaxVigor());
 	}
-	else
+	else if (tag == "PLATING")
 	{
-		ownerVitals.Momentum = moementumValue;
+		ApplyResource(ownerVitals.Plating); 
+		onPlatingModified.Broadcast(GetPlating() / GetMaxPlating());
+	}
+	else if (tag == "MOMENTUM")
+	{
+		ApplyStat(ownerVitals.Momentum);
+	}
+	else if (tag == "FOCUS")
+	{
+		ApplyStat(ownerVitals.Focus);
+	}
+	else if (tag == "RECOVERY")
+	{
+		ApplyStat(ownerVitals.Recovery);
+	}
+	else if (tag == "INSIGHT")
+	{
+		ApplyStat(ownerVitals.Insight);
+	}
+	else if (category == "LIGHT ATTACK")
+	{
+		if (tag == "DAMAGE")
+		{
+			ApplyStat(ownerVitals.LightAttack.abilityDamage);
+		}
+		else if(tag == "COOLDOWN")
+		{
+
+			ApplyStat(ownerVitals.LightAttack.abilityCooldown);
+		}
+		onAbilityModified.Broadcast(ownerVitals.LightAttack);
+	}
+	else if (category == "HEAVY ATTACK")
+	{
+		if (tag == "DAMAGE")
+		{
+			ApplyStat(ownerVitals.HeavyAttack.abilityDamage);
+		}
+		else if (tag == "COOLDOWN")
+		{
+
+			ApplyStat(ownerVitals.HeavyAttack.abilityCooldown);
+		}
+		onAbilityModified.Broadcast(ownerVitals.HeavyAttack);
+	}
+	else if (category == "DASH")
+	{
+		if (tag == "DAMAGE")
+		{
+			ApplyStat(ownerVitals.Dash.abilityDamage);
+		}
+		else if (tag == "COOLDOWN")
+		{
+
+			ApplyStat(ownerVitals.Dash.abilityCooldown);
+		}
+		else if (tag == "DISTANCE")
+		{
+
+			ApplyStat(*ownerVitals.Dash.dashDistance);
+		}
+		onAbilityModified.Broadcast(ownerVitals.Dash);
 	}
 
-}
 
-void VitalsComponent::SetFocus(float focusValue, bool modify)
-{
-	if (modify)
-	{
-		ownerVitals.Focus = ownerVitals.Focus + focusValue;
-	}
-	else
-	{
-		ownerVitals.Focus = focusValue;
-	}
 
-}
 
-void VitalsComponent::SetRecovery(float recoveryValue, bool modify)
-{
-	if (modify)
-	{
-		ownerVitals.Recovery = ownerVitals.Recovery + recoveryValue;
-	}
-	else
-	{
-		ownerVitals.Recovery = recoveryValue;
-	}
-
-}
-
-void VitalsComponent::SetInsight(float insightValue, bool modify)
-{
-	if (modify)
-	{
-		ownerVitals.Insight = ownerVitals.Insight + insightValue;
-	}
-	else
-	{
-		ownerVitals.Insight = insightValue;
-	}
-
+	std::cout << "[VitalsComponent] Current Stats -> "
+		<< "Vigor(Max): " << ownerVitals.Vigor.max << " | "
+		<< "Plating(Max): " << ownerVitals.Plating.max << " | "
+		<< "Momentum: " << ownerVitals.Momentum << " | "
+		<< "Focus: " << ownerVitals.Focus << " | "
+		<< "Recovery: " << ownerVitals.Recovery << " | "
+		<< "Insight: " << ownerVitals.Insight << " | "
+		<< "Light Damage: " << ownerVitals.LightAttack.abilityDamage << " | "
+		<< "Light Cooldown: " << ownerVitals.LightAttack.abilityCooldown << " | "
+		<< "Heavy Damage: " << ownerVitals.HeavyAttack.abilityDamage << " | "
+		<< "Heavy Cooldown: " << ownerVitals.HeavyAttack.abilityCooldown << " | "
+		<< "Dash Damage: " << ownerVitals.Dash.abilityDamage << " | "
+		<< "Dash Cooldown: " << ownerVitals.Dash.abilityCooldown << " | "
+		<< "Dash Distance: " << ownerVitals.Dash.dashDistance.value_or(0.0f) << " | "
+		<< std::endl;
 }
 

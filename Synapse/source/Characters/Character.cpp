@@ -1,5 +1,6 @@
 #include "../GameConfig/GameConfigs.h"
 #include "../Managers/CollisionManager.h"
+#include "../Templates/Templates.h"
 #include "Character.h"
 #include "glm/glm.hpp"
 #include <algorithm>
@@ -66,7 +67,7 @@ void Character::Update(double deltaTime)
 {
 
     // Movement and Collision Update
-    movementSpeed = 1.0 * deltaTime;
+    movementSpeed = VitalsComp.GetMomentum() * deltaTime;
 
     // Collision stuff should happen in collision component....research if giving owner ref to components makes decoupling easier or difficult....
     float halfX = Collidor->BoxSize.x * 0.5f;

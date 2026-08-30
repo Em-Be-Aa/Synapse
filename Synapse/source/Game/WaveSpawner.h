@@ -17,8 +17,9 @@ public:
 		currentSession = session;
 	}
 
+	void Init() override;
 	void StartWave(int CurrentWaveCount);
-	void Update(double dT);
+	void Update(double dT) override;
 
 	Delegate<int> OnWaveCompleted;
 
@@ -30,6 +31,11 @@ public:
 	int GetTotalEnemyCount()
 	{
 		return currentWaveInfo.enemyCount;
+	}
+
+	int GetCurrentWaveCount()
+	{
+		return currentWaveCount;
 	}
 
 
@@ -65,6 +71,8 @@ private:
 	Session* currentSession;
 	int currentWaveCount;
 	WaveInfo currentWaveInfo;
+
+	bool isWaveEnded = true;
 
 
 };

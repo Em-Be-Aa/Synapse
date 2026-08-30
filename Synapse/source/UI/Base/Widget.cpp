@@ -56,20 +56,32 @@ glm::vec2 Widget::AnchorwithLocalOffset(AnchorPoint anchor, glm::vec2 Offset)
 
     switch (anchor)
     {
-    case AnchorPoint::TopLeft: { return { pixelSize.x * 0.5f + Offset.x, windowHeight - pixelSize.y * 0.5f - Offset.y }; }
-                             break;
-    case AnchorPoint::BottomLeft: { return  { pixelSize.x * 0.5f + Offset.x, pixelSize.y * 0.5f + Offset.y }; }
-                                break;
-    case AnchorPoint::TopRight: { return  { windowWidth - pixelSize.x * 0.5f - Offset.x, windowHeight - pixelSize.y * 0.5f - Offset.y }; }
-                              break;
-    case AnchorPoint::BottomRight: { return  { windowWidth - pixelSize.x * 0.5f - Offset.x, pixelSize.y * 0.5f + Offset.y }; }
-                                 break;
-    case AnchorPoint::Center: { return  { windowWidth/2 + Offset.y, windowHeight/2 + Offset.y }; }
-                            break;
-    case AnchorPoint::None: { return  {  pixelSize.x * 0.5f + Offset.y, pixelSize.y * 0.5f + Offset.y }; }
-                          break;
-    default: { return  { windowWidth + pixelSize.x * 0.5f + Offset.y, windowHeight + pixelSize.y * 0.5f + Offset.y }; }
-           break;
+    case AnchorPoint::TopLeft: { return { pixelSize.x * 0.5f + Offset.x, windowHeight - pixelSize.y * 0.5f - Offset.y }; } break;
+   
+
+    case AnchorPoint::BottomLeft: { return  { pixelSize.x * 0.5f + Offset.x, pixelSize.y * 0.5f + Offset.y }; } break;
+                               
+
+    case AnchorPoint::TopRight: { return  { windowWidth - pixelSize.x * 0.5f - Offset.x, windowHeight - pixelSize.y * 0.5f - Offset.y }; } break;
+                            
+
+    case AnchorPoint::BottomRight: { return  { windowWidth - pixelSize.x * 0.5f - Offset.x, pixelSize.y * 0.5f + Offset.y }; } break;
+                                
+
+    case AnchorPoint::Center: { return  { windowWidth/2 + Offset.x, windowHeight/2 + Offset.y }; } break;
+                           
+
+    case AnchorPoint::TopCenter: { return  { windowWidth / 2 + Offset.x,  - pixelSize.y * 0.5f - Offset.y }; } break;
+                            
+
+    case AnchorPoint::BottomCenter: { return  { windowWidth / 2 + Offset.x, pixelSize.y * 0.5f + Offset.y }; } break;
+                           
+
+    case AnchorPoint::None: { return  {  pixelSize.x * 0.5f + Offset.x, pixelSize.y * 0.5f + Offset.y }; } break;
+                          
+
+    default: { return  { windowWidth + pixelSize.x * 0.5f + Offset.x, windowHeight + pixelSize.y * 0.5f + Offset.y }; } break;
+          
     }
 }
 

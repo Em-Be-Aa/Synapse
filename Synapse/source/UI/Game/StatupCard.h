@@ -1,23 +1,30 @@
 #pragma once
 
-#include "../Base/Widget.h"
+#include "../Base/Button.h"
 
 class TextWidget;
 
-class StatupCard : public Widget
+class StatupCard : public Button
 {
 
 public:
 
-	StatupCard(CardInfo info);
+	StatupCard(CardInfo info, float position);
 
 	void Init() override;
 	void Update(double dT) override;
 
+	void Destroy() override;
+
+	CardInfo GetCardInfo()
+	{
+		return cardInfo;
+	};
 
 private:
 
 	CardInfo cardInfo;
+	float cardPosition;
 	TextWidget* TitleText;
 	TextWidget* DescText;
 

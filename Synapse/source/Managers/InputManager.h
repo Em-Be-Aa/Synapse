@@ -4,6 +4,7 @@
 #include "../Enums&Structs/GameTypes.h"
 #include <functional>
 #include <GLFW/glfw3.h>
+#include <iostream>
 #include <map>
 
 
@@ -20,14 +21,17 @@ public:
 	std::function<void(double, double)> onMouseMove;
 	GLFWwindow* InputWindow;
 
-	void EnableActorInput(Actor* actor)
+	void EnableActorInput(IInputObserver* actor)
 	{
 		observers.push_back(actor);
 	}
 
 	void DisableInputforPendingDestoryed()
 	{
-		std::erase_if(observers, [](const Actor* actor) { return actor->isPendingDestroy; });
+		std::erase_if(observers, [](const IInputObserver* observer) {
+			const Object* asObject = dynamic_cast<const Object*>(observer);
+			return asObject && asObject->isPendingDestroy;
+			});
 	}
 
 private:
@@ -67,5 +71,5 @@ private:
 		{GLFW_MOUSE_BUTTON_2, { false, false }}
 	};
 
-	std::vector<Actor*> observers = {};
+	std::vector<IInputObserver*> observers = {};
 };

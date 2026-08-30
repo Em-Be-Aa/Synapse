@@ -9,10 +9,10 @@ class HUD : public Object
 public:
 
 	HUD(Font* font) : defaultFont(font) {};
-
 	void Update(double dT) override;
-
 	void Init() override;
+
+	void ShowCardsWidget(bool show);
 
 private:
 

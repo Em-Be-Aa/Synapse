@@ -27,10 +27,6 @@ void Session::Init()
     Landscape = SpawnActor<TileMap>();
     SynapsePlayer = SpawnActor<Player>();
 
-    // duplicates should not be added.
-    SynapsePlayer->GetAbilityComponent().AddAbility("LIGHT ATTACK");
-    SynapsePlayer->GetAbilityComponent().AddAbility("HEAVY ATTACK");
-
     // If the player dies...this behaves weird..fix this so it can act independent if there is no owner
     defaultCamera = SpawnActor<Camera>(SynapsePlayer);
 
@@ -44,10 +40,11 @@ void Session::Init()
     waveSpawner = SpawnActor<WaveSpawner>(this);
     waveSpawner->StartWave(1);
 
-    defaultFont.Init("Assets/Fonts/alagard.ttf", 36.0f);
+    largeFont.Init("Assets/Fonts/Cinzel.ttf", 60.0f);
+    defaultFont.Init("Assets/Fonts/Cinzel.ttf", 40.0f);
+    smallFont.Init("Assets/Fonts/Cinzel.ttf", 20.0f);
 
-    sessionHUD = SpawnActor<HUD>(&defaultFont);
-    sessionHUD->Init();
+    sessionHUD = SpawnActor<HUD>(&defaultFont); 
 
     //glEnable(GL_DEPTH_TEST);
     srand(time(0));

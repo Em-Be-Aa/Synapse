@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Collision/CollisionComponent.h"
-#include "../Sprite/Animator.h"
+#include "../../Collision/CollisionComponent.h"
+#include "../../Sprite/Animator.h"
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -12,9 +13,9 @@ class Ability : public Object
 
 public:
 
-	Ability(std::string abilTag, Animator* animator, std::string charTag);
+	Ability(std::string abilTag, Animator* animator, std::string charTag, Character* Owner, AbilityInfo info);
 	void Update(double deltaTime) override;
-	void Activate(Character* instigator);
+	virtual void Activate();
 
 	unsigned ID = 0;
 	std::string tag = "";
@@ -25,20 +26,22 @@ public:
 		return isOnCooldown;
 	};
 
-private:
+	float GetCurrentCooldownPerc()
+	{
 
-	float targetCooldownTime = 2.0f;
+		return isOnCooldown ? currentCooldownTime / abilInfo.abilityCooldown : 0.0f;
+	}
+
+protected:
+
 	float currentCooldownTime = 0.0f;
 	bool isOnCooldown= false;
-
 	float targetActivationTime = 1.0f;
 	float currentActivationTime = 0.0f;
 	bool isActivated = false;
 
 	Character* owner;
-
-	AbilityCollisionInfo abilInfo;
-
+	AbilityInfo abilInfo;
 	CollisionComponent* abilityCollidor;
 
 };

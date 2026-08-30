@@ -1,5 +1,5 @@
 #pragma once
-#include "../Ability.h"
+#include "../Abilities/Ability.h"
 #include <vector>
 
 class Character;
@@ -13,13 +13,16 @@ public:
 
 	Ability* GetAbility(std::string Tag);
 
-	void AddAbility(std::string Tag);
-
 	void ActivateAbility(std::string Tag);
 
 	Character* GetOwner() 
 	{
 		return componentOwner;
+	}
+
+	std::vector<Ability*>& GetAbilities()
+	{
+		return abilities;
 	}
 
 private:

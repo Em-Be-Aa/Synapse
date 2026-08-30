@@ -21,7 +21,7 @@ void CharacterHealthBar::Init()
 	SetZOrder(0);
 
 	auto ownerCharacter = dynamic_cast<Character*>(owner);
-	ownerCharacter->GetVitalsComponent().onVigorChanged.Subscribe
+	ownerCharacter->GetVitalsComponent().onVigorModified.Subscribe
 	(
 		[this](float VigorPer) { this->UpdateVigorBar(VigorPer); }
 	);

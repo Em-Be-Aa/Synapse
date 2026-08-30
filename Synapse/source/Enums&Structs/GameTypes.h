@@ -2,6 +2,7 @@
 
 #include "../ImageLoader/Image.h"
 #include <glm/glm.hpp>
+#include <optional>
 #include <string>
 
 class Actor;
@@ -56,18 +57,21 @@ struct CollisionInfo {
 };
 
 // This should also inlcude the time offsets start and end
-struct AbilityCollisionInfo {
+struct AbilityInfo {
 
-	AbilityCollisionInfo() 
+	AbilityInfo() 
 	{
 		collidorSize   = {0, 0};
 		collidorOffset = {0, 0};
-		collidorDamage = 0;
+		abilityDamage = 0;
+		abilityCooldown = 0;
 	}
 
-	glm::vec2 collidorSize;
-	glm::vec2 collidorOffset;
-	float collidorDamage;
+	std::optional<glm::vec2> collidorSize;
+	std::optional<glm::vec2> collidorOffset;
+	float abilityDamage;
+	float abilityCooldown;
+	std::optional<float> dashDistance;
 };
 
 struct WaveInfo
@@ -99,6 +103,8 @@ enum class AnchorPoint {
 	TopRight,
 	BottomRight,
 	Center,
+	TopCenter,
+	BottomCenter,
 	None
 };
 
@@ -115,6 +121,14 @@ struct Resource {
 	float max;
 };
 
+struct AbilityVital {
+
+	std::string tag;
+	float abilityDamage;
+	float abilityCooldown;
+	std::optional<float> dashDistance;
+};
+
 struct Vitals
 {
 	Resource Vigor; // Health
@@ -123,6 +137,10 @@ struct Vitals
 	float Focus; // Crit Chance
 	float Recovery; // Health Recovery
 	int Insight; // Luck
+
+	AbilityVital LightAttack;
+	AbilityVital HeavyAttack;
+	AbilityVital Dash;
 };
 
 struct CardInfo {
@@ -133,6 +151,7 @@ struct CardInfo {
 	std::string description =  "Heavy Attack deals +15 damage.";
 	std::string statTag =  "DAMAGE";
 	float value =  15.0;
+	bool isMultiplier = false;
 	std::string icon = "Assets/UI/Cards/impact_dmg_icon.png";
 	std::string vfxTag = "IMPACT_SHOCKWAVE";
 };

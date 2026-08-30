@@ -1,3 +1,6 @@
+#include "../Characters/Player.h"
+#include "../Game/Game.h"
+#include "../Game/Session.h"
 #include "../GameConfig/GameConfigs.h"
 #include "../Templates/Templates.h"
 #include "../UI/Game/StatupCard.h"
@@ -6,7 +9,7 @@
 #include <string>
 #include <vector>
 
-void CardManager::ComputeRandomCards()
+void CardManager::SetupCards()
 {
 	std::vector<std::string> Cards = {"VITALS", "SLASH", "IMPACT", "SURGE"};
 	std::vector<std::string> selectedCards;
@@ -23,6 +26,36 @@ void CardManager::ComputeRandomCards()
 
 	std::vector<CardInfo> cardsInfo = GameConfigs::GetGameConfig().GetCardsData(selectedCards);
 
-	SpawnActor<StatupCard>(cardsInfo[0]);
+	cardA = SpawnActor<StatupCard>(cardsInfo[0], -500.0f );
+	cardB = SpawnActor<StatupCard>(cardsInfo[1],  0.0f   );
+	cardC = SpawnActor<StatupCard>(cardsInfo[2],  500.0f );
 
+	cardA->OnClicked.Subscribe
+	(
+		[this]() { RemoveCards(cardA->GetCardInfo()); }
+	);
+
+	cardB->OnClicked.Subscribe
+	(
+		[this]() { RemoveCards(cardB->GetCardInfo()); }
+	);
+
+	cardC->OnClicked.Subscribe
+	(
+		[this]() { RemoveCards(cardC->GetCardInfo()); }
+	);
+}
+
+void CardManager::RemoveCards(CardInfo info)
+{
+	// Modify the vitals first
+	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().ModifyVital(info.target, info.statTag, info.value, info.isMultiplier);
+
+	// Send delegate to HUD next
+	onCardSelected.Broadcast();
+
+	// Then remove the UI
+	cardA->Destroy();
+	cardB->Destroy();
+	cardC->Destroy();
 }

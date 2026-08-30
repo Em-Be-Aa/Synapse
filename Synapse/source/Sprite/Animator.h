@@ -3,7 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Enums&Structs/GameTypes.h"
 #include "../Interfaces/IAnimate.h"
-#include "../Templates/Templates.h"
+#include "../Templates/Delegate.h"
 #include "glm/glm.hpp"
 #include <map>
 #include <string>

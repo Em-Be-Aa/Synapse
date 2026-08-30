@@ -1,13 +1,21 @@
 #include "../AI/StateMachine/StateMachine.h"
+#include "../Characters/Abilities/AttackAbility.h"
 #include "../Characters/Enemy.h"
 #include "../Characters/Player.h"
 #include "../Game/Session.h"
+#include "../GameConfig/GameConfigs.h"
 #include "WaveSpawner.h"
 #include <iostream>
+
+void WaveSpawner::Init()
+{
+
+}
 
 void WaveSpawner::StartWave(int CurrentWaveCount)
 {
     std::cout << "Starting Wave Number :" << CurrentWaveCount << std::endl;
+    isWaveEnded = false;
 
     auto it = Wave.find(CurrentWaveCount);
 
@@ -26,7 +34,9 @@ void WaveSpawner::StartWave(int CurrentWaveCount)
         {
 
             Enemy* newEnemy = SpawnActor<Enemy>(GetRandomSpawnPosition());
-            newEnemy->GetAbilityComponent().AddAbility("LIGHT ATTACK");
+            AbilityInfo LightAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(newEnemy->GetCharacterTag(), "LIGHT ATTACK");
+            AddAbility<AttackAbility>(newEnemy, "LIGHT ATTACK", LightAttack);
+            newEnemy->GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {0.0f, 0.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown}, {"HEAVY ATTACK", 0.0f, 0.0f}, {"DASH", 0.0f, 0.0f}});
             newEnemy->AIStateMachine = SpawnActor<StateMachine>(newEnemy, currentPlayer);
             currentEnemies.push_back(newEnemy);
         }
@@ -50,11 +60,10 @@ void WaveSpawner::Update(double dT)
         }
     }
 
-    if (currentEnemies.empty())
+    if (!isWaveEnded && currentEnemies.empty())
     {
+        isWaveEnded = true;
         currentWaveCount++;
-
         OnWaveCompleted.Broadcast(currentWaveCount);
-        StartWave(currentWaveCount);
     }
 }

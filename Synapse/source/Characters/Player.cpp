@@ -1,10 +1,13 @@
 #include "../Game/Game.h"
 #include "../GameConfig/GameConfigs.h"
-#include "../Shader/Shader.h"
+#include "../Templates/Templates.h"
 #include "../Window/Window.h"
+#include "Abilities/AttackAbility.h"
+#include "Abilities/DashAbility.h"
 #include "glm/glm.hpp"
 #include "Player.h"
 #include <iostream>
+#include <string>
 
 Player::Player()
 {
@@ -16,7 +19,15 @@ Player::Player()
     characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
     characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
 
-    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {50.0f, 50.0f}, 0.0f, 0.0f, 0});
+    AbilityInfo LightAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "LIGHT ATTACK");
+    AbilityInfo HeavyAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "HEAVY ATTACK");
+    AbilityInfo Dash = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "DASH");
+
+    AddAbility<AttackAbility>(this, "LIGHT ATTACK", LightAttack);
+    AddAbility<AttackAbility>(this, "HEAVY ATTACK", HeavyAttack);
+    AddAbility<DashAbility>(this, "DASH", Dash);
+
+    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {50.0f, 50.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown }, {"HEAVY ATTACK", HeavyAttack.abilityDamage, HeavyAttack.abilityCooldown }, {"DASH", Dash.abilityDamage, Dash.abilityCooldown, Dash.dashDistance } });
 }
 
 
@@ -62,6 +73,10 @@ void Player::onInputClicked(int Key)
     else if (Key == GLFW_KEY_Q)
     {
         AbilComp.ActivateAbility("HEAVY ATTACK");
+    }
+    else if (Key == GLFW_KEY_SPACE)
+    {
+        AbilComp.ActivateAbility("DASH");
     }
 
 

@@ -26,9 +26,19 @@ public:
 		return SynapsePlayer;
 	};
 
-	Font* GetDefaultFont() 
+	Font* GetLargeFont() 
+	{
+		return &largeFont;
+	}
+
+	Font* GetDefaultFont()
 	{
 		return &defaultFont;
+	}
+
+	Font* GetSmallFont()
+	{
+		return &smallFont;
 	}
 
 	WaveSpawner* GetWaveSpawner()
@@ -44,7 +54,9 @@ private:
 	Camera* defaultCamera;
 	HUD* sessionHUD;
 	WaveSpawner* waveSpawner;
+	Font largeFont;
 	Font defaultFont;
+	Font smallFont;
 
 	Game* game;
 

@@ -141,6 +141,10 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\UI\Game\AbilityWidget.cpp" />
+    <ClCompile Include="source\Characters\Abilities\AttackAbility.cpp" />
+    <ClCompile Include="source\Characters\Abilities\DashAbility.cpp" />
+    <ClCompile Include="source\UI\Base\Button.cpp" />
     <ClCompile Include="source\Managers\CardManager.cpp" />
     <ClCompile Include="source\Characters\Components\VitalsComponent.cpp" />
     <ClCompile Include="source\UI\Game\CharacterHealthBar.cpp" />
@@ -152,7 +156,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\AI\StateMachine\AttackState.cpp" />
     <ClCompile Include="source\AI\StateMachine\ChaseState.cpp" />
     <ClCompile Include="source\AI\StateMachine\AIState.cpp" />
-    <ClCompile Include="source\Characters\Ability.cpp" />
+    <ClCompile Include="source\Characters\Abilities\Ability.cpp" />
     <ClCompile Include="source\Characters\Components\AbilityComponent.cpp" />
     <ClCompile Include="source\GameConfig\GameConfigs.cpp" />
     <ClCompile Include="source\Interfaces\IUpdate.h" />
@@ -187,8 +191,14 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\UI\Base\TextWidget.cpp" />
     <ClCompile Include="source\UI\Game\WaveWidget.cpp" />
     <ClCompile Include="source\UI\Game\StatupCard.cpp" />
+    <ClCompile Include="source\UI\Game\VitalsWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\UI\Game\AbilityWidget.h" />
+    <ClInclude Include="source\Characters\Abilities\AttackAbility.h" />
+    <ClInclude Include="source\Characters\Abilities\DashAbility.h" />
+    <ClInclude Include="source\Templates\Delegate.h" />
+    <ClInclude Include="source\UI\Base\Button.h" />
     <ClInclude Include="source\Managers\CardManager.h" />
     <ClInclude Include="source\Characters\Components\VitalsComponent.h" />
     <ClInclude Include="source\UI\Game\CharacterHealthBar.h" />
@@ -201,7 +211,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\AI\StateMachine\AttackState.h" />
     <ClInclude Include="source\AI\StateMachine\ChaseState.h" />
     <ClInclude Include="source\AI\StateMachine\AIState.h" />
-    <ClInclude Include="source\Characters\Ability.h" />
+    <ClInclude Include="source\Characters\Abilities\Ability.h" />
     <ClInclude Include="source\Characters\Components\AbilityComponent.h" />
     <ClInclude Include="source\GameConfig\GameConfigs.h" />
     <ClInclude Include="source\GameConfig\json.hpp" />
@@ -239,6 +249,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClInclude Include="source\UI\Base\TextWidget.h" />
     <ClInclude Include="source\UI\Game\WaveWidget.h" />
     <ClInclude Include="source\UI\Game\StatupCard.h" />
+    <ClInclude Include="source\UI\Game\VitalsWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs" />

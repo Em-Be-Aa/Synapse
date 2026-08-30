@@ -7,25 +7,26 @@
 void WaveWidget::Init()
 {
 	SetAnchor(AnchorPoint::TopRight);
-	SetSize({ 400.0f, 150.0f });
+	SetSize({ 400.0f, 170.0f });
 	SetOffset({20.0f, 20.0f});
 	widgetSprite.Init("Assets/UI/WaveInfo_V2.png");
 	SetZOrder(0);
 
-	Font* font = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
+	Font* fontA = Game::GetGame()->GetCurrentSession()->GetLargeFont();
+	Font* fontB = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
 
 	// Wave Text
-	WaveText = SpawnActor<TextWidget>(font, "WAVE 1");
+	WaveText = SpawnActor<TextWidget>(fontA, "Wave 1");
 	WaveText->SetColor({ 0.83f, 0.77f, 0.64f, 1.0f });
 	WaveText->SetSize({ 30.0f, 30.0f });
-	WaveText->SetOffset({ 160.0f, 44.0f });
+	WaveText->SetOffset({ 140.0f, 70.0f });
 	WaveText->SetAnchor(AnchorPoint::TopRight);
 	WaveText->SetZOrder(1);
 
-	WaveInfoText = SpawnActor<TextWidget>(font, "1/1");
-	WaveInfoText->SetColor({ 0.83f, 0.77f, 0.64f, 1.0f });
+	WaveInfoText = SpawnActor<TextWidget>(fontB, "1/1");
+	WaveInfoText->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 	WaveInfoText->SetSize({ 15.0f, 15.0f });
-	WaveInfoText->SetOffset({ 183.0f, 95.0f });
+	WaveInfoText->SetOffset({ 200.0f, 130.0f });
 	WaveInfoText->SetAnchor(AnchorPoint::TopRight);
 	WaveInfoText->SetZOrder(1);
 

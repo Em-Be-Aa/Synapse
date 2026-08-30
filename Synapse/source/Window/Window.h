@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/fwd.hpp>
+#include <glm/glm.hpp>
 #include <iostream>
 
 class Window
@@ -17,6 +19,16 @@ public:
 
 	float GetWindowWidth() { return Width;}
 	float GetWindowHeight() { return Height;}
+
+	glm::vec2 GetCursorPosition()
+	{
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+
+		float windowHeight = GetWindowHeight();
+
+		return glm::vec2(static_cast<float>(xpos), windowHeight - static_cast<float>(ypos));
+	}
 
 	void SetInputModeGame()
 	{

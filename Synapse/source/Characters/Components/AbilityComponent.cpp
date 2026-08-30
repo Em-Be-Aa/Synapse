@@ -8,16 +8,6 @@ AbilityComponent::AbilityComponent(Character* C)
 }
 
 
-// We are assuming characters can have and use abilities....look into this if this is the right approach
-void AbilityComponent::AddAbility(std::string Tag)
-{
-	std::unique_ptr<Ability> ability(new Ability(Tag, componentOwner->GetSpriteComponent().spriteAnimator, componentOwner->GetCharacterTag()));
-	Ability* newAbility = ability.get();
-	UpdateManager::GetUpdateManager().RegisterPostUpdateObject(std::move(ability));
-	newAbility->Init();
-	abilities.push_back(newAbility);
-}
-
 
 Ability* AbilityComponent::GetAbility(std::string Tag)
 {
@@ -45,6 +35,6 @@ void AbilityComponent::ActivateAbility(std::string Tag)
 
 	if (Ability* targetAbility = GetAbility(Tag))
 	{
-		targetAbility->Activate(componentOwner);
+		targetAbility->Activate();
 	}
 }

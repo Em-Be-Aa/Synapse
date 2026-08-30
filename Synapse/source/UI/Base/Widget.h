@@ -79,6 +79,11 @@ public:
 		owner = Owner;
 	}
 
+	void SetImage(const char* imagePath)
+	{
+		widgetSprite.Init(imagePath);
+	}
+
 
 };
 

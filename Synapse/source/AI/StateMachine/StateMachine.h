@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../../Actor/Object.h"
-#include "../../Characters/Character.h"
 #include "../../Characters/Enemy.h"
 #include "../../Characters/Player.h"
+#include "../../Templates/Templates.h"
 #include "AIState.h"
 
 

@@ -1,45 +1,58 @@
 #include "../../Game/Game.h"
 #include "../../Game/Session.h"
+#include "../../Templates/Templates.h"
 #include "../../Text/Font.h"
 #include "../Base/TextWidget.h"
 #include "StatupCard.h"
+#include <iostream>
 
 
-StatupCard::StatupCard(CardInfo info)
+StatupCard::StatupCard(CardInfo info, float position)
 {
 	cardInfo = info;
+	cardPosition = position;
 }
 
 void StatupCard::Init()
 {
+	Button::Init();
+
 	SetAnchor(AnchorPoint::Center);
 	SetSize({ 400.0f, 600.0f });
-	SetOffset({ 20.0f, 20.0f });
-	widgetSprite.Init("Assets/UI/Card.png");
+	SetOffset({ cardPosition, 0.0f });
+	widgetSprite.Init("Assets/UI/Card_V2.png");
 	SetZOrder(0);
 
-	Font* font = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
+	Font* fontA = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
+	Font* fontB = Game::GetGame()->GetCurrentSession()->GetSmallFont();
+
 
 	// Wave Text
-	TitleText = SpawnActor<TextWidget>(font, cardInfo.title);
+	TitleText = SpawnActor<TextWidget>(fontA, cardInfo.title);
 	TitleText->SetColor({ 0.83f, 0.77f, 0.64f, 1.0f });
 	TitleText->SetSize({ 30.0f, 30.0f });
-	TitleText->SetOffset({ 160.0f, 44.0f });
+	TitleText->SetOffset({ cardPosition, -50.0f });
 	TitleText->SetAnchor(AnchorPoint::Center);
 	TitleText->SetZOrder(1);
 
-	DescText = SpawnActor<TextWidget>(font, cardInfo.description);
+	DescText = SpawnActor<TextWidget>(fontB, cardInfo.description);
 	DescText->SetColor({ 0.83f, 0.77f, 0.64f, 1.0f });
 	DescText->SetSize({ 15.0f, 15.0f });
-	DescText->SetOffset({ 183.0f, 95.0f });
+	DescText->SetOffset({ cardPosition, -130.0f });
 	DescText->SetAnchor(AnchorPoint::Center);
 	DescText->SetZOrder(1);
-
-
 
 }
 
 void StatupCard::Update(double dT)
 {
-	Widget::Update(dT);
+	Button::Update(dT);
+}
+
+void StatupCard::Destroy()
+{
+	TitleText->Destroy();
+	DescText->Destroy();
+
+	Object::Destroy();
 }

@@ -50,7 +50,8 @@
           "x": 0.19,
           "y": 0.0
         },
-        "collidorDamage": 30.0
+        "abilityDamage": 30.0,
+        "abilityCooldown": 2.0
       },
       "HEAVY ATTACK": {
         "collidorSize": {
@@ -61,11 +62,18 @@
           "x": 0.19,
           "y": 0.0
         },
-        "collidorDamage": 50.0
+        "abilityDamage": 50.0,
+        "abilityCooldown": 3.0
+      },
+      "DASH": {
+        "dashDistance" : 5.0,
+        "abilityDamage": 0.0,
+        "abilityCooldown": 3.0
       }
-    }
+  }
 
-  },
+
+},
 
 
   "slime": {
@@ -107,7 +115,8 @@
           "x": 0.19,
           "y": 0.0
         },
-        "collidorDamage": 10.0
+        "abilityDamage": 10.0,
+        "abilityCooldown": 4.0
       }
 
     }
@@ -123,6 +132,7 @@
           "description": "Increases Max Health by 20.",
           "statTag": "VIGOR",
           "value": 20.0,
+          "isMultiplier": false,
           "icon": "Assets/UI/Cards/vigor_icon.png",
           "vfxTag": ""
         },
@@ -132,24 +142,27 @@
           "description": "Increases Move Speed by 8%.",
           "statTag": "MOMENTUM",
           "value": 0.08,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/momentum_icon.png",
           "vfxTag": ""
         },
         {
           "id": "vitals_plating_01",
           "title": "Iron Hide",
-          "description": "Reduces incoming damage by 5%.",
+          "description": "Increase armor strength by 5%.",
           "statTag": "PLATING",
           "value": 0.05,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/plating_icon.png",
           "vfxTag": ""
         },
         {
           "id": "vitals_focus_01",
           "title": "Steady Aim",
-          "description": "Increases Crit Chance by 6%.",
+          "description": "Increases Crit Chance by 50%.",
           "statTag": "FOCUS",
-          "value": 0.06,
+          "value": 0.5,
+          "isMultiplier": false,
           "icon": "Assets/UI/Cards/focus_icon.png",
           "vfxTag": ""
         }
@@ -165,6 +178,7 @@
           "description": "Light Attack deals +8 damage.",
           "statTag": "DAMAGE",
           "value": 8.0,
+          "isMultiplier": false,
           "icon": "Assets/UI/Cards/reflex_dmg_icon.png",
           "vfxTag": "SLASH_TRAIL"
         },
@@ -174,6 +188,7 @@
           "description": "Light Attack cooldown reduced by 10%.",
           "statTag": "COOLDOWN",
           "value": -0.10,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/reflex_cd_icon.png",
           "vfxTag": ""
         }
@@ -189,6 +204,7 @@
           "description": "Heavy Attack deals +15 damage.",
           "statTag": "DAMAGE",
           "value": 15.0,
+          "isMultiplier": false,
           "icon": "Assets/UI/Cards/impact_dmg_icon.png",
           "vfxTag": "IMPACT_SHOCKWAVE"
         },
@@ -198,6 +214,7 @@
           "description": "Heavy Attack cooldown reduced by 8%.",
           "statTag": "COOLDOWN",
           "value": -0.08,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/impact_cd_icon.png",
           "vfxTag": ""
         }
@@ -213,6 +230,7 @@
           "description": "Dash cooldown reduced by 20%.",
           "statTag": "COOLDOWN",
           "value": -0.20,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/surge_cd_icon.png",
           "vfxTag": ""
         },
@@ -222,6 +240,7 @@
           "description": "Dash distance increased by 25%.",
           "statTag": "DISTANCE",
           "value": 0.25,
+          "isMultiplier": true,
           "icon": "Assets/UI/Cards/surge_dist_icon.png",
           "vfxTag": "DASH_STREAK"
         }

@@ -1,24 +1,31 @@
 #pragma once
 
+class StatupCard;
 
 class CardManager
 {
 
 public:
 
-	//static CardManager* GetCardManager()
-	//{
-	//	static CardManager DefaultCardManager;
+	static CardManager* GetCardManager()
+	{
+		static CardManager DefaultCardManager;
 
-	//	return &DefaultCardManager;
-	//};
+		return &DefaultCardManager;
+	};
 
-	void ComputeRandomCards();
+	void SetupCards();
+	void RemoveCards(CardInfo info);
 
+	Delegate<> onCardSelected;
 	
 private:
 	
 	CardManager() {};
+
+	StatupCard* cardA;
+	StatupCard* cardB;
+	StatupCard* cardC;
 
 };
 

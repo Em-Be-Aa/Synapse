@@ -13,27 +13,36 @@ InputManager::InputManager(GLFWwindow* window)
 
 void InputManager::ProcessInputs()
 {
-	for (auto observer: observers)
+	for (auto& inputAction : inputActions)
 	{
-		for (auto& inputAction : inputActions)
+		bool isPressed = (inputAction.first == GLFW_MOUSE_BUTTON_1 || inputAction.first == GLFW_MOUSE_BUTTON_2)
+			? glfwGetMouseButton(InputWindow, inputAction.first) == GLFW_PRESS
+			: glfwGetKey(InputWindow, inputAction.first) == GLFW_PRESS;
+
+		bool wasPressed = inputAction.second.wasPressed;
+
+		bool justClicked = (isPressed && !wasPressed);
+		bool justReleased = (!isPressed && wasPressed);
+
+		for (auto observer : observers)
 		{
-			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_PRESS && !inputAction.second.wasPressed)
+			if (justClicked)
 			{
 				observer->onInputClicked(inputAction.first);
-				inputAction.second.wasPressed = true;
 			}
 
-			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_PRESS)
+			if (isPressed)
 			{
 				observer->onInputPressed(inputAction.first);
 			}
 
-			if (glfwGetKey(InputWindow, inputAction.first) == GLFW_RELEASE && inputAction.second.wasPressed)
+			if (justReleased)
 			{
 				observer->onInputReleased(inputAction.first);
-				inputAction.second.wasPressed = false;
 			}
 		}
+
+		inputAction.second.wasPressed = isPressed;
 	}
 }
 
