@@ -2,6 +2,7 @@
 
 #include "../../Actor/Object.h"
 #include "../../Text/Font.h"
+#include "TextWidget.h"
 
 class HUD : public Object
 {

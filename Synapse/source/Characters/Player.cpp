@@ -27,7 +27,7 @@ Player::Player()
     AddAbility<AttackAbility>(this, "HEAVY ATTACK", HeavyAttack);
     AddAbility<DashAbility>(this, "DASH", Dash);
 
-    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {50.0f, 50.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown }, {"HEAVY ATTACK", HeavyAttack.abilityDamage, HeavyAttack.abilityCooldown }, {"DASH", Dash.abilityDamage, Dash.abilityCooldown, Dash.dashDistance } });
+    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 0.0, {50.0f, 50.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown }, {"HEAVY ATTACK", HeavyAttack.abilityDamage, HeavyAttack.abilityCooldown }, {"DASH", Dash.abilityDamage, Dash.abilityCooldown, Dash.dashDistance } });
 }
 
 

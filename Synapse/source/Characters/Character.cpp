@@ -67,7 +67,8 @@ void Character::Update(double deltaTime)
 {
 
     // Movement and Collision Update
-    movementSpeed = VitalsComp.GetMomentum() * deltaTime;
+    movementSpeed = 0.5 * deltaTime;
+    movementSpeed = (VitalsComp.GetMomentum() * movementSpeed) + movementSpeed;
 
     // Collision stuff should happen in collision component....research if giving owner ref to components makes decoupling easier or difficult....
     float halfX = Collidor->BoxSize.x * 0.5f;

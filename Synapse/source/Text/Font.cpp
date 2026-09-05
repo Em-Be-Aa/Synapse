@@ -28,6 +28,25 @@ bool Font::Init(const char* ttfPath, float pixelheight)
 
     pixelHeight = pixelheight;
 
+
+    stbtt_fontinfo fontInfo;
+    if (!stbtt_InitFont(&fontInfo, fontBuffer.data(), 0))
+    {
+        std::cout << "Font: stbtt_InitFont failed for " << ttfPath << std::endl;
+        delete[] bakedChars;
+        bakedChars = nullptr;
+        return false;
+    }
+
+    int rawAscent, rawDescent, rawLineGap;
+    stbtt_GetFontVMetrics(&fontInfo, &rawAscent, &rawDescent, &rawLineGap);
+
+    float scale = stbtt_ScaleForPixelHeight(&fontInfo, pixelheight);
+
+    ascentPixels = rawAscent * scale;
+    descentPixels = -rawDescent * scale;
+
+
     std::vector<unsigned char> singleChannelBitmap(atlasWidth * atlasHeight);
     bakedChars = new stbtt_bakedchar[96]; // ASCII 32 (space) .. 127
 

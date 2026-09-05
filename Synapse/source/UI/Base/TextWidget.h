@@ -8,6 +8,7 @@ class TextWidget : public Widget
 {
 public:
     TextWidget(Font* font, std::string initialText);
+    TextWidget(Font* font, std::string initialText, Widget* Parent);
 
     void Update(double dT) override;
 

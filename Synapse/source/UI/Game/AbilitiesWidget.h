@@ -5,7 +5,7 @@
 
 class TextWidget;
 
-class VitalsWidget : public Widget
+class AbilitiesWidget : public Widget
 {
 
 public:
@@ -16,10 +16,10 @@ public:
 
 private:
 
-	AbilityWidget* Momentum;
-	AbilityWidget* Focus;
-	AbilityWidget* Recovery;
-	AbilityWidget* Insight;
+	AbilityWidget* Light;
+	AbilityWidget* Heavy;
+	AbilityWidget* Dash;
+
 
 };
 

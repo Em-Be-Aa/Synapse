@@ -23,4 +23,19 @@ private:
     stbtt_bakedchar* bakedChars = nullptr; // covers ASCII 32..126
     int atlasWidth = 512;
     int atlasHeight = 512;
+    float ascentPixels = 0.0f;
+    float descentPixels = 0.0f;
+
+
+public:
+
+    float GetAscentPixels()
+    {
+        return ascentPixels;
+    }
+
+    float GetDescentPixels()
+    {
+        return descentPixels;
+    }
 };

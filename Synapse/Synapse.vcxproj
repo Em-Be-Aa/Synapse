@@ -141,6 +141,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\UI\Game\AbilitiesWidget.cpp" />
     <ClCompile Include="source\UI\Game\AbilityWidget.cpp" />
     <ClCompile Include="source\Characters\Abilities\AttackAbility.cpp" />
     <ClCompile Include="source\Characters\Abilities\DashAbility.cpp" />
@@ -194,6 +195,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\UI\Game\VitalsWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\UI\Game\AbilitiesWidget.h" />
     <ClInclude Include="source\UI\Game\AbilityWidget.h" />
     <ClInclude Include="source\Characters\Abilities\AttackAbility.h" />
     <ClInclude Include="source\Characters\Abilities\DashAbility.h" />

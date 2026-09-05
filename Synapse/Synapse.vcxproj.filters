@@ -168,6 +168,9 @@
     <ClCompile Include="source\UI\Game\AbilityWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\UI\Game\AbilitiesWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader\Shader.h">
@@ -336,6 +339,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\UI\Game\AbilityWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Game\AbilitiesWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

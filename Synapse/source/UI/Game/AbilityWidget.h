@@ -9,23 +9,31 @@ class AbilityWidget : public Widget
 
 public:
 
+	AbilityWidget(const char* ImagePath);
+	AbilityWidget(const char* ImagePath, Widget* Parent);
 	void Init() override;
 	void Update(double dT) override;
-
+	void SetSize(glm::vec2 Size) override;
 
 private:
 
-	Widget* LightBG;
-	Widget* HeavyBG;
-	Widget* DashBG;
+	Widget* Image;
+	Widget* Cooldown;
+	TextWidget* Text;
 
-	Widget* LightImage;
-	Widget* HeavyImage;
-	Widget* DashImage;
+	const char* imagePath;
 
-	Widget* LightCooldown;
-	Widget* HeavyCooldown;
-	Widget* DashCooldown;
 
+public:
+
+	Widget* GetCooldown()
+	{
+		return Cooldown;
+	}
+
+	TextWidget* GetText()
+	{
+		return Text;
+	}
 };
 

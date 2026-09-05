@@ -26,10 +26,10 @@ public:
 		return isOnCooldown;
 	};
 
-	float GetCurrentCooldownPerc()
+	float GetCurrentCooldown()
 	{
 
-		return isOnCooldown ? currentCooldownTime / abilInfo.abilityCooldown : 0.0f;
+		return isOnCooldown ? abilInfo.abilityCooldown - currentCooldownTime : 0.0f;
 	}
 
 protected:

@@ -26,9 +26,9 @@ void CardManager::SetupCards()
 
 	std::vector<CardInfo> cardsInfo = GameConfigs::GetGameConfig().GetCardsData(selectedCards);
 
-	cardA = SpawnActor<StatupCard>(cardsInfo[0], -500.0f );
+	cardA = SpawnActor<StatupCard>(cardsInfo[0], -250.0f );
 	cardB = SpawnActor<StatupCard>(cardsInfo[1],  0.0f   );
-	cardC = SpawnActor<StatupCard>(cardsInfo[2],  500.0f );
+	cardC = SpawnActor<StatupCard>(cardsInfo[2],  250.0f );
 
 	cardA->OnClicked.Subscribe
 	(

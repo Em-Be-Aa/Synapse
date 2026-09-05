@@ -10,13 +10,15 @@ TextWidget::TextWidget(Font* font, std::string initialText) : fontRef(font), tex
 
 }
 
+TextWidget::TextWidget(Font* font, std::string initialText, Widget* Parent) : fontRef(font), text(initialText)
+{
+    parent = Parent;
+}
+
 void TextWidget::Update(double dT)
 {
     if (!fontRef || text.empty())
         return;
-
-    float windowWidth = Game::GetGame()->GetGameWindow()->GetWindowWidth();
-    float windowHeight = Game::GetGame()->GetGameWindow()->GetWindowHeight();
 
     glm::vec2 anchorPoint = GetRawAnchorPoint(widgetAnchor, offset);
 
@@ -28,16 +30,52 @@ void TextWidget::Update(double dT)
     }
 
     bool isRightAnchored = (widgetAnchor == AnchorPoint::TopRight || widgetAnchor == AnchorPoint::BottomRight);
-    bool isCenterAnchored = (widgetAnchor == AnchorPoint::Center);
-    bool isTopAnchored = (widgetAnchor == AnchorPoint::TopLeft || widgetAnchor == AnchorPoint::TopRight);
-    float ascentEstimate = fontRef->GetPixelHeight() * 0.35f;
+    bool isHCenterAnchored = (widgetAnchor == AnchorPoint::Center || widgetAnchor == AnchorPoint::TopCenter || widgetAnchor == AnchorPoint::BottomCenter);
+
+    bool isTopAnchored = (widgetAnchor == AnchorPoint::TopLeft || widgetAnchor == AnchorPoint::TopRight || widgetAnchor == AnchorPoint::TopCenter);
+    bool isBottomAnchored = (widgetAnchor == AnchorPoint::BottomLeft || widgetAnchor == AnchorPoint::BottomRight || widgetAnchor == AnchorPoint::BottomCenter);
+    bool isVCenterAnchored = (widgetAnchor == AnchorPoint::Center);
+
+    float ascent = fontRef->GetAscentPixels();
+    float descent = fontRef->GetDescentPixels();
 
     float cursorX = isRightAnchored ? anchorPoint.x - totalWidth
-        : isCenterAnchored ? anchorPoint.x - totalWidth * 0.5f
+        : isHCenterAnchored ? anchorPoint.x - totalWidth * 0.5f
         : anchorPoint.x;
-    float cursorY = isTopAnchored ? anchorPoint.y - ascentEstimate : anchorPoint.y + ascentEstimate;
 
-    const float baselineY = cursorY; // capture once — stb only advances cursorX per glyph, not cursorY
+    float cursorY;
+
+    if (isVCenterAnchored)
+    {
+        // Measurement pass: find the real visual top/bottom of THIS string,
+        // not the font's theoretical max ascent/descent.
+        float measureX = 0.0f, measureY = 0.0f;
+        float visualTop = 0.0f, visualBottom = 0.0f;
+        bool first = true;
+
+        for (char c : text)
+        {
+            if (c < 32 || c > 127) continue;
+            stbtt_aligned_quad q;
+            stbtt_GetBakedQuad((stbtt_bakedchar*)fontRef->GetBakedChars(),
+                fontRef->GetAtlasWidth(), fontRef->GetAtlasHeight(),
+                c - 32, &measureX, &measureY, &q, 1);
+
+            if (first) { visualTop = q.y0; visualBottom = q.y1; first = false; }
+            else { visualTop = std::min(visualTop, q.y0); visualBottom = std::max(visualBottom, q.y1); }
+        }
+
+        float centerOffset = (visualTop + visualBottom) * 0.5f; // offset from baseline, y-down
+        cursorY = anchorPoint.y + centerOffset;
+    }
+    else
+    {
+        cursorY = isTopAnchored ? anchorPoint.y - ascent
+            : isBottomAnchored ? anchorPoint.y + descent
+            : anchorPoint.y;
+    }
+
+    const float baselineY = cursorY;
 
     RenderComp.textureID = fontRef->GetTextureID();
     RenderComp.tint = widgetColor;
@@ -60,7 +98,6 @@ void TextWidget::Update(double dT)
         float glyphWidth = quad.x1 - quad.x0;
         float glyphHeight = quad.y1 - quad.y0;
 
-        // Mirror the Y-down vertical center around the baseline to convert to Y-up screen space
         float glyphCenterYDown = quad.y0 + glyphHeight * 0.5f;
         float glyphCenterYUp = (2.0f * baselineY) - glyphCenterYDown;
 
@@ -75,6 +112,8 @@ void TextWidget::Update(double dT)
         RenderComp.model = model;
         RenderComp.uvScaleOffset = glm::vec4(uvScale, uvOffset);
         RenderComp.layer = zOrder;
+        RenderComp.SetIsDisabled(!isVisible);
+
         Renderer2D::GetRenderer()->Submit(RenderComp);
     }
 }

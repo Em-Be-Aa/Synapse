@@ -14,6 +14,9 @@ public:
 	Widget() : RenderComp(this) {};
 	Widget(const char* imagePath);
 
+	Widget(Widget* Parent) : RenderComp(this) { parent = Parent; };
+	Widget(const char* imagePath, Widget* Parent);
+
 	void Update(double dT) override;
 
 	glm::vec3 CalculateWidgetPosition();
@@ -29,8 +32,10 @@ protected:
 	glm::vec2 offset = { 0.00f, 0.0f };
 	glm::vec4 widgetColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	int zOrder = 0;
+	bool isVisible = true;
 
 	Actor* owner = nullptr;
+	Widget* parent = nullptr;
 
 	AnchorPoint widgetAnchor = AnchorPoint::TopRight;
 	RenderSpace widgetRenderSpace = RenderSpace::Screen;
@@ -49,7 +54,7 @@ public:
 		offset = Offset;
 	}
 
-	void SetSize(glm::vec2 Size)
+	virtual void SetSize(glm::vec2 Size)
 	{
 		pixelSize = Size;
 	}
@@ -84,6 +89,20 @@ public:
 		widgetSprite.Init(imagePath);
 	}
 
+	void SetVisibility(bool value)
+	{
+		isVisible = value;
+	}
+
+	bool GetVisibility()
+	{
+		return isVisible;
+	}
+
+	glm::vec3 GetPosition()
+	{
+		return widgetPosition;
+	}
 
 };
 

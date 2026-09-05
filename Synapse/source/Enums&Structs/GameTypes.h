@@ -105,6 +105,8 @@ enum class AnchorPoint {
 	Center,
 	TopCenter,
 	BottomCenter,
+	RightCenter,
+	LeftCenter,
 	None
 };
 

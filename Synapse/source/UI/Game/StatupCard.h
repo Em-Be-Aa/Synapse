@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Base/Button.h"
+#include "AbilityWidget.h"
 
 class TextWidget;
 
@@ -25,6 +26,8 @@ private:
 
 	CardInfo cardInfo;
 	float cardPosition;
+
+	AbilityWidget* StatIcon;
 	TextWidget* TitleText;
 	TextWidget* DescText;
 

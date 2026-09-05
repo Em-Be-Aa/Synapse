@@ -7,24 +7,24 @@
 
 void HealthWidget::Init()
 {
-	SetAnchor(AnchorPoint::TopLeft);
-	SetSize({ 600.0f, 185.0f });
+	SetAnchor(AnchorPoint::BottomLeft);
+	SetSize({ 500.0f, 100.0f });
 	SetOffset({ 20.0f, 20.0f });
-	widgetSprite.Init("Assets/UI/HealthBar_V2.png");
+	widgetSprite.Init("Assets/UI/HealthBar.png");
 	SetZOrder(1);
 
 	VigorBar = SpawnActor<Widget>();
-	VigorBar->SetAnchor(AnchorPoint::TopLeft);
-	VigorBar->SetSize({ 477.0f, 50.0f });
-	VigorBar->SetOffset({ 107.0f, 35.0f });
-	VigorBar->SetColor({ 0.361, 0.125, 0.145, 1.0f});
+	VigorBar->SetAnchor(AnchorPoint::BottomLeft);
+	VigorBar->SetSize({ 440.0f, 28.0f });
+	VigorBar->SetOffset({ 75.0f, 35.0f });
+	VigorBar->SetColor({ 0.929, 0.161, 0.116, 1.0f});
 	VigorBar->SetZOrder(0);
 
 	PlatingBar = SpawnActor<Widget>();
-	PlatingBar->SetAnchor(AnchorPoint::TopLeft);
-	PlatingBar->SetSize({ 477.0f, 50.0f });
-	PlatingBar->SetOffset({ 107.0f, 140.0f });
-	PlatingBar->SetColor({ 0.239, 0.275, 0.322, 1.0f });
+	PlatingBar->SetAnchor(AnchorPoint::BottomLeft);
+	PlatingBar->SetSize({ 440.0f, 28.0f });
+	PlatingBar->SetOffset({ 75.0f, 85.0f });
+	PlatingBar->SetColor({ 0.135, 0.343, 0.904, 1.0f });
 	PlatingBar->SetZOrder(0);
 
 

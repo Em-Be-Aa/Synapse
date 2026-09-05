@@ -40,9 +40,9 @@ void Session::Init()
     waveSpawner = SpawnActor<WaveSpawner>(this);
     waveSpawner->StartWave(1);
 
-    largeFont.Init("Assets/Fonts/Cinzel.ttf", 60.0f);
-    defaultFont.Init("Assets/Fonts/Cinzel.ttf", 40.0f);
-    smallFont.Init("Assets/Fonts/Cinzel.ttf", 20.0f);
+    largeFont.Init("Assets/Fonts/Caesar.ttf", 60.0f);
+    defaultFont.Init("Assets/Fonts/Caesar.ttf", 40.0f);
+    smallFont.Init("Assets/Fonts/Caesar.ttf", 20.0f);
 
     sessionHUD = SpawnActor<HUD>(&defaultFont); 
 

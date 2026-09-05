@@ -4,8 +4,7 @@
 #include "../../Game/WaveSpawner.h"
 #include "../../Managers/CardManager.h"
 #include "../../Window/Window.h"
-#include "../Game/AbilityWidget.h"
-#include "../Game/CharacterHealthBar.h"
+#include "../Game/AbilitiesWidget.h"
 #include "../Game/HealthWidget.h"
 #include "../Game/VitalsWidget.h"
 #include "../Game/WaveWidget.h"
@@ -17,8 +16,7 @@ void HUD::Init()
 	SpawnActor<WaveWidget>();
 	SpawnActor<HealthWidget>();
 	SpawnActor<VitalsWidget>();
-	SpawnActor<AbilityWidget>();
-
+	SpawnActor<AbilitiesWidget>();
 	
 	Game::GetGame()->GetCurrentSession()->GetWaveSpawner()->OnWaveCompleted.Subscribe
 	(

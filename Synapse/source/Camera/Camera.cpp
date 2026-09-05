@@ -48,7 +48,7 @@ void Camera::Update(double deltaTime)
 {
     if (attachedActor)
     {
-        Position = { attachedActor->Position.x, attachedActor->Position.y, 6.0f };
+        Position = { 0.0f, 0.0f, 6.0f };
     }
     
 }
