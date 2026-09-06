@@ -20,7 +20,7 @@ public:
 	void Init(const char* spriteVertexShaderPath, const char* spriteFragmentShaderPath);
 	void Shutdown();
 	void  BeginScene(const glm::mat4& worldView, const glm::mat4& worldProjection, const glm::mat4& screenView, const glm::mat4& screenProjection);
-	void Submit(const RenderComponent& rc);
+	void Submit(RenderComponent& rc);
 	void Submit(unsigned int textureID, const glm::mat4& model, const glm::vec4& uvScaleOffset, const RenderSpace space);
 	void DrawSubmissions(std::vector<Submission>& subs, unsigned int& currentTex);
 	void EndScene();

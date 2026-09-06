@@ -195,6 +195,7 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
     <ClCompile Include="source\UI\Game\VitalsWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Audio\miniaudio.h" />
     <ClInclude Include="source\UI\Game\AbilitiesWidget.h" />
     <ClInclude Include="source\UI\Game\AbilityWidget.h" />
     <ClInclude Include="source\Characters\Abilities\AttackAbility.h" />
@@ -320,6 +321,9 @@ xcopy "$(ProjectDir)Assets" "$(OutDir)Assets" /s /y /i</Command>
   </ItemGroup>
   <ItemGroup>
     <Font Include="source\Text\UnifrakturCook.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\SoundTrack.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

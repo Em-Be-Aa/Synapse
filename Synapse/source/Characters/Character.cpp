@@ -53,13 +53,13 @@ void Character::Tick(double deltaTime)
     }
    
     // Send info to render
-    RenderComp.model = glm::translate(glm::mat4(1.0f), Position);
-    RenderComp.textureXFlip = !isFacingRight;
-    RenderComp.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator->uvScale.x, characterSprite.spriteAnimator->uvScale.y,
+    RenderComp.defaultQuad.model = glm::translate(glm::mat4(1.0f), Position);
+    RenderComp.defaultQuad.textureXFlip = !isFacingRight;
+    RenderComp.defaultQuad.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator->uvScale.x, characterSprite.spriteAnimator->uvScale.y,
                                          characterSprite.spriteAnimator->uvOffset.x, characterSprite.spriteAnimator->uvOffset.y);
     if (characterSprite.spriteAnimator->currentMontage.spriteSheet)
     {
-        RenderComp.textureID = characterSprite.spriteAnimator->currentMontage.spriteSheet->ID;
+        RenderComp.defaultQuad.textureID = characterSprite.spriteAnimator->currentMontage.spriteSheet->ID;
     }
 }
 

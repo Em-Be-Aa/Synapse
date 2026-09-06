@@ -48,8 +48,8 @@ void CollisionComponent::Update(double deltaTime)
     model = glm::scale(model, glm::vec3(BoxSize.x, BoxSize.y, 1.0f));
 
 
-    RenderComp.model = model;
-    RenderComp.textureID = collisionSprite.DefaultImage->ID;
-    RenderComp.uvScaleOffset = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
+    RenderComp.defaultQuad.model = model;
+    RenderComp.defaultQuad.textureID = collisionSprite.DefaultImage->ID;
+    RenderComp.defaultQuad.uvScaleOffset = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
 
 }

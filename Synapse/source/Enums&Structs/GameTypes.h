@@ -157,3 +157,14 @@ struct CardInfo {
 	std::string icon = "Assets/UI/Cards/impact_dmg_icon.png";
 	std::string vfxTag = "IMPACT_SHOCKWAVE";
 };
+
+struct QuadInfo
+{
+	RenderSpace space = RenderSpace::World;
+	glm::mat4 model;
+	glm::vec4 tint;
+	int layer = 0;
+	glm::vec4 uvScaleOffset;
+	unsigned int textureID;
+	bool textureXFlip = false;
+};

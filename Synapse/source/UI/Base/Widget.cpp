@@ -23,22 +23,19 @@ void Widget::Update(double dT)
     model = glm::scale(model, glm::vec3(GetSize(), 1.0f));
     glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
 
-    RenderComp.uvScaleOffset = uv;
-    RenderComp.space = widgetRenderSpace;
-    RenderComp.model = model;
-    RenderComp.tint = widgetColor;
-    RenderComp.layer = zOrder;
+    RenderComp.defaultQuad.uvScaleOffset = uv;
+    RenderComp.defaultQuad.space = widgetRenderSpace;
+    RenderComp.defaultQuad.model = model;
+    RenderComp.defaultQuad.tint = widgetColor;
+    RenderComp.defaultQuad.layer = zOrder;
 
     if (widgetSprite.DefaultImage)
     {
-        RenderComp.textureID = widgetSprite.DefaultImage->ID;
+        RenderComp.defaultQuad.textureID = widgetSprite.DefaultImage->ID;
     }
 
     RenderComp.SetIsDisabled(!isVisible);
-   
-    Renderer2D::GetRenderer()->Submit(RenderComp);
-    
-
+ 
 }
 
 glm::vec3 Widget::CalculateWidgetPosition()

@@ -60,30 +60,39 @@ void Renderer2D::BeginScene(const glm::mat4& worldView, const glm::mat4& worldPr
     screenSubmissions.clear();
 }
 
-void Renderer2D::Submit(const RenderComponent& rc)
+void Renderer2D::Submit(RenderComponent& rc)
 {
     Submission s;
-    s.textureID = rc.textureID;
-    s.model = rc.model;
-    s.uv = rc.uvScaleOffset;
-    s.tint = rc.tint;
-    s.layer = rc.layer;
-    s.textureXFlip = rc.textureXFlip;
-    s.space = rc.space;
 
-    if (rc.GetIsDisabled())
+    std::vector<QuadInfo> QI = rc.GetQuads();
+
+    for (auto Quad : QI)
     {
-        return;
+        s.textureID = Quad.textureID;
+        s.model = Quad.model;
+        s.uv = Quad.uvScaleOffset;
+        s.tint = Quad.tint;
+        s.layer = Quad.layer;
+        s.textureXFlip = Quad.textureXFlip;
+        s.space = Quad.space;
+
+        if (rc.GetIsDisabled())
+        {
+            return;
+        }
+
+        if (s.space == RenderSpace::World)
+        {
+            worldSubmissions.push_back(s);
+        }
+        else
+        {
+            screenSubmissions.push_back(s);
+        }
     }
 
-    if (s.space == RenderSpace::World)
-    {
-        worldSubmissions.push_back(s);
-    }
-    else
-    {
-        screenSubmissions.push_back(s);
-    }
+    rc.ClearQuads();
+   
 }
 
 void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const glm::vec4& uvScaleOffset, const RenderSpace space)

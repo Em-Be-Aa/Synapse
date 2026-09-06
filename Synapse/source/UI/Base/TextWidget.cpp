@@ -77,9 +77,9 @@ void TextWidget::Update(double dT)
 
     const float baselineY = cursorY;
 
-    RenderComp.textureID = fontRef->GetTextureID();
-    RenderComp.tint = widgetColor;
-    RenderComp.space = RenderSpace::Screen;
+    RenderComp.defaultQuad.textureID = fontRef->GetTextureID();
+    RenderComp.defaultQuad.tint = widgetColor;
+    RenderComp.defaultQuad.space = RenderSpace::Screen;
 
     for (char c : text)
     {
@@ -109,11 +109,11 @@ void TextWidget::Update(double dT)
         glm::vec2 uvScale = { quad.s1 - quad.s0, -(quad.t1 - quad.t0) };
         glm::vec2 uvOffset = { quad.s0, quad.t1 };
 
-        RenderComp.model = model;
-        RenderComp.uvScaleOffset = glm::vec4(uvScale, uvOffset);
-        RenderComp.layer = zOrder;
+        RenderComp.defaultQuad.model = model;
+        RenderComp.defaultQuad.uvScaleOffset = glm::vec4(uvScale, uvOffset);
+        RenderComp.defaultQuad.layer = zOrder;
         RenderComp.SetIsDisabled(!isVisible);
 
-        Renderer2D::GetRenderer()->Submit(RenderComp);
+        RenderComp.Quads.push_back(RenderComp.defaultQuad);
     }
 }

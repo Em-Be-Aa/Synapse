@@ -18,23 +18,34 @@ public:
 	RenderComponent(const RenderComponent&) = delete;
 	RenderComponent& operator=(const RenderComponent&) = delete;
 
-	
-	RenderSpace space = RenderSpace::World;
-	glm::mat4 model;
-	glm::vec4 tint;
-	int layer = 0;
-	glm::vec4 uvScaleOffset;
-	unsigned int textureID;
-	bool textureXFlip = false;
+	QuadInfo defaultQuad;
 
 	Object* GetOwner() const { return owner; }
 	bool GetIsDisabled() const { return isDisabled; }
 	void SetIsDisabled(bool disable) { isDisabled = disable; }
+	std::vector<QuadInfo> GetQuads()
+	{
+		if (Quads.empty())
+		{
+			Quads.push_back(defaultQuad);
+		}
+
+		return Quads;
+	}
+
+	void ClearQuads()
+	{
+		Quads.clear();
+	}
+
+	std::vector<QuadInfo> Quads;
+
 
 private:
 
 	Object* owner;
 	bool isDisabled = false;
+
 
 };
 
