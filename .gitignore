@@ -23,8 +23,6 @@ x86/
 
 # --- Compiled Files ---
 *.exe
-*.dll
-*.lib
 *.pdb
 *.obj
 *.ilk
@@ -33,6 +31,11 @@ x86/
 *.tlog
 *.lastbuildstate
 *.log
+/x64/**/*.lib
+/x86/**/*.lib
+/Debug/*.lib
+/Release/*.lib
+!dependencies/**/*.lib
 
 # --- Specific GLAD/Internal Cache ---
 .cache/
