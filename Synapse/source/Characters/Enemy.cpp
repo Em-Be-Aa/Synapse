@@ -9,7 +9,7 @@ Enemy::Enemy(glm::vec3 spawnPosition)
 {
 
     // this should be cleaner to specify for instances....the collidor box specification specially
-    Position = spawnPosition;
+    UpdatePosition(spawnPosition, false);
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
     tag = "slime";

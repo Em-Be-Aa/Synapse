@@ -24,11 +24,40 @@ public:
 	void onInputClicked(int Key) override {};
 
 	unsigned int ID;
-	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0003f);
+
+	void UpdatePosition(glm::vec3 position, bool modify)
+	{
+		previousPosition = Position;
+
+		if (modify)
+		{
+			Position += position;
+		}
+		else
+		{
+			Position = position;
+		}
+	}
+
+	glm::vec3 GetPosition()
+	{
+		return Position;
+	}
+
 
 	void SetDeltaPosition(glm::vec3 dP)
 	{
 		deltaPosition = dP;
+	}
+
+	glm::vec3 GetDeltaPosition()
+	{
+		return deltaPosition;
+	}
+
+	glm::vec3 GetPreviousPosition()
+	{
+		return previousPosition;
 	}
 
 
@@ -38,6 +67,10 @@ protected:
 	glm::vec3 Velocity;
 	float movementSpeed = 1.0f;
 	glm::vec3 deltaPosition;
+
+private:
+	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0003f);
+	glm::vec3 previousPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
 
 };
 

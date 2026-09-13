@@ -10,6 +10,7 @@
 *.db
 *.ipch
 *.sln.docstates
+*.idea/
 
 # --- Build Output (The "Junk") ---
 # This ignores the folders where VS puts your compiled code

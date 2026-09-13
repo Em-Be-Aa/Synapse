@@ -69,8 +69,8 @@ void Ability::Update(double deltaTime)
 	{
 		float halfX = abilityCollidor->BoxSize.x * 0.5f;
 		float halfY = abilityCollidor->BoxSize.y * 0.5f;
-		abilityCollidor->Box.min = { owner->Position.x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->Position.y - halfY + abilInfo.collidorOffset->y };
-		abilityCollidor->Box.max = { owner->Position.x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->Position.y + halfY + abilInfo.collidorOffset->y };
+		abilityCollidor->Box.min = { owner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
+		abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y };
 	}
 }
 
@@ -103,8 +103,8 @@ void Ability::Activate()
 			abilityCollidor->BoxSize = abilInfo.collidorSize.value_or(glm::vec2(0.0f));
 			float halfX = abilityCollidor->BoxSize.x * 0.5f;
 			float halfY = abilityCollidor->BoxSize.y * 0.5f;
-			abilityCollidor->Box.min = { owner->Position.x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->Position.y - halfY + abilInfo.collidorOffset->y };
-			abilityCollidor->Box.max = { owner->Position.x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->Position.y + halfY + abilInfo.collidorOffset->y };
+			abilityCollidor->Box.min = { owner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
+			abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y };
 		}
 	}
 	

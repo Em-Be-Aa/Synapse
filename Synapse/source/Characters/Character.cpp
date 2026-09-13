@@ -37,9 +37,8 @@ void Character::Tick(double deltaTime)
     // Animation Mode Update
     if (deltaTime != 0)
     {
-        Velocity = (Position - previousPosition) / glm::vec1(deltaTime);
+        Velocity = (GetPosition() - GetPreviousPosition()) / glm::vec1(deltaTime);
         Speed = glm::length(Velocity);
-        previousPosition = Position;
 
         if (Speed == 0 && characterSprite.spriteAnimator->GetCurrentAnim() != "IDLE" && !characterSprite.spriteAnimator->currentMontage.isMontage)
         {
@@ -53,7 +52,7 @@ void Character::Tick(double deltaTime)
     }
    
     // Send info to render
-    RenderComp.defaultQuad.model = glm::translate(glm::mat4(1.0f), Position);
+    RenderComp.defaultQuad.model = glm::translate(glm::mat4(1.0f), GetPosition());
     RenderComp.defaultQuad.textureXFlip = !isFacingRight;
     RenderComp.defaultQuad.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator->uvScale.x, characterSprite.spriteAnimator->uvScale.y,
                                          characterSprite.spriteAnimator->uvOffset.x, characterSprite.spriteAnimator->uvOffset.y);
@@ -75,33 +74,41 @@ void Character::Update(double deltaTime)
     float halfY = Collidor->BoxSize.y * 0.5f;
 
     // This is wrong....the box is updated always that is why we can escape from collision position...we should be able to escape by reverting the previous delta position...
-    Collidor->Box.min = { Position.x + deltaPosition.x - halfX, Position.y  - halfY };
-    Collidor->Box.max = { Position.x + deltaPosition.x + halfX, Position.y  + halfY };
+    // also so many function calls for just getting position
+    // but this function in the middle alters the position so just calling one at the start is wrong too so find a better architecture for it.
+
+    glm::vec3 newPosition = GetPosition();
+
+    Collidor->Box.min = { GetPosition().x + deltaPosition.x - halfX, GetPosition().y - halfY};
+    Collidor->Box.max = { GetPosition().x + deltaPosition.x + halfX, GetPosition().y  + halfY };
 
     if (!CollisionManager::GetCollisionManager()->CheckCollision(*Collidor))
     {
-        Position.x = Position.x + deltaPosition.x;
+        glm::vec3 oldPosition = GetPosition();
+        newPosition.x = oldPosition.x + deltaPosition.x;
+    }
+    else
+    {
+        Collidor->Box.min = { GetPosition().x - halfX, GetPosition().y - halfY };
+        Collidor->Box.max = { GetPosition().x + halfX, GetPosition().y + halfY };
+    }
+
+    Collidor->Box.min = { GetPosition().x - halfX, GetPosition().y + deltaPosition.y - halfY };
+    Collidor->Box.max = { GetPosition().x + halfX, GetPosition().y + deltaPosition.y + halfY };
+
+    if (!CollisionManager::GetCollisionManager()->CheckCollision(*Collidor))
+    {
+        glm::vec3 oldPosition = GetPosition();
+        newPosition.y = oldPosition.y + deltaPosition.y;
     }
     else
     {
 
-        Collidor->Box.min = { Position.x - halfX, Position.y - halfY };
-        Collidor->Box.max = { Position.x + halfX, Position.y + halfY };
+        Collidor->Box.min = { GetPosition().x - halfX, GetPosition().y - halfY };
+        Collidor->Box.max = { GetPosition().x + halfX, GetPosition().y + halfY };
     }
 
-    Collidor->Box.min = { Position.x - halfX, Position.y + deltaPosition.y - halfY };
-    Collidor->Box.max = { Position.x + halfX, Position.y + deltaPosition.y + halfY };
-
-    if (!CollisionManager::GetCollisionManager()->CheckCollision(*Collidor))
-    {
-        Position.y = Position.y + deltaPosition.y;
-    }
-    else
-    {
-
-        Collidor->Box.min = { Position.x - halfX, Position.y - halfY };
-        Collidor->Box.max = { Position.x + halfX, Position.y + halfY };
-    }
+    UpdatePosition(newPosition, false);
 
     if (deltaPosition.x > 0 && !characterSprite.spriteAnimator->currentMontage.isMontage)
     {

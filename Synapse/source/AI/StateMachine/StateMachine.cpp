@@ -12,7 +12,7 @@ StateMachine::StateMachine(Enemy* Owner, Player* Player)
 void StateMachine::Update(double dt)
 {
 	// Add functions to check edge distances not centers
-	glm::vec3 difference = player->Position - owner->Position;
+	glm::vec3 difference = player->GetPosition() - owner->GetPosition();
 	float distance = glm::length(difference);
 
 	// For now dead players when animation is running for death have chase mode on...in the future add a default mode

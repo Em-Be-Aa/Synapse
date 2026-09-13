@@ -67,7 +67,7 @@ void Session::Update(double deltaTime)
 
     // 3D Transformation, Camera and Projection
     glm::mat4 worldView;
-    worldView = glm::lookAt(defaultCamera->Position, defaultCamera->Position + defaultCamera->cameraFront, defaultCamera->cameraUp);
+    worldView = glm::lookAt(defaultCamera->GetPosition(), defaultCamera->GetPosition() + defaultCamera->cameraFront, defaultCamera->cameraUp);
 
     glm::mat4 worldProjection = glm::perspective(glm::radians(45.0f), ((float)GW->GetWindowWidth() / (float)GW->GetWindowHeight()), 0.1f, 100.0f);
 

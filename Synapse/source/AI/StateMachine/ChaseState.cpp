@@ -21,7 +21,7 @@ void ChaseState::Update(double deltaTime)
         return;
     }
 
-    glm::vec3 difference = player->Position - owner->Position;
+    glm::vec3 difference = player->GetPosition() - owner->GetPosition();
 
     float distance = glm::length(difference);
 

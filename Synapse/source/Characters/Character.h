@@ -33,7 +33,6 @@ protected:
 	std::string tag = "character";
 	glm::vec3 characterFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 characterUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 previousPosition = glm::vec3(0.0f, 0.0f, 0.0003f);
 	Faction characterFaction = Faction::None;
 
 private:
@@ -85,5 +84,7 @@ public:
 	}
 
 	std::string GetCharacterTag() { return tag; }
+
+
 
 };

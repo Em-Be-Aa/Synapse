@@ -46,7 +46,7 @@ glm::vec3 Widget::CalculateWidgetPosition()
     }
     else if (widgetRenderSpace == RenderSpace::World)
     {
-        return  owner->Position + glm::vec3(offset, 0.0f);
+        return  owner->GetPosition() + glm::vec3(offset, 0.0f);
     }
 }
 

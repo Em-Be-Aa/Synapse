@@ -16,7 +16,18 @@ void DashAbility::Activate()
 
 		if (targetAnimator)
 		{
-			owner->Position = owner->Position + glm::vec3{ 1.0f, 0.0f, 0.0f };
+			float dashMagnitude = owner->GetVitalsComponent().GetDashInfo().dashDistance.value_or(0.0f);
+			glm::vec3 deltaPosition = owner->GetPosition() - owner->GetPreviousPosition();
+			glm::vec3 dashDirection = { owner->GetCharacterDirection(), 0.0, 0.0};
+			if (deltaPosition != glm::vec3(0.0f))
+			{
+				dashDirection = deltaPosition / glm::length(deltaPosition);
+			}
+
+			std::cout << " Modify Value: (" << (dashDirection * dashMagnitude).x << (dashDirection * dashMagnitude).y << std::endl;
+
+
+			owner->UpdatePosition(dashDirection * dashMagnitude, true);
 		}
 	}
 }

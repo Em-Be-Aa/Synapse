@@ -6,15 +6,15 @@
 int main()
 {
     // Fix this
-    ma_result result;
-    ma_engine engine;
+    //ma_result result;
+    //ma_engine engine;
 
-    result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        return -1;
-    }
+    //result = ma_engine_init(NULL, &engine);
+    //if (result != MA_SUCCESS) {
+    //    return -1;
+    //}
 
-    ma_engine_play_sound(&engine, "Assets/Audio/SoundTrack.mp3", NULL);
+    //ma_engine_play_sound(&engine, "Assets/Audio/SoundTrack.mp3", NULL);
 
 
     Game* defaultGame = Game::GetGame();
