@@ -163,7 +163,6 @@ void Character::OnAnimationMontageComplete(std::string Anim)
 {
     if (Anim == "DEATH")
     {
-        //std::cout << "Death Animation is complete" << std::endl;
         this->Destroy();
     }
 }

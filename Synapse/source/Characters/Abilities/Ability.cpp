@@ -32,6 +32,11 @@ Ability::Ability(std::string abilTag, Animator* animator, std::string charTag, C
 			
 		}
 	);
+
+	owner->GetSpriteComponent().spriteAnimator->onMontageComplete.Subscribe
+	(
+		[this](std::string Anim) { OnAbilityMontageCompleted(Anim); }
+	);
 }
 
 void Ability::Update(double deltaTime)
@@ -47,21 +52,21 @@ void Ability::Update(double deltaTime)
 	}
 
 	// Also add this in ability info
-	if (isActivated && currentActivationTime <= targetActivationTime)
+	if (isCollidorActivated && currentCollidorTime <= targetCollidorTime)
 	{
-		currentActivationTime += deltaTime;
+		currentCollidorTime += deltaTime;
 	}
 	else
 	{
-		if (abilityCollidor && currentActivationTime > targetActivationTime)
+		if (abilityCollidor && currentCollidorTime > targetCollidorTime)
 		{
 			abilityCollidor->Destroy();
 			abilityCollidor = nullptr;
 		}
 
 
-		currentActivationTime = 0.0f;
-		isActivated = false;
+		currentCollidorTime = 0.0f;
+		isCollidorActivated = false;
 
 	}
 
@@ -79,8 +84,11 @@ void Ability::Activate()
 {
 	if (!isOnCooldown)
 	{
+		// Change the collidor appearance functionality so its time of appearance is in its config and is loaded...also make sure it is not set to true from the start we can have abilities that spawn
+		// collidor box a bit late like a heavy attack
 		isOnCooldown = !isOnCooldown;
-		isActivated = true;
+		isCollidorActivated = true;
+		isAbilityActivated = true;
 
 		if (targetAnimator)
 		{
@@ -104,8 +112,16 @@ void Ability::Activate()
 			float halfX = abilityCollidor->BoxSize.x * 0.5f;
 			float halfY = abilityCollidor->BoxSize.y * 0.5f;
 			abilityCollidor->Box.min = { owner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
-			abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y };
+			abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y};
 		}
 	}
 	
+}
+
+void Ability::OnAbilityMontageCompleted(std::string Anim)
+{
+	if (Anim == tag)
+	{
+		isAbilityActivated = false;
+	}
 }

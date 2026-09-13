@@ -26,7 +26,7 @@ void AbilityComponent::ActivateAbility(std::string Tag)
 	// Multiple abilities can be active if passive abilities are introduced..so fix this later
 	for (auto abil : abilities)
 	{
-		if (abil->GetCooldownStatus())
+		if (abil->IsAbilityActivated())
 		{
 			return;
 		}

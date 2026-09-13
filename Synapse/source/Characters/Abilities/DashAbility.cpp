@@ -12,7 +12,7 @@ void DashAbility::Activate()
 	if (!isOnCooldown)
 	{
 		isOnCooldown = !isOnCooldown;
-		isActivated = true;
+		isAbilityActivated = true;
 
 		if (targetAnimator)
 		{
@@ -28,6 +28,9 @@ void DashAbility::Activate()
 
 
 			owner->UpdatePosition(dashDirection * dashMagnitude, true);
+
+			// This has no animation like system rn but it should just sudden teleport is not dashing...we have to give time to go from one place to another
+			isAbilityActivated = false;
 		}
 	}
 }

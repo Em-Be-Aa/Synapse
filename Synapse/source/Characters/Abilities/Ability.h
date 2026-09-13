@@ -16,6 +16,7 @@ public:
 	Ability(std::string abilTag, Animator* animator, std::string charTag, Character* Owner, AbilityInfo info);
 	void Update(double deltaTime) override;
 	virtual void Activate();
+	void OnAbilityMontageCompleted(std::string Anim);
 
 	unsigned ID = 0;
 	std::string tag = "";
@@ -32,13 +33,19 @@ public:
 		return isOnCooldown ? abilInfo.abilityCooldown - currentCooldownTime : 0.0f;
 	}
 
+	bool IsAbilityActivated()
+	{
+		return isAbilityActivated;
+	}
+
 protected:
 
 	float currentCooldownTime = 0.0f;
 	bool isOnCooldown= false;
-	float targetActivationTime = 1.0f;
-	float currentActivationTime = 0.0f;
-	bool isActivated = false;
+	float targetCollidorTime = 1.0f;
+	float currentCollidorTime = 0.0f;
+	bool isCollidorActivated = false;
+	bool isAbilityActivated = false;
 
 	Character* owner;
 	AbilityInfo abilInfo;
