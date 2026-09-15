@@ -81,7 +81,6 @@ void Player::onInputClicked(int Key)
 
 
 
-
     if (Key == GLFW_KEY_ESCAPE)
     {
         glfwSetWindowShouldClose(Game::GetGame()->GetGameWindow()->window, GLFW_TRUE);

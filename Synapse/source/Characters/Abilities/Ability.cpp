@@ -104,6 +104,7 @@ void Ability::Activate()
 				totalDamage = 2 * abilInfo.abilityDamage;
 			}
 			
+			std::cout << "Spawning collidor for damage: " << totalDamage << std::endl;
 
 			abilityCollidor = SpawnActor<CollisionComponent>(owner, true, totalDamage);
 

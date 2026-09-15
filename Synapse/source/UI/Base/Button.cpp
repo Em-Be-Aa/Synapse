@@ -41,13 +41,8 @@ void Button::onInputPressed(int Key)
 
 void Button::onInputClicked(int Key)
 {
-    // Log every time the function receives an input, showing the key code and hover state
-    std::cout << "[Button] onInputClicked triggered | Key: " << Key
-        << " | currentlyOver: " << (currentlyOver ? "True" : "False") << std::endl;
-
     if (currentlyOver && Key == GLFW_MOUSE_BUTTON_1)
     {
-        std::cout << "[Button] Valid left-click detected. Broadcasting OnClicked." << std::endl;
         OnClicked.Broadcast();
     }
 }

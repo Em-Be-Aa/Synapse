@@ -16,7 +16,6 @@ void VitalsWidget::Init()
 	SetColor({ 0.0f, 0.0f, 0.0f, 0.0f });
 	SetZOrder(0);
 
-
 	Momentum = SpawnActor<AbilityWidget>("Assets/UI/MomemtumVital.png", this);
 	Momentum->SetOffset({ 50.0f, 150.0f });
 	Momentum->SetAnchor(AnchorPoint::Center);
@@ -55,5 +54,5 @@ void VitalsWidget::Update(double dT)
 	Recovery->GetText()->SetText("+" + std::to_string(static_cast<int>(std::round(VC.GetRecovery() * 100.0f))) + "%");
 	Focus->GetText()->SetText("+" + std::to_string(static_cast<int>(std::round(VC.GetFocus() * 100.0f))) + "%");
 	Insight->GetText()->SetText("+" + std::to_string(static_cast<int>(std::round(VC.GetInsight() * 100.0f))) + "%");
-	
+
 }

@@ -24,9 +24,6 @@ void DashAbility::Activate()
 				dashDirection = deltaPosition / glm::length(deltaPosition);
 			}
 
-			std::cout << " Modify Value: (" << (dashDirection * dashMagnitude).x << (dashDirection * dashMagnitude).y << std::endl;
-
-
 			owner->UpdatePosition(dashDirection * dashMagnitude, true);
 
 			// This has no animation like system rn but it should just sudden teleport is not dashing...we have to give time to go from one place to another

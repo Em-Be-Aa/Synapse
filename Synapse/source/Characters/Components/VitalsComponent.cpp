@@ -117,20 +117,20 @@ void VitalsComponent::ModifyVital(std::string category, std::string tag, float v
 
 
 
-	std::cout << "[VitalsComponent] Current Stats -> "
-		<< "Vigor(Max): " << ownerVitals.Vigor.max << " | "
-		<< "Plating(Max): " << ownerVitals.Plating.max << " | "
-		<< "Momentum: " << ownerVitals.Momentum << " | "
-		<< "Focus: " << ownerVitals.Focus << " | "
-		<< "Recovery: " << ownerVitals.Recovery << " | "
-		<< "Insight: " << ownerVitals.Insight << " | "
-		<< "Light Damage: " << ownerVitals.LightAttack.abilityDamage << " | "
-		<< "Light Cooldown: " << ownerVitals.LightAttack.abilityCooldown << " | "
-		<< "Heavy Damage: " << ownerVitals.HeavyAttack.abilityDamage << " | "
-		<< "Heavy Cooldown: " << ownerVitals.HeavyAttack.abilityCooldown << " | "
-		<< "Dash Damage: " << ownerVitals.Dash.abilityDamage << " | "
-		<< "Dash Cooldown: " << ownerVitals.Dash.abilityCooldown << " | "
-		<< "Dash Distance: " << ownerVitals.Dash.dashDistance.value_or(0.0f) << " | "
-		<< std::endl;
+	//std::cout << "[VitalsComponent] Current Stats -> "
+	//	<< "Vigor(Max): " << ownerVitals.Vigor.max << " | "
+	//	<< "Plating(Max): " << ownerVitals.Plating.max << " | "
+	//	<< "Momentum: " << ownerVitals.Momentum << " | "
+	//	<< "Focus: " << ownerVitals.Focus << " | "
+	//	<< "Recovery: " << ownerVitals.Recovery << " | "
+	//	<< "Insight: " << ownerVitals.Insight << " | "
+	//	<< "Light Damage: " << ownerVitals.LightAttack.abilityDamage << " | "
+	//	<< "Light Cooldown: " << ownerVitals.LightAttack.abilityCooldown << " | "
+	//	<< "Heavy Damage: " << ownerVitals.HeavyAttack.abilityDamage << " | "
+	//	<< "Heavy Cooldown: " << ownerVitals.HeavyAttack.abilityCooldown << " | "
+	//	<< "Dash Damage: " << ownerVitals.Dash.abilityDamage << " | "
+	//	<< "Dash Cooldown: " << ownerVitals.Dash.abilityCooldown << " | "
+	//	<< "Dash Distance: " << ownerVitals.Dash.dashDistance.value_or(0.0f) << " | "
+	//	<< std::endl;
 }
 

@@ -15,9 +15,10 @@ public:
 	void Update(double dT) override;
 	void SetSize(glm::vec2 Size) override;
 
+	Widget* Image;
+
 private:
 
-	Widget* Image;
 	Widget* Cooldown;
 	TextWidget* Text;
 

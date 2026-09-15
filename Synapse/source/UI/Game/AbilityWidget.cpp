@@ -26,7 +26,6 @@ void AbilityWidget::Init()
 {
 	Widget::Init();
 
-
 	Font* fontA = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
 
 	SetImage("Assets/UI/StatBG.png");

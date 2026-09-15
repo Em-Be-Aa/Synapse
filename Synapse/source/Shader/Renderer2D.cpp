@@ -62,8 +62,13 @@ void Renderer2D::BeginScene(const glm::mat4& worldView, const glm::mat4& worldPr
 
 void Renderer2D::Submit(RenderComponent& rc)
 {
-    Submission s;
+    if (rc.GetIsDisabled())
+    {
+        rc.ClearQuads();
+        return;
+    }
 
+    Submission s;
     std::vector<QuadInfo> QI = rc.GetQuads();
 
     for (auto Quad : QI)
@@ -75,11 +80,6 @@ void Renderer2D::Submit(RenderComponent& rc)
         s.layer = Quad.layer;
         s.textureXFlip = Quad.textureXFlip;
         s.space = Quad.space;
-
-        if (rc.GetIsDisabled())
-        {
-            return;
-        }
 
         if (s.space == RenderSpace::World)
         {
@@ -117,7 +117,7 @@ void Renderer2D::Submit(unsigned int textureID, const glm::mat4& model, const gl
 
 void Renderer2D::DrawSubmissions(std::vector<Submission>& subs, unsigned int& currentTex)
 {
-    std::sort(subs.begin(), subs.end(),
+    std::stable_sort(subs.begin(), subs.end(),
         [](const Submission& a, const Submission& b)
         {
             return a.layer < b.layer;
