@@ -12,7 +12,7 @@ void VitalsComponent::SetVigor(float vigorValue)
 {
 
 	ownerVitals.Vigor.current = vigorValue;
-	onVigorModified.Broadcast( GetVigor() / GetMaxVigor() );
+	onVigorModified.Broadcast( GetVigor(), GetMaxVigor() );
 
 	if (GetVigor() <= 0.0f)
 	{
@@ -23,7 +23,7 @@ void VitalsComponent::SetVigor(float vigorValue)
 void VitalsComponent::SetPlating(float platingValue)
 {
 	ownerVitals.Plating.current = platingValue;
-	onPlatingModified.Broadcast( GetPlating() / GetMaxPlating() );
+	onPlatingModified.Broadcast(GetPlating(), GetMaxPlating());
 }
 
 
@@ -46,12 +46,12 @@ void VitalsComponent::ModifyVital(std::string category, std::string tag, float v
 	if (tag == "VIGOR")
 	{
 		ApplyResource(ownerVitals.Vigor);
-		onVigorModified.Broadcast(GetVigor() / GetMaxVigor());
+		onVigorModified.Broadcast(GetVigor() , GetMaxVigor());
 	}
 	else if (tag == "PLATING")
 	{
 		ApplyResource(ownerVitals.Plating); 
-		onPlatingModified.Broadcast(GetPlating() / GetMaxPlating());
+		onPlatingModified.Broadcast(GetPlating() , GetMaxPlating());
 	}
 	else if (tag == "MOMENTUM")
 	{

@@ -11,13 +11,16 @@ public:
 
 	void Init() override;
 
-	void UpdateVigorBar(float VigorPer);
-	void UpdatePlatingBar(float PlatingPer);
+	void UpdateVigorBar(float Vigor, float MaxVigor);
+	void UpdatePlatingBar(float Plating, float MaxPlating);
 
 
 private:
 
 	Widget* VigorBar;
 	Widget* PlatingBar;
+
+	TextWidget* VigorText;
+	TextWidget* PlatingText;
 };
 

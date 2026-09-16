@@ -68,7 +68,7 @@
       "DASH": {
         "dashDistance" : 0.5,
         "abilityDamage": 0.0,
-        "abilityCooldown": 3.0
+        "abilityCooldown": 1.0
       }
   }
 

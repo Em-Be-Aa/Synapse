@@ -13,7 +13,7 @@ public:
 
 	void Init() override;
 
-	void UpdateVigorBar(float VigorPer);
+	void UpdateVigorBar(float Vigor, float MaxVigor);
 
 };
 

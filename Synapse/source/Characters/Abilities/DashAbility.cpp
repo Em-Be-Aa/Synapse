@@ -5,6 +5,18 @@
 void DashAbility::Update(double deltaTime)
 {
 	Ability::Update(deltaTime);
+
+	if (isAbilityActivated)
+	{
+		owner->UpdatePosition((dashMagnitude / dashIntervals), true);
+		currentDashInterval++;
+
+		if (currentDashInterval == dashIntervals)
+		{
+			currentDashInterval = 0.0f;
+			isAbilityActivated = false;
+		}
+	}
 }
 
 void DashAbility::Activate()
@@ -16,7 +28,7 @@ void DashAbility::Activate()
 
 		if (targetAnimator)
 		{
-			float dashMagnitude = owner->GetVitalsComponent().GetDashInfo().dashDistance.value_or(0.0f);
+			float dashMultiplier = owner->GetVitalsComponent().GetDashInfo().dashDistance.value_or(0.0f);
 			glm::vec3 deltaPosition = owner->GetPosition() - owner->GetPreviousPosition();
 			glm::vec3 dashDirection = { owner->GetCharacterDirection(), 0.0, 0.0};
 			if (deltaPosition != glm::vec3(0.0f))
@@ -24,10 +36,7 @@ void DashAbility::Activate()
 				dashDirection = deltaPosition / glm::length(deltaPosition);
 			}
 
-			owner->UpdatePosition(dashDirection * dashMagnitude, true);
-
-			// This has no animation like system rn but it should just sudden teleport is not dashing...we have to give time to go from one place to another
-			isAbilityActivated = false;
+			dashMagnitude = dashDirection * dashMultiplier;
 		}
 	}
 }

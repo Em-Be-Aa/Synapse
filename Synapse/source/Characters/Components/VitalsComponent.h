@@ -15,8 +15,8 @@ public:
 	VitalsComponent(Character* Owner);
 
 	Delegate<> onDeath;
-	Delegate<float> onVigorModified;
-	Delegate<float> onPlatingModified;
+	Delegate<float, float> onVigorModified;
+	Delegate<float, float> onPlatingModified;
 	Delegate<AbilityVital> onAbilityModified;
 
 

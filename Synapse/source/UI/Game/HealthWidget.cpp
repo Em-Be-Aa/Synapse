@@ -7,6 +7,8 @@
 
 void HealthWidget::Init()
 {
+	Font* fontA = Game::GetGame()->GetCurrentSession()->GetSmallFont();
+
 	SetAnchor(AnchorPoint::BottomLeft);
 	SetSize({ 500.0f, 100.0f });
 	SetOffset({ 20.0f, 20.0f });
@@ -28,25 +30,43 @@ void HealthWidget::Init()
 	PlatingBar->SetZOrder(0);
 
 
+	VigorText = SpawnActor<TextWidget>(fontA, "100/100", this);
+	VigorText->SetAnchor(AnchorPoint::Center);
+	VigorText->SetOffset({ 30.0f, -25 });
+	VigorText->SetColor({ 1, 1, 1, 1.0f });
+	VigorText->SetZOrder(1);
+
+	PlatingText = SpawnActor<TextWidget>(fontA, "50/50", this);
+	PlatingText->SetAnchor(AnchorPoint::Center);
+	PlatingText->SetOffset({ 30.0f, 25 });
+	PlatingText->SetColor({ 1, 1, 1, 1.0f });
+	PlatingText->SetZOrder(1);
+
+
 	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onVigorModified.Subscribe
 	(
-		[this](float VigorPer) { this->UpdateVigorBar(VigorPer);}
+		[this](float Vigor, float MaxVigor) { this->UpdateVigorBar(Vigor, MaxVigor);}
 	);
 
 
 	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onPlatingModified.Subscribe
 	(
-		[this](float PlatingPer) { this->UpdatePlatingBar(PlatingPer); }
+		[this](float Plating, float MaxPlating) { this->UpdatePlatingBar(Plating, MaxPlating); }
 	);
 
 }
 
-void HealthWidget::UpdateVigorBar(float VigorPer)
+void HealthWidget::UpdateVigorBar(float Vigor, float MaxVigor)
 {
-	VigorBar->SetSize({ 477.0f * VigorPer, VigorBar->GetSize().y });
+
+	std::cout << "this is health change: " << Vigor << "-----" << MaxVigor << std::endl;
+	VigorBar->SetSize({ 440.0f * (Vigor/MaxVigor), VigorBar->GetSize().y });
+	VigorText->SetText(std::to_string(static_cast<int>(Vigor)) + "/" + std::to_string(static_cast<int>(MaxVigor)));
 }
 
-void HealthWidget::UpdatePlatingBar(float PlatingPer)
+void HealthWidget::UpdatePlatingBar(float Plating, float MaxPlating)
 {
-	PlatingBar->SetSize({ 477.0f * PlatingPer, PlatingBar->GetSize().y });
+
+	PlatingBar->SetSize({ 440.0f * (Plating/MaxPlating), PlatingBar->GetSize().y });
+	PlatingText->SetText(std::to_string(static_cast<int>(Plating)) + "/" + std::to_string(static_cast<int>(MaxPlating)));
 }
