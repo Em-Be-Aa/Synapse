@@ -7,8 +7,8 @@
 class TextWidget : public Widget
 {
 public:
-    TextWidget(Font* font, std::string initialText);
-    TextWidget(Font* font, std::string initialText, Widget* Parent);
+    TextWidget(std::weak_ptr<Font> font, std::string initialText);
+    TextWidget(std::weak_ptr<Font> font, std::string initialText, std::weak_ptr<Widget> Parent);
 
     void Update(double dT) override;
 
@@ -16,6 +16,6 @@ public:
 
 private:
 
-    Font* fontRef;
+    std::weak_ptr<Font> fontRef;
     std::string text;
 };

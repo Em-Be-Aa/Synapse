@@ -10,11 +10,11 @@ class CollisionManager : public Object
 public:
 
 
-	void RegisterCollisionComponent(CollisionComponent* Coll);
-	void UnregisterCollisionComponent(CollisionComponent* Coll);
+	void RegisterCollisionComponent(std::weak_ptr<CollisionComponent> Coll);
+	void UnregisterCollisionComponent(std::weak_ptr<CollisionComponent> Coll);
 	void Update(double deltaTime) override;
 	static CollisionManager* GetCollisionManager();
-	bool CheckCollision(CollisionComponent& SourceCollidor);
+	bool CheckCollision(std::weak_ptr<CollisionComponent> SourceCollidor);
 	bool IsColliding(const CollisionBox& A, const CollisionBox& B)
 	{
 		return	A.min.x <= B.max.x &&
@@ -25,11 +25,21 @@ public:
 
 	void DestoryPendingCollidors()
 	{
-		std::erase_if(CollisionComponents, [](const CollisionComponent* CC) { return CC->isPendingDestroy; });
+		std::erase_if(CollisionComponents, [](std::weak_ptr<CollisionComponent> CC) 
+			{
+				if (CC.lock())
+				{
+					return CC.lock()->isPendingDestroy;
+				}
+				else
+				{
+					return true;
+				}
+			});
 	};
 
 private:
-	std::vector<CollisionComponent*> CollisionComponents;
+	std::vector<std::weak_ptr<CollisionComponent>> CollisionComponents;
 	CollisionManager() {};
 };
 

@@ -16,10 +16,10 @@ public:
 
 private:
 
-	AbilityWidget* Momentum;
-	AbilityWidget* Focus;
-	AbilityWidget* Recovery;
-	AbilityWidget* Insight;
+	std::shared_ptr<AbilityWidget> Momentum;
+	std::shared_ptr<AbilityWidget> Focus;
+	std::shared_ptr<AbilityWidget> Recovery;
+	std::shared_ptr<AbilityWidget> Insight;
 
 };
 

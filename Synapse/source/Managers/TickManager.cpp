@@ -9,14 +9,25 @@ TickManager* TickManager::GetTickManager()
 	return &DefaultTickManager;
 }
 
-void TickManager::RegisterObject(Actor* O)
+void TickManager::RegisterObject(std::weak_ptr<Actor> O)
 {
 	RegisteredActors.push_back(O);
 }
 
 void TickManager::RemovePendingDestroyActors()
 {
-	std::erase_if(RegisteredActors, [](const Actor* A) { return A->isPendingDestroy; });
+	std::erase_if(RegisteredActors, [](std::weak_ptr<Actor> A) 
+		{ 
+			if (A.lock())
+			{
+				return A.lock()->isPendingDestroy;
+			}
+			else
+			{
+				return true;
+			}
+			
+		});
 }
 
 

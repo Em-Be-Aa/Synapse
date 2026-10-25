@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <glad/glad.h>
+#include <memory>
 
 void Session::Init()
 {
@@ -30,21 +31,34 @@ void Session::Init()
     // If the player dies...this behaves weird..fix this so it can act independent if there is no owner
     defaultCamera = SpawnActor<Camera>(SynapsePlayer);
 
-    InputManager* IM = game->GetInputManager();
-    Window* GW = game->GetGameWindow();
+    largeFont = SpawnActor<Font>();
+    defaultFont = SpawnActor<Font>();
+    smallFont = SpawnActor<Font>();
+
+    auto G = game;
+
+    if (!G)
+    {
+        return;
+    }
+
+    auto GW = G->GetGameWindow();
 
     // Setting Input Actor
-    IM->EnableActorInput(SynapsePlayer);
-    IM->onMouseMove = ([GW, this](double xpos, double ypos) { defaultCamera->CameraMove(GW->window, xpos, ypos); });
+    if (auto IM = G->GetInputManager().lock())
+    {
+        IM->EnableActorInput(SynapsePlayer);
+        IM->onMouseMove = ([GW, this](double xpos, double ypos) { if (auto w = GW.lock()) { defaultCamera->CameraMove(w->window, xpos, ypos); } });
+    }
 
-    waveSpawner = SpawnActor<WaveSpawner>(this);
+    waveSpawner = SpawnActor<WaveSpawner>(std::dynamic_pointer_cast<Session>(shared_from_this()));
     waveSpawner->StartWave(1);
 
-    largeFont.Init("Assets/Fonts/Caesar.ttf", 60.0f);
-    defaultFont.Init("Assets/Fonts/Caesar.ttf", 40.0f);
-    smallFont.Init("Assets/Fonts/Caesar.ttf", 20.0f);
+    largeFont->Init("Assets/Fonts/Caesar.ttf", 60.0f);
+    defaultFont->Init("Assets/Fonts/Caesar.ttf", 40.0f);
+    smallFont->Init("Assets/Fonts/Caesar.ttf", 20.0f);
 
-    sessionHUD = SpawnActor<HUD>(&defaultFont); 
+    sessionHUD = SpawnActor<HUD>(defaultFont); 
 
     //glEnable(GL_DEPTH_TEST);
     srand(time(0));
@@ -52,11 +66,16 @@ void Session::Init()
 
 void Session::Update(double deltaTime)
 {
+    auto G = game;
 
-    InputManager* IM = game->GetInputManager();
-    Window* GW = game->GetGameWindow();
+    if (!G)
+    {
+        return;
+    }
+
+    auto IM = G->GetInputManager().lock();
+    auto GW = G->GetGameWindow().lock();
     Renderer2D* Renderer = Renderer2D::GetRenderer();
-\
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -83,42 +102,45 @@ void Session::Update(double deltaTime)
     UpdateManager::GetUpdateManager().FlushPending();
 
     // Update World...this should work for things we need updated before we tick world
-    for (auto& O : UpdateManager::GetUpdateManager().PreUpdateObjects)
+    for (auto O : UpdateManager::GetUpdateManager().PreUpdateObjects)
     {
-        if (!O->isPendingDestroy)
+        auto object = O.lock();
+        if (object && !object->isPendingDestroy)
         {
-            O->Update(deltaTime);
+            object->Update(deltaTime);
         }
     }
     for (auto& O : UpdateManager::GetUpdateManager().UpdateObjects)
     {
-        if (!O->isPendingDestroy)
+        auto object = O.lock();
+        if (object && !object->isPendingDestroy)
         {
-            O->Update(deltaTime);
+            object->Update(deltaTime);
         }
     }
     for (auto& O : UpdateManager::GetUpdateManager().PostUpdateObjects)
     {
-        if (!O->isPendingDestroy)
+        auto object = O.lock();
+        if (object && !object->isPendingDestroy)
         {
-            O->Update(deltaTime);
+            object->Update(deltaTime);
         }
     }
 
     // Tick World
-    for (Actor* O : TickManager::GetTickManager()->RegisteredActors)
+    for (auto O : TickManager::GetTickManager()->RegisteredActors)
     {
-        if (!O->isPendingDestroy)
+        auto object = O.lock();
+        if (object && !object->isPendingDestroy)
         {
-            O->Tick(deltaTime);
+            object->Tick(deltaTime);
         }
     }
 
     // Submit all registered RenderComponents to Renderer2D
-    for (RenderComponent* rc : RenderManager::GetRenderManager().RenderComps)
+    for (auto rc : RenderManager::GetRenderManager().RenderComps)
     {
-        if (rc)
-            Renderer->Submit(*rc);
+       Renderer->Submit(rc);
     }
 
     // End and flush renderer

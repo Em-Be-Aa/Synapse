@@ -3,10 +3,6 @@
 #include "VitalsComponent.h"
 #include <iostream>
 
-VitalsComponent::VitalsComponent(Character* Owner)
-{
-
-}
 
 void VitalsComponent::SetVigor(float vigorValue)
 {

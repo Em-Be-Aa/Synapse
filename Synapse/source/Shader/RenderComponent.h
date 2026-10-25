@@ -3,16 +3,20 @@
 #include "../Actor/Object.h"
 #include "../Enums&Structs/GameTypes.h"
 #include <glm/glm.hpp>
+#include <memory>
 
 class Object;
 
-class RenderComponent
+class RenderComponent : public Object
 {
 
 public:
 
-	RenderComponent(Object* Owner);
+	RenderComponent();
 	~RenderComponent();
+
+	void Init() override;
+	void Update(double dT) override {};
 
 	// non-copyable to avoid double registration
 	RenderComponent(const RenderComponent&) = delete;
@@ -20,7 +24,7 @@ public:
 
 	QuadInfo defaultQuad;
 
-	Object* GetOwner() const { return owner; }
+	std::weak_ptr<Object> GetOwner() const { return owner; }
 	bool GetIsDisabled() const { return isDisabled; }
 	void SetIsDisabled(bool disable) { isDisabled = disable; }
 	std::vector<QuadInfo> GetQuads()
@@ -38,12 +42,17 @@ public:
 		Quads.clear();
 	}
 
+	void SetOwner(std::weak_ptr<Object> Owner)
+	{
+		owner = Owner;
+	}
+
 	std::vector<QuadInfo> Quads;
 
 
 private:
 
-	Object* owner;
+	std::weak_ptr<Object> owner;
 	bool isDisabled = false;
 
 

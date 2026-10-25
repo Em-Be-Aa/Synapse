@@ -6,13 +6,15 @@
 #include "CharacterHealthBar.h"
 #include <iostream>
 
-CharacterHealthBar::CharacterHealthBar(Actor* Owner)
+CharacterHealthBar::CharacterHealthBar(std::weak_ptr<Actor> Owner)
 {
 	owner = Owner;
 }
 
 void CharacterHealthBar::Init()
 {
+	Widget::Init();
+
 	SetAnchor(AnchorPoint::None);
 	SetSize({ 0.3f, 0.025f });
 	SetOffset({0.0f, 0.1f + 0.0f });
@@ -20,8 +22,8 @@ void CharacterHealthBar::Init()
 	SetRenderSpace(RenderSpace::World);
 	SetZOrder(0);
 
-	auto ownerCharacter = dynamic_cast<Character*>(owner);
-	ownerCharacter->GetVitalsComponent().onVigorModified.Subscribe
+	auto ownerCharacter = dynamic_pointer_cast<Character>(owner.lock());
+	ownerCharacter->GetVitalsComponent().lock()->onVigorModified.Subscribe
 	(
 		[this](float Vigor, float MaxVigor) { this->UpdateVigorBar( Vigor, MaxVigor); }
 	);

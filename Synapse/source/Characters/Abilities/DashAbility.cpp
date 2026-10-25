@@ -8,7 +8,14 @@ void DashAbility::Update(double deltaTime)
 
 	if (isAbilityActivated)
 	{
-		owner->UpdatePosition((dashMagnitude / dashIntervals), true);
+		auto Owner = owner.lock();
+
+		if (!Owner)
+		{
+			return;
+		}
+
+		Owner->UpdatePosition((dashMagnitude / dashIntervals), true);
 		currentDashInterval++;
 
 		if (currentDashInterval == dashIntervals)
@@ -25,12 +32,14 @@ void DashAbility::Activate()
 	{
 		isOnCooldown = !isOnCooldown;
 		isAbilityActivated = true;
+		auto TargetAnimator = targetAnimator.lock();
+		auto Owner = owner.lock();
 
-		if (targetAnimator)
+		if (TargetAnimator)
 		{
-			float dashMultiplier = owner->GetVitalsComponent().GetDashInfo().dashDistance.value_or(0.0f);
-			glm::vec3 deltaPosition = owner->GetPosition() - owner->GetPreviousPosition();
-			glm::vec3 dashDirection = { owner->GetCharacterDirection(), 0.0, 0.0};
+			float dashMultiplier = Owner->GetVitalsComponent().lock()->GetDashInfo().dashDistance.value_or(0.0f);
+			glm::vec3 deltaPosition = Owner->GetPosition() - Owner->GetPreviousPosition();
+			glm::vec3 dashDirection = { Owner->GetCharacterDirection(), 0.0, 0.0};
 			if (deltaPosition != glm::vec3(0.0f))
 			{
 				dashDirection = deltaPosition / glm::length(deltaPosition);

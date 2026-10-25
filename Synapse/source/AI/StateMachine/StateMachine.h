@@ -12,14 +12,14 @@ class StateMachine : public Object
 
 public:
 
-	StateMachine(Enemy* Owner, Player* Player);
+	StateMachine(std::weak_ptr<Enemy> Owner, std::weak_ptr<Player> Player);
 
 	void Update(double dt) override;
 
 	template<typename T>
-	void SetState(StateMachine* SM)
+	void SetState(std::weak_ptr<StateMachine> SM)
 	{
-		if (dynamic_cast<T*>(currentState) != nullptr)
+		if (std::dynamic_pointer_cast<std::shared_ptr<T>>(currentState) != nullptr)
 		{
 			return;
 		}
@@ -30,22 +30,21 @@ public:
 			currentState->Destroy();
 		}
 
-		auto CS = SpawnActor<T>(SM);
-		currentState = CS;
+		currentState = SpawnActor<T>(SM);
 		currentState->Enter();
 	
 	}
 
 	void Destroy() override;
 
-	AIState* GetCurrentState() { return currentState; }
-	Player* GetPlayer() { return player; }
-	Enemy* GetOwner() { return owner; }
+	std::weak_ptr<AIState> GetCurrentState() { return currentState; }
+	std::weak_ptr<Player> GetPlayer() { return player; }
+	std::weak_ptr<Enemy> GetOwner() { return owner; }
 
 private:
 
-	Enemy* owner;
-	Player* player;
-	AIState* currentState;
+	std::weak_ptr< Enemy> owner;
+	std::weak_ptr<Player> player;
+	std::shared_ptr<AIState> currentState;
 };
 

@@ -14,6 +14,7 @@ class Character: public Actor
 public:
 
 	Character();
+	void Init() override;
 	void Tick(double deltaTime) override;
 	void Update(double deltaTime) override;
 	void Destroy() override;
@@ -24,11 +25,11 @@ public:
 
 protected:
 
-	Sprite characterSprite;
-	CollisionComponent* Collidor;
-	RenderComponent RenderComp;
-	VitalsComponent VitalsComp;
-	AbilityComponent AbilComp;
+	std::shared_ptr<Sprite> characterSprite;
+	std::shared_ptr<CollisionComponent> Collidor;
+	std::shared_ptr<RenderComponent> RenderComp;
+	std::shared_ptr<VitalsComponent> VitalsComp;
+	std::shared_ptr<AbilityComponent> AbilComp;
 
 	std::string tag = "character";
 	glm::vec3 characterFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -43,22 +44,22 @@ private:
 
 public:
 
-	AbilityComponent& GetAbilityComponent()
+	std::weak_ptr<AbilityComponent> GetAbilityComponent()
 	{
 		return AbilComp;
 	};
 
-	Sprite& GetSpriteComponent()
+	std::weak_ptr<Sprite> GetSpriteComponent()
 	{
 		return characterSprite;
 	};
 
-	CollisionComponent& GetCollisionComponent()
+	std::weak_ptr<CollisionComponent> GetCollisionComponent()
 	{
-		return *Collidor;
+		return Collidor;
 	}
 
-	VitalsComponent& GetVitalsComponent()
+	std::weak_ptr<VitalsComponent> GetVitalsComponent()
 	{
 		return VitalsComp;
 	}

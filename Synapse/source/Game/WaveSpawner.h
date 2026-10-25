@@ -12,7 +12,7 @@ class WaveSpawner : public Object
 	
 public:
 
-	WaveSpawner(Session* session)
+	WaveSpawner(std::weak_ptr<Session> session)
 	{
 		currentSession = session;
 	}
@@ -67,8 +67,8 @@ private:
 	{ 6, {12} }
 	};
 
-	std::vector<Enemy*> currentEnemies;
-	Session* currentSession;
+	std::vector<std::shared_ptr<Enemy>> currentEnemies;
+	std::weak_ptr<Session> currentSession;
 	int currentWaveCount;
 	WaveInfo currentWaveInfo;
 

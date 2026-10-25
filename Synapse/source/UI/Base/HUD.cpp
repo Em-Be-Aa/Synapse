@@ -18,7 +18,7 @@ void HUD::Init()
 	SpawnActor<VitalsWidget>();
 	SpawnActor<AbilitiesWidget>();
 	
-	Game::GetGame()->GetCurrentSession()->GetWaveSpawner()->OnWaveCompleted.Subscribe
+	Game::GetGame()->GetCurrentSession().lock()->GetWaveSpawner().lock()->OnWaveCompleted.Subscribe
 	(
 		[this](int waveNumber) {  ShowCardsWidget(true); }
 	);
@@ -34,13 +34,13 @@ void HUD::ShowCardsWidget(bool show)
 {
 	if (show)
 	{
-		Game::GetGame()->GetGameWindow()->SetInputModeUI();
+		Game::GetGame()->GetGameWindow().lock()->SetInputModeUI();
 		CardManager::GetCardManager()->SetupCards();
 	}
 	else
 	{
-		Game::GetGame()->GetGameWindow()->SetInputModeGame();
-		WaveSpawner* WS = Game::GetGame()->GetCurrentSession()->GetWaveSpawner();
+		Game::GetGame()->GetGameWindow().lock()->SetInputModeGame();
+		auto WS = Game::GetGame()->GetCurrentSession().lock()->GetWaveSpawner().lock();
 		WS->StartWave(WS->GetCurrentWaveCount());
 	}
 }

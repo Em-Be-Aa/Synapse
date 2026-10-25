@@ -9,9 +9,9 @@
 void Game::Init()
 {
 
-    gameWindow = new Window();
+    gameWindow = std::make_shared<Window>();
     gameWindow->SetInputModeGame();
-    defaultInputManager = new InputManager(gameWindow->window);
+    defaultInputManager = std::make_shared<InputManager>(gameWindow);
     Renderer2D::GetRenderer()->Init("Shaders/shader.vs", "Shaders/shader.fs");
     GameConfigs::GetGameConfig();
 
@@ -22,8 +22,6 @@ void Game::Init()
     double initialTime = glfwGetTime();
     double deltaTime = 0.0f;   
     
-
-
     while (!glfwWindowShouldClose(gameWindow->window))
     {
 
@@ -36,20 +34,23 @@ void Game::Init()
 
 }
 
+
+// Test by making some main menu shit....the session should be started again with nothing from previous session being stale or dangling or alive....the session and everything in it should completely start from scratch
 void Game::StartGame()
 {
     if (gameSession)
     {
-        delete gameSession;
+        gameSession.reset();
     }
     
-    gameSession = new Session(this);
+    gameSession = std::make_shared<Session>(this);
     gameSession->Init();
 
 }
 
 void Game::End()
 {
+    // make clean removal..even if this dont crash and game exits...
     Renderer2D::GetRenderer()->Shutdown();
     glfwTerminate();
 }

@@ -1,13 +1,17 @@
 #pragma once
 
+#include "../Actor/Object.h"
 #include <string>
 #include <vector>
 
 #include "stb_truetype.h"
 
-class Font
+class Font : public Object
 {
 public:
+
+    void Update(double dT) override {};
+    using Object::Init;
     bool Init(const char* ttfPath, float pixelheight = 32.0f);
 
     unsigned int GetTextureID() const { return textureID; }

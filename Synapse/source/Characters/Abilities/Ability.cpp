@@ -9,14 +9,20 @@
 #include <random>
 
 
-Ability::Ability(std::string abilTag, Animator* animator, std::string charTag, Character* Owner, AbilityInfo info)
+Ability::Ability(std::string abilTag, std::weak_ptr<Animator> animator, std::string charTag, std::weak_ptr<Character> Owner, AbilityInfo info)
 {
 	tag = abilTag;
 	targetAnimator = animator;
 	owner = Owner;
 	abilInfo = info;
 
-	owner->GetVitalsComponent().onAbilityModified.Subscribe
+	auto abilOwner = owner.lock();
+	if (!abilOwner)
+	{
+		return;
+	}
+
+	abilOwner->GetVitalsComponent().lock()->onAbilityModified.Subscribe
 	(
 		[this](AbilityVital info)
 		{
@@ -33,7 +39,7 @@ Ability::Ability(std::string abilTag, Animator* animator, std::string charTag, C
 		}
 	);
 
-	owner->GetSpriteComponent().spriteAnimator->onMontageComplete.Subscribe
+	abilOwner->GetSpriteComponent().lock()->GetAnimator().lock()->onMontageComplete.Subscribe
 	(
 		[this](std::string Anim) { OnAbilityMontageCompleted(Anim); }
 	);
@@ -41,6 +47,13 @@ Ability::Ability(std::string abilTag, Animator* animator, std::string charTag, C
 
 void Ability::Update(double deltaTime)
 {
+	auto abilOwner = owner.lock();
+	if (!abilOwner)
+	{
+		return;
+	}
+
+
 	if (isOnCooldown && currentCooldownTime <= abilInfo.abilityCooldown)
 	{
 		currentCooldownTime += deltaTime;
@@ -70,18 +83,24 @@ void Ability::Update(double deltaTime)
 
 	}
 
-	if (owner && abilityCollidor)
+	if (abilOwner && abilityCollidor)
 	{
 		float halfX = abilityCollidor->BoxSize.x * 0.5f;
 		float halfY = abilityCollidor->BoxSize.y * 0.5f;
-		abilityCollidor->Box.min = { owner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
-		abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y };
+		abilityCollidor->Box.min = { abilOwner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * abilOwner->GetCharacterDirection()), abilOwner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
+		abilityCollidor->Box.max = { abilOwner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * abilOwner->GetCharacterDirection()), abilOwner->GetPosition().y + halfY + abilInfo.collidorOffset->y };
 	}
 }
 
 // Make 3 child classes light heavy and dash ability so logic is simpler...core logic resides here...
 void Ability::Activate()
 {
+	auto abilOwner = owner.lock();
+	if (!abilOwner)
+	{
+		return;
+	}
+
 	if (!isOnCooldown)
 	{
 		// Change the collidor appearance functionality so its time of appearance is in its config and is loaded...also make sure it is not set to true from the start we can have abilities that spawn
@@ -90,21 +109,21 @@ void Ability::Activate()
 		isCollidorActivated = true;
 		isAbilityActivated = true;
 
-		if (targetAnimator)
+		auto animator = targetAnimator.lock();
+
+		if (animator)
 		{
-			targetAnimator->SetCurrentAnim(tag, false);
+			animator->SetCurrentAnim(tag, false);
 
 			std::random_device rd;
 			std::mt19937 gen(rd());
-			std::bernoulli_distribution proc_chance(owner->GetVitalsComponent().GetFocus());
+			std::bernoulli_distribution proc_chance(abilOwner->GetVitalsComponent().lock()->GetFocus());
 			float totalDamage = abilInfo.abilityDamage;
 
 			if (proc_chance(gen))
 			{
 				totalDamage = 2 * abilInfo.abilityDamage;
 			}
-			
-			std::cout << "Spawning collidor for damage: " << totalDamage << std::endl;
 
 			abilityCollidor = SpawnActor<CollisionComponent>(owner, true, totalDamage);
 
@@ -112,8 +131,8 @@ void Ability::Activate()
 			abilityCollidor->BoxSize = abilInfo.collidorSize.value_or(glm::vec2(0.0f));
 			float halfX = abilityCollidor->BoxSize.x * 0.5f;
 			float halfY = abilityCollidor->BoxSize.y * 0.5f;
-			abilityCollidor->Box.min = { owner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
-			abilityCollidor->Box.max = { owner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * owner->GetCharacterDirection()), owner->GetPosition().y + halfY + abilInfo.collidorOffset->y};
+			abilityCollidor->Box.min = { abilOwner->GetPosition().x - halfX + (abilInfo.collidorOffset->x * abilOwner->GetCharacterDirection()), abilOwner->GetPosition().y - halfY + abilInfo.collidorOffset->y };
+			abilityCollidor->Box.max = { abilOwner->GetPosition().x + halfX + (abilInfo.collidorOffset->x * abilOwner->GetCharacterDirection()), abilOwner->GetPosition().y + halfY + abilInfo.collidorOffset->y};
 		}
 	}
 	

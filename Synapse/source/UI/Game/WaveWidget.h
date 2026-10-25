@@ -17,8 +17,8 @@ public:
 
 private:
 
-	TextWidget* WaveText;
-	TextWidget* WaveInfoText;
+	std::shared_ptr<TextWidget> WaveText;
+	std::shared_ptr<TextWidget> WaveInfoText;
 
 };
 

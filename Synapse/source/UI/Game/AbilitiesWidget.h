@@ -16,9 +16,9 @@ public:
 
 private:
 
-	AbilityWidget* Light;
-	AbilityWidget* Heavy;
-	AbilityWidget* Dash;
+	std::shared_ptr<AbilityWidget> Light;
+	std::shared_ptr<AbilityWidget> Heavy;
+	std::shared_ptr<AbilityWidget> Dash;
 
 
 };

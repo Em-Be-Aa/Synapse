@@ -11,14 +11,15 @@ public:
 
 	Enemy(glm::vec3 spawnPosition);
 
+	void Init() override;
 	void Tick(double deltaTime) override;
 
 	void Destroy() override;
 
-	StateMachine* AIStateMachine;
+	std::shared_ptr<StateMachine> AIStateMachine;
 
 private:
 
-	CharacterHealthBar* healthBar;
+	std::shared_ptr<CharacterHealthBar> healthBar;
 };
 

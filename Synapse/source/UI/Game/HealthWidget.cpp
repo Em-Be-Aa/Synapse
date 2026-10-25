@@ -7,12 +7,12 @@
 
 void HealthWidget::Init()
 {
-	Font* fontA = Game::GetGame()->GetCurrentSession()->GetSmallFont();
+	auto fontA = Game::GetGame()->GetCurrentSession().lock()->GetSmallFont().lock();
 
 	SetAnchor(AnchorPoint::BottomLeft);
 	SetSize({ 500.0f, 100.0f });
 	SetOffset({ 20.0f, 20.0f });
-	widgetSprite.Init("Assets/UI/HealthBar.png");
+	widgetSprite->Init("Assets/UI/HealthBar.png");
 	SetZOrder(1);
 
 	VigorBar = SpawnActor<Widget>();
@@ -30,26 +30,26 @@ void HealthWidget::Init()
 	PlatingBar->SetZOrder(0);
 
 
-	VigorText = SpawnActor<TextWidget>(fontA, "100/100", this);
+	VigorText = SpawnActor<TextWidget>(fontA, "100/100", std::dynamic_pointer_cast<Widget>(shared_from_this()));
 	VigorText->SetAnchor(AnchorPoint::Center);
 	VigorText->SetOffset({ 30.0f, -25 });
 	VigorText->SetColor({ 1, 1, 1, 1.0f });
 	VigorText->SetZOrder(1);
 
-	PlatingText = SpawnActor<TextWidget>(fontA, "50/50", this);
+	PlatingText = SpawnActor<TextWidget>(fontA, "50/50", std::dynamic_pointer_cast<Widget>(shared_from_this()));
 	PlatingText->SetAnchor(AnchorPoint::Center);
 	PlatingText->SetOffset({ 30.0f, 25 });
 	PlatingText->SetColor({ 1, 1, 1, 1.0f });
 	PlatingText->SetZOrder(1);
 
 
-	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onVigorModified.Subscribe
+	Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetVitalsComponent().lock()->onVigorModified.Subscribe
 	(
 		[this](float Vigor, float MaxVigor) { this->UpdateVigorBar(Vigor, MaxVigor);}
 	);
 
 
-	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().onPlatingModified.Subscribe
+	Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetVitalsComponent().lock()->onPlatingModified.Subscribe
 	(
 		[this](float Plating, float MaxPlating) { this->UpdatePlatingBar(Plating, MaxPlating); }
 	);

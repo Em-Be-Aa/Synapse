@@ -4,32 +4,42 @@
 
 class Character;
 
-class AbilityComponent
+class AbilityComponent : public Object
 {
 
 public:
 
-	AbilityComponent(Character* C);
-
-	Ability* GetAbility(std::string Tag);
+	void Init() override {};
+	void Update(double dT) override {};
 
 	void ActivateAbility(std::string Tag);
 
-	Character* GetOwner() 
+
+
+private:
+
+	std::vector<std::shared_ptr<Ability>> abilities;
+	std::weak_ptr<Character> componentOwner;
+
+
+public:
+
+	void SetOwner(std::weak_ptr<Character> Owner)
+	{
+		componentOwner = Owner;
+	}
+
+	std::weak_ptr<Character> GetOwner()
 	{
 		return componentOwner;
 	}
 
-	std::vector<Ability*>& GetAbilities()
+	std::vector<std::shared_ptr<Ability>>& GetAbilities()
 	{
 		return abilities;
 	}
 
-private:
-
-	std::vector<Ability*> abilities;
-	Character* componentOwner;
-
+	std::weak_ptr<Ability> GetAbility(std::string Tag);
 
 };
 

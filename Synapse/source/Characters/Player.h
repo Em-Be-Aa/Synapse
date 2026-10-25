@@ -12,6 +12,7 @@ public:
 
 	Player();
 
+	void Init() override;
 	void Tick(double deltaTime) override;
 	void onInputClicked(int Key) override;
 	void onInputPressed(int Key) override;

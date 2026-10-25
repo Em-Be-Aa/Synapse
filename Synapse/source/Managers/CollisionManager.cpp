@@ -3,59 +3,69 @@
 #include "CollisionManager.h"
 #include <memory>
 
-
 CollisionManager* CollisionManager::GetCollisionManager()
 {
-    static CollisionManager* DefaultCollisionManager = nullptr;
+    static std::shared_ptr<CollisionManager> DefaultCollisionManager;
 
     if (!DefaultCollisionManager)
     {
-        std::unique_ptr<CollisionManager> actor(new CollisionManager());
-        DefaultCollisionManager = actor.get();
-        UpdateManager::GetUpdateManager().RegisterPostUpdateObject(std::move(actor));
+        DefaultCollisionManager = std::shared_ptr<CollisionManager>(new CollisionManager());
+        UpdateManager::GetUpdateManager().RegisterPostUpdateObject(DefaultCollisionManager);
         DefaultCollisionManager->Init();
     }
 
-    return DefaultCollisionManager;
+    return DefaultCollisionManager.get();
 }
 
-void CollisionManager::RegisterCollisionComponent(CollisionComponent* Coll)
+void CollisionManager::RegisterCollisionComponent(std::weak_ptr<CollisionComponent> Coll)
 {
     CollisionComponents.push_back(Coll);
 }
 
-void CollisionManager::UnregisterCollisionComponent(CollisionComponent* Coll)
+void CollisionManager::UnregisterCollisionComponent(std::weak_ptr<CollisionComponent> Coll)
 {
-    std::erase(CollisionComponents, Coll);
+    std::erase_if(CollisionComponents, [Coll](const std::weak_ptr<CollisionComponent>& weak)
+        {
+            return Coll.lock() == weak.lock();
+        });
 }
 
 
 void CollisionManager::Update(double deltaTime)
 {
-
-    for (CollisionComponent* Collidor : CollisionComponents)
+    for (auto Collidor : CollisionComponents)
     {
-        CheckCollision(*Collidor);
+        CheckCollision(Collidor);
     }
 }
 
-bool CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
+bool CollisionManager::CheckCollision(std::weak_ptr<CollisionComponent> Source)
 {
+    auto SourceCollidor = Source.lock();
 
-    std::vector<CollisionComponent*> currentCollidors = {};
+    if (!SourceCollidor)
+    {
+        return false;
+    }
+
+    std::vector<std::weak_ptr<CollisionComponent>> currentCollidors = {};
 
     for (size_t j = 0; j < CollisionComponents.size(); j++)
     {
-        auto OtherCollidor = CollisionComponents[j];
+        auto OtherCollidor = CollisionComponents[j].lock();
+        if (!OtherCollidor)
+        {
+            continue;
+        }
 
-        const auto& boxA = SourceCollidor.Box;
+        const auto& boxA = SourceCollidor->Box;
         const auto& boxB = OtherCollidor->Box;
 
-        Character* sourceCollidorOwner = dynamic_cast<Character*>(SourceCollidor.GetOwner());
-        Character* otherCollidorOwner = dynamic_cast<Character*>(OtherCollidor->GetOwner());
+        auto sourceCollidorOwner = dynamic_pointer_cast<Character>(SourceCollidor->GetOwner().lock());
+        auto otherCollidorOwner = dynamic_pointer_cast<Character>(OtherCollidor->GetOwner().lock());
 
         //should make this part of the iscolliding function...
-        if (&SourceCollidor == OtherCollidor || sourceCollidorOwner->GetFaction() == otherCollidorOwner->GetFaction())
+        if (SourceCollidor == OtherCollidor || sourceCollidorOwner->GetFaction() == otherCollidorOwner->GetFaction())
         {
             continue;
         }
@@ -66,14 +76,18 @@ bool CollisionManager::CheckCollision(CollisionComponent& SourceCollidor)
             currentCollidors.push_back(OtherCollidor);
 
             // This will fire once on overlap
-            if (!SourceCollidor.IsCurrentCollidor(OtherCollidor))
+            if (!SourceCollidor->IsCurrentCollidor(OtherCollidor))
             {
-                SourceCollidor.CollisionDelegate.Broadcast({OtherCollidor->GetOwner(), OtherCollidor->isDamageCollidor, OtherCollidor->damageCount,{} });
+                SourceCollidor->CollisionDelegate.Broadcast({OtherCollidor->GetOwner(), OtherCollidor->isDamageCollidor, OtherCollidor->damageCount,{} });
+                if (OtherCollidor->isDamageCollidor)
+                {
+                    std::cout << "Damage done to character" << std::endl;
+                }
             }
         }
     }
 
-    SourceCollidor.UpdateCollidors(currentCollidors);
+    SourceCollidor->UpdateCollidors(currentCollidors);
 
-    return SourceCollidor.GetCollisionState();
+    return SourceCollidor->GetCollisionState();
 }

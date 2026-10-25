@@ -14,7 +14,7 @@ AbilityWidget::AbilityWidget(const char* ImagePath)
 	imagePath = ImagePath;
 }
 
-AbilityWidget::AbilityWidget(const char* ImagePath, Widget* Parent)
+AbilityWidget::AbilityWidget(const char* ImagePath, std::weak_ptr<Widget> Parent)
 {
 	// This is not okay...i have to manually make constructor for each widget type to set parent...
 
@@ -26,7 +26,7 @@ void AbilityWidget::Init()
 {
 	Widget::Init();
 
-	Font* fontA = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
+	auto fontA = Game::GetGame()->GetCurrentSession().lock()->GetDefaultFont().lock();
 
 	SetImage("Assets/UI/StatBG.png");
 	SetSize({ 100.0f, 100.0f });
@@ -34,13 +34,13 @@ void AbilityWidget::Init()
 	SetZOrder(0);
 
 
-	Image = SpawnActor<Widget>(imagePath, this);
+	Image = SpawnActor<Widget>(imagePath, std::dynamic_pointer_cast<Widget>(shared_from_this()));
 	Image->SetSize({ GetSize().x * 0.65, GetSize().y * 0.65 });
 	Image->SetAnchor(AnchorPoint::Center);
 	Image->SetZOrder(1);
 
 
-	Cooldown = SpawnActor<Widget>(this);
+	Cooldown = SpawnActor<Widget>(std::dynamic_pointer_cast<Widget>(shared_from_this()));
 	Cooldown->SetColor({ 0.11, 0.11, 0.11, 0.45f });
 	Cooldown->SetSize({ GetSize().x * 0.7, GetSize().y * 0.7 });
 	Cooldown->SetAnchor(AnchorPoint::Center);
@@ -48,7 +48,7 @@ void AbilityWidget::Init()
 	Cooldown->SetZOrder(2);
 
 
-	Text = SpawnActor<TextWidget>(fontA, "2", this);
+	Text = SpawnActor<TextWidget>(fontA, "2", std::dynamic_pointer_cast<Widget>(shared_from_this()));
 	Text->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 	Text->SetSize({ 30.0f, 30.0f });
 	Text->SetAnchor(AnchorPoint::Center);

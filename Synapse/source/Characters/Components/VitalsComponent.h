@@ -5,14 +5,14 @@
 
 class Character;
 
-class VitalsComponent 
+class VitalsComponent : public Object
 {
 
 public:
 
 	VitalsComponent() {};
 
-	VitalsComponent(Character* Owner);
+	void Update(double dT) override {};
 
 	Delegate<> onDeath;
 	Delegate<float, float> onVigorModified;
@@ -23,7 +23,7 @@ public:
 private:
 
 	Vitals ownerVitals = { {100.0f, 100.0f}, 1.0f, { 0.0f, 0.0f }, 0.0f, 0.0f, 0 , {"", 0.0f, 0.0f}, {"", 0.0f, 0.0f}, {"", 0.0f, 0.0f} };
-	Character* owner = nullptr;
+	std::weak_ptr<Character> owner;
 
 
 public:

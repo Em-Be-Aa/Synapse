@@ -9,7 +9,7 @@ class CharacterHealthBar : public Widget
 
 public:
 
-	CharacterHealthBar(Actor* Owner);
+	CharacterHealthBar(std::weak_ptr<Actor> Owner);
 
 	void Init() override;
 

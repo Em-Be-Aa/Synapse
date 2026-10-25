@@ -3,7 +3,7 @@
 #include "StateMachine.h"
 
 
-AIState::AIState(StateMachine* stateM)
+AIState::AIState(std::weak_ptr<StateMachine> stateM)
 {
 	SM = stateM;
 }

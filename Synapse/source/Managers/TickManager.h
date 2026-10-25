@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Actor/Actor.h"
+#include <memory>
 #include <vector>
 
 class TickManager
@@ -13,11 +14,11 @@ private:
 public:
 
 	static TickManager* GetTickManager();
-	void RegisterObject(Actor* O);
+	void RegisterObject(std::weak_ptr<Actor> O);
 
 	void RemovePendingDestroyActors();
 
-	std::vector<Actor*> RegisteredActors;
+	std::vector<std::weak_ptr<Actor>> RegisteredActors;
 
 };
 

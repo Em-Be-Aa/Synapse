@@ -9,7 +9,7 @@ class HUD : public Object
 
 public:
 
-	HUD(Font* font) : defaultFont(font) {};
+	HUD(std::weak_ptr<Font> font) : defaultFont(font) {};
 	void Update(double dT) override;
 	void Init() override;
 
@@ -17,6 +17,6 @@ public:
 
 private:
 
-	Font* defaultFont;
+	std::weak_ptr<Font> defaultFont;
 };
 

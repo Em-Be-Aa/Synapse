@@ -12,12 +12,12 @@ class CollisionComponent : public Object
 {
 
 public:
-	CollisionComponent(Actor* Owner);
+	CollisionComponent(std::weak_ptr<Actor> Owner);
 	CollisionComponent(bool isDamage, float damageAmount);
-	CollisionComponent(Actor* Owner, bool isDamage, float damageAmount);
-
+	CollisionComponent(std::weak_ptr<Actor> Owner, bool isDamage, float damageAmount);
 	~CollisionComponent();
 
+	void Init() override;
 	// This is component of an actor...think about if this need tick or update....this goes for all components...the initial thought was to use update for managers, components so their logic runs before actors run tick
 	void Update(double deltaTime) override;
 
@@ -32,21 +32,17 @@ public:
 
 private:
 
-	Shader* collisionShader;
-	Sprite collisionSprite;
-	Actor* owner;
-	RenderComponent RenderComp;
-
-	std::vector<CollisionComponent*> currentCollidors;
-
-private:
+	std::shared_ptr<Sprite> collisionSprite;
+	std::weak_ptr<Actor> owner;
+	std::shared_ptr<RenderComponent> RenderComp;
+	std::vector<std::weak_ptr<CollisionComponent>> currentCollidors;
 
 	bool enableDebug = false;
 	
 
 public:
 
-	Actor* GetOwner() 
+	std::weak_ptr<Actor> GetOwner() 
 	{
 		return owner;
 	};
@@ -61,9 +57,8 @@ public:
 		return isColliding;
 	};
 
-	void UpdateCollidors(std::vector<CollisionComponent*> CCS)
+	void UpdateCollidors(std::vector<std::weak_ptr<CollisionComponent>> CCS)
 	{
-		
 		if (CCS.empty())
 		{
 			currentCollidors = {};
@@ -75,7 +70,14 @@ public:
 		// This is not good practice learn a better way and change this....
 		for (auto CC : CCS)
 		{
-			if (!CC->isDamageCollidor)
+			auto Collidor = CC.lock();
+
+			if (!Collidor)
+			{
+				return;
+			}
+
+			if (!Collidor->isDamageCollidor)
 			{
 				SetCollisionState(true);
 				return;
@@ -85,15 +87,21 @@ public:
 		SetCollisionState(false);
 	}
 
-	bool IsCurrentCollidor(CollisionComponent* CC)
+	bool IsCurrentCollidor(std::weak_ptr<CollisionComponent> CC)
 	{
-		if (currentCollidors.empty() || !CC)
+		if (currentCollidors.empty() || !CC.lock())
 		{
 			return false;
 		}
 		else
 		{
-			auto iterator = std::find(currentCollidors.begin(), currentCollidors.end(), CC);
+			auto iterator = std::find_if(currentCollidors.begin(), currentCollidors.end(),
+				[CC] (const std::weak_ptr<CollisionComponent>& collidor)
+				{
+					return collidor.lock() == CC.lock();
+				}
+
+				);
 			return (!currentCollidors.empty() && iterator != currentCollidors.end());
 		}
 	}

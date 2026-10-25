@@ -8,7 +8,7 @@ class Enemy;
 class Camera;
 class WaveSpawner;
 
-class Session
+class Session : public std::enable_shared_from_this<Session>
 {
 
 public:
@@ -21,27 +21,27 @@ public:
 	void Init();
 	void Update(double deltaTime);
 
-	Player* GetActivePlayer()
+	std::weak_ptr<Player> GetActivePlayer()
 	{
 		return SynapsePlayer;
 	};
 
-	Font* GetLargeFont() 
+	std::weak_ptr<Font> GetLargeFont() 
 	{
-		return &largeFont;
+		return largeFont;
 	}
 
-	Font* GetDefaultFont()
+	std::weak_ptr<Font> GetDefaultFont()
 	{
-		return &defaultFont;
+		return defaultFont;
 	}
 
-	Font* GetSmallFont()
+	std::weak_ptr<Font> GetSmallFont()
 	{
-		return &smallFont;
+		return smallFont;
 	}
 
-	WaveSpawner* GetWaveSpawner()
+	std::weak_ptr<WaveSpawner> GetWaveSpawner()
 	{
 		return waveSpawner;
 	}
@@ -49,15 +49,14 @@ public:
 private:
 
 
-	TileMap* Landscape ;
-	Player* SynapsePlayer;
-	Camera* defaultCamera;
-	HUD* sessionHUD;
-	WaveSpawner* waveSpawner;
-	Font largeFont;
-	Font defaultFont;
-	Font smallFont;
-
+	std::shared_ptr<TileMap> Landscape ;
+	std::shared_ptr<Player> SynapsePlayer;
+	std::shared_ptr<Camera> defaultCamera;
+	std::shared_ptr<HUD> sessionHUD;
+	std::shared_ptr<WaveSpawner> waveSpawner;
+	std::shared_ptr<Font> largeFont;
+	std::shared_ptr<Font> defaultFont;
+	std::shared_ptr<Font> smallFont;
 	Game* game;
 
 };

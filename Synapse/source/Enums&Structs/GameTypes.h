@@ -2,6 +2,7 @@
 
 #include "../ImageLoader/Image.h"
 #include <glm/glm.hpp>
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -50,7 +51,7 @@ struct KeyState {
 };
 
 struct CollisionInfo {
-	Actor* Collidor;
+	std::weak_ptr<Actor> Collidor;
 	bool isDamageCollidor = false;
 	float damageCount = 0;
 	std::vector<Actor*> ignoreActors;

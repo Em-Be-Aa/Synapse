@@ -13,8 +13,15 @@ void ChaseState::Update(double deltaTime)
 {
 
     // Make your own formula for good chase....this is all AI
-    Character* player =  SM->GetPlayer();
-    Character* owner = SM->GetOwner();
+    auto sm = SM.lock();
+
+    if (!sm)
+    {
+        return;
+    }
+
+    auto player =  sm->GetPlayer().lock();
+    auto owner = sm->GetOwner().lock();
 
     if (!player || !owner)
     {

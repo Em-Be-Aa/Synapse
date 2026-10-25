@@ -19,6 +19,7 @@ public:
 	void Destroy() override;
 	void Tick(double deltaTime) override {};
 	void Update(double deltaTime) override {};
+
 	void onInputPressed(int Key) override {};
 	void onInputReleased(int Key) override {};
 	void onInputClicked(int Key) override {};

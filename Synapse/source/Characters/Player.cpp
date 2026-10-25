@@ -1,4 +1,5 @@
 #include "../Game/Game.h"
+#include "../Game/Game.h"
 #include "../GameConfig/GameConfigs.h"
 #include "../Templates/Templates.h"
 #include "../Window/Window.h"
@@ -7,29 +8,43 @@
 #include "glm/glm.hpp"
 #include "Player.h"
 #include <iostream>
+#include <memory>
 #include <string>
 
 Player::Player()
 {
     // make the player's collision box smaller than the full sprite
+    
+
+
+  }
+
+
+void Player::Init()
+{
+    Character::Init();
+
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
     tag = "player";
     characterFaction = Faction::Player;
-    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
-    characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
+    characterSprite->GetAnimator().lock()->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
+    characterSprite->GetAnimator().lock()->SetCurrentAnim("IDLE", false);
 
     AbilityInfo LightAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "LIGHT ATTACK");
     AbilityInfo HeavyAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "HEAVY ATTACK");
     AbilityInfo Dash = GameConfigs::GetGameConfig().GetCharacterAbilityData(tag, "DASH");
 
-    AddAbility<AttackAbility>(this, "LIGHT ATTACK", LightAttack);
-    AddAbility<AttackAbility>(this, "HEAVY ATTACK", HeavyAttack);
-    AddAbility<DashAbility>(this, "DASH", Dash);
+    AddAbility<AttackAbility>(std::static_pointer_cast<Character>(shared_from_this()), "LIGHT ATTACK", LightAttack);
+    AddAbility<AttackAbility>(std::static_pointer_cast<Character>(shared_from_this()), "HEAVY ATTACK", HeavyAttack);
+    AddAbility<DashAbility>(std::static_pointer_cast<Character>(shared_from_this()), "DASH", Dash);
 
-    GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 0.0, {50.0f, 50.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown }, {"HEAVY ATTACK", HeavyAttack.abilityDamage, HeavyAttack.abilityCooldown }, {"DASH", Dash.abilityDamage, Dash.abilityCooldown, Dash.dashDistance } });
+    if (auto VC = GetVitalsComponent().lock())
+    {
+        VC->SetVitals({ {100.0f, 100.0f }, 0.0f, {50.0f, 50.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown }, {"HEAVY ATTACK", HeavyAttack.abilityDamage, HeavyAttack.abilityCooldown }, {"DASH", Dash.abilityDamage, Dash.abilityCooldown, Dash.dashDistance } });
+    }
+
 }
-
 
 void Player::Tick(double deltaTime)
 {
@@ -68,23 +83,25 @@ void Player::onInputClicked(int Key)
 {
     if (Key == GLFW_KEY_E)
     {
-        AbilComp.ActivateAbility("LIGHT ATTACK");
+        AbilComp->ActivateAbility("LIGHT ATTACK");
     }
     else if (Key == GLFW_KEY_Q)
     {
-        AbilComp.ActivateAbility("HEAVY ATTACK");
+        AbilComp->ActivateAbility("HEAVY ATTACK");
     }
     else if (Key == GLFW_KEY_SPACE)
     {
-        AbilComp.ActivateAbility("DASH");
+        AbilComp->ActivateAbility("DASH");
     }
-
-
 
     if (Key == GLFW_KEY_ESCAPE)
     {
-        glfwSetWindowShouldClose(Game::GetGame()->GetGameWindow()->window, GLFW_TRUE);
+        if (auto gameWindow = Game::GetGame()->GetGameWindow().lock())
+        {
+            glfwSetWindowShouldClose(gameWindow->window, GLFW_TRUE);
+        }
     }
+
 }
 
 

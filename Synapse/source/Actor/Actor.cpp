@@ -12,11 +12,11 @@ Actor::~Actor()
 
 void Actor::Init()
 {
-	TickManager::GetTickManager()->RegisterObject(this);
+	Object::Init();
+	TickManager::GetTickManager()->RegisterObject(std::dynamic_pointer_cast<Actor>(shared_from_this()));
 }
 
 void Actor::Destroy()
 {
 	Object::Destroy();
 }
-

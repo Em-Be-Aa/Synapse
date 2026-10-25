@@ -8,7 +8,7 @@ class ChaseState : public AIState
 
 public:
 	
-	ChaseState(StateMachine* stateM) : AIState(stateM) {};
+	ChaseState(std::weak_ptr<StateMachine> stateM) : AIState(stateM) {};
 	
 	void Enter() override;
 	void Update(double deltaTime) override;

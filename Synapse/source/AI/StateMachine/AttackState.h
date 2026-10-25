@@ -8,7 +8,7 @@ class AttackState : public AIState
 
 public:
 
-	AttackState(StateMachine* stateM) : AIState(stateM) {};
+	AttackState(std::weak_ptr<StateMachine> stateM) : AIState(stateM) {};
 
 	void Enter() override;
 	void Update(double deltaTime) override;

@@ -5,13 +5,13 @@
 
 void Button::Init()
 {
-    Game::GetGame()->GetInputManager()->EnableActorInput(this);
+    Game::GetGame()->GetInputManager().lock()->EnableActorInput(std::static_pointer_cast<Button>(shared_from_this()));
 }
 void Button::Update(double dT)
 {
     Widget::Update(dT);
 
-    glm::vec2 cursor = Game::GetGame()->GetGameWindow()->GetCursorPosition();
+    glm::vec2 cursor = Game::GetGame()->GetGameWindow().lock()->GetCursorPosition();
     glm::vec2 halfSize = GetSize() * 0.5f;
 
 

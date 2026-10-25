@@ -49,7 +49,7 @@ void CardManager::SetupCards()
 void CardManager::RemoveCards(CardInfo info)
 {
 	// Modify the vitals first
-	Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetVitalsComponent().ModifyVital(info.target, info.statTag, info.value, info.isMultiplier);
+	Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetVitalsComponent().lock()->ModifyVital(info.target, info.statTag, info.value, info.isMultiplier);
 
 	// Send delegate to HUD next
 	onCardSelected.Broadcast();

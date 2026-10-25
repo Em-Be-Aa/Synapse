@@ -5,19 +5,20 @@
 #include "TextWidget.h"
 #include <glm/ext/matrix_transform.hpp>
 
-TextWidget::TextWidget(Font* font, std::string initialText) : fontRef(font), text(initialText)
+TextWidget::TextWidget(std::weak_ptr<Font> font, std::string initialText) : fontRef(font), text(initialText)
 {
 
 }
 
-TextWidget::TextWidget(Font* font, std::string initialText, Widget* Parent) : fontRef(font), text(initialText)
+TextWidget::TextWidget(std::weak_ptr<Font> font, std::string initialText, std::weak_ptr<Widget> Parent) : fontRef(font), text(initialText)
 {
     parent = Parent;
 }
 
 void TextWidget::Update(double dT)
 {
-    if (!fontRef || text.empty())
+    auto font = fontRef.lock();
+    if (!font || text.empty())
         return;
 
     glm::vec2 anchorPoint = GetRawAnchorPoint(widgetAnchor, offset);
@@ -26,7 +27,7 @@ void TextWidget::Update(double dT)
     for (char c : text)
     {
         if (c < 32 || c > 127) continue;
-        totalWidth += fontRef->GetBakedChars()[c - 32].xadvance;
+        totalWidth += font->GetBakedChars()[c - 32].xadvance;
     }
 
     bool isRightAnchored = (widgetAnchor == AnchorPoint::TopRight || widgetAnchor == AnchorPoint::BottomRight);
@@ -36,8 +37,8 @@ void TextWidget::Update(double dT)
     bool isBottomAnchored = (widgetAnchor == AnchorPoint::BottomLeft || widgetAnchor == AnchorPoint::BottomRight || widgetAnchor == AnchorPoint::BottomCenter);
     bool isVCenterAnchored = (widgetAnchor == AnchorPoint::Center);
 
-    float ascent = fontRef->GetAscentPixels();
-    float descent = fontRef->GetDescentPixels();
+    float ascent = font->GetAscentPixels();
+    float descent = font->GetDescentPixels();
 
     float cursorX = isRightAnchored ? anchorPoint.x - totalWidth
         : isHCenterAnchored ? anchorPoint.x - totalWidth * 0.5f
@@ -57,8 +58,8 @@ void TextWidget::Update(double dT)
         {
             if (c < 32 || c > 127) continue;
             stbtt_aligned_quad q;
-            stbtt_GetBakedQuad((stbtt_bakedchar*)fontRef->GetBakedChars(),
-                fontRef->GetAtlasWidth(), fontRef->GetAtlasHeight(),
+            stbtt_GetBakedQuad((stbtt_bakedchar*)font->GetBakedChars(),
+                font->GetAtlasWidth(), font->GetAtlasHeight(),
                 c - 32, &measureX, &measureY, &q, 1);
 
             if (first) { visualTop = q.y0; visualBottom = q.y1; first = false; }
@@ -77,9 +78,9 @@ void TextWidget::Update(double dT)
 
     const float baselineY = cursorY;
 
-    RenderComp.defaultQuad.textureID = fontRef->GetTextureID();
-    RenderComp.defaultQuad.tint = widgetColor;
-    RenderComp.defaultQuad.space = RenderSpace::Screen;
+    RenderComp->defaultQuad.textureID = font->GetTextureID();
+    RenderComp->defaultQuad.tint = widgetColor;
+    RenderComp->defaultQuad.space = RenderSpace::Screen;
 
     for (char c : text)
     {
@@ -87,8 +88,8 @@ void TextWidget::Update(double dT)
 
         stbtt_aligned_quad quad;
         stbtt_GetBakedQuad(
-            (stbtt_bakedchar*)fontRef->GetBakedChars(),
-            fontRef->GetAtlasWidth(), fontRef->GetAtlasHeight(),
+            (stbtt_bakedchar*)font->GetBakedChars(),
+            font->GetAtlasWidth(), font->GetAtlasHeight(),
             c - 32,
             &cursorX, &cursorY,
             &quad,
@@ -109,11 +110,11 @@ void TextWidget::Update(double dT)
         glm::vec2 uvScale = { quad.s1 - quad.s0, -(quad.t1 - quad.t0) };
         glm::vec2 uvOffset = { quad.s0, quad.t1 };
 
-        RenderComp.defaultQuad.model = model;
-        RenderComp.defaultQuad.uvScaleOffset = glm::vec4(uvScale, uvOffset);
-        RenderComp.defaultQuad.layer = zOrder;
-        RenderComp.SetIsDisabled(!isVisible);
+        RenderComp->defaultQuad.model = model;
+        RenderComp->defaultQuad.uvScaleOffset = glm::vec4(uvScale, uvOffset);
+        RenderComp->defaultQuad.layer = zOrder;
+        RenderComp->SetIsDisabled(!isVisible);
 
-        RenderComp.Quads.push_back(RenderComp.defaultQuad);
+        RenderComp->Quads.push_back(RenderComp->defaultQuad);
     }
 }

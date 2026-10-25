@@ -19,26 +19,27 @@ void AbilitiesWidget::Init()
 	SetColor({ 0.0f, 0.0f, 0.0f, 0.0f });
 	SetZOrder(0);
 
-	Font* fontA = Game::GetGame()->GetCurrentSession()->GetDefaultFont();
+	// so many locks usage without checks just because i know that session or object will be alive...research how to make this better
+	auto fontA = Game::GetGame()->GetCurrentSession().lock()->GetDefaultFont().lock();
 
 	Light = SpawnActor<AbilityWidget>("Assets/UI/LightAttack.png");
 	Light->SetSize({ 80.0f, 80.0f });
 	Light->SetOffset({ -100.0f, 25.0f });
-	Light->GetCooldown()->SetVisibility(true);
+	Light->GetCooldown().lock()->SetVisibility(true);
 	Light->SetAnchor(AnchorPoint::BottomCenter);
 	Light->SetZOrder(0);
 
 	Heavy = SpawnActor<AbilityWidget>("Assets/UI/HeavyAttack.png");
 	Heavy->SetSize({ 80.0f, 80.0f });
 	Heavy->SetOffset({ 0.0f, 25.0f });
-	Heavy->GetCooldown()->SetVisibility(true);
+	Heavy->GetCooldown().lock()->SetVisibility(true);
 	Heavy->SetAnchor(AnchorPoint::BottomCenter);
 	Heavy->SetZOrder(0);
 
 	Dash = SpawnActor<AbilityWidget>("Assets/UI/DashAbility.png");
 	Dash->SetSize({ 80.0f, 80.0f });
 	Dash->SetOffset({ 100.0f, 25.0f });
-	Dash->GetCooldown()->SetVisibility(true);
+	Dash->GetCooldown().lock()->SetVisibility(true);
 	Dash->SetAnchor(AnchorPoint::BottomCenter);
 	Dash->SetZOrder(0);
 
@@ -49,47 +50,47 @@ void AbilitiesWidget::Update(double dT)
 {
 	Widget::Update(dT);
 
-	float LightAttackCooldown = Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetAbilityComponent().GetAbility("LIGHT ATTACK")->GetCurrentCooldown();
+	float LightAttackCooldown = Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetAbilityComponent().lock()->GetAbility("LIGHT ATTACK").lock()->GetCurrentCooldown();
 	if (LightAttackCooldown > 0.0f)
 	{
-		Light->GetCooldown()->SetSize({70.0f, 70.0f});
+		Light->GetCooldown().lock()->SetSize({70.0f, 70.0f});
 		std::string cooldownStr = std::format("{:.1f}", LightAttackCooldown);
-		Light->GetText()->SetText(cooldownStr);
-		Light->GetText()->SetVisibility(true);
+		Light->GetText().lock()->SetText(cooldownStr);
+		Light->GetText().lock()->SetVisibility(true);
 	}
 	else
 	{
-		Light->GetCooldown()->SetSize({ 0, 0 });
-		Light->GetText()->SetVisibility(false);
+		Light->GetCooldown().lock()->SetSize({0, 0});
+		Light->GetText().lock()->SetVisibility(false);
 	}
 
 
-	float HeavyAttackCooldown = Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetAbilityComponent().GetAbility("HEAVY ATTACK")->GetCurrentCooldown();
+	float HeavyAttackCooldown = Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetAbilityComponent().lock()->GetAbility("HEAVY ATTACK").lock()->GetCurrentCooldown();
 	if (HeavyAttackCooldown > 0.0f)
 	{
-		Heavy->GetCooldown()->SetSize({ 70.0f, 70.0f });
+		Heavy->GetCooldown().lock()->SetSize({70.0f, 70.0f});
 		std::string cooldownStr = std::format("{:.1f}", HeavyAttackCooldown);
-		Heavy->GetText()->SetText(cooldownStr);
-		Heavy->GetText()->SetVisibility(true);
+		Heavy->GetText().lock()->SetText(cooldownStr);
+		Heavy->GetText().lock()->SetVisibility(true);
 	}
 	else
 	{
-		Heavy->GetCooldown()->SetSize({ 0, 0 });
-		Heavy->GetText()->SetVisibility(false);
+		Heavy->GetCooldown().lock()->SetSize({0, 0});
+		Heavy->GetText().lock()->SetVisibility(false);
 	}
 
-	float DashAbilityCooldown = Game::GetGame()->GetCurrentSession()->GetActivePlayer()->GetAbilityComponent().GetAbility("DASH")->GetCurrentCooldown();
+	float DashAbilityCooldown = Game::GetGame()->GetCurrentSession().lock()->GetActivePlayer().lock()->GetAbilityComponent().lock()->GetAbility("DASH").lock()->GetCurrentCooldown();
 	if (DashAbilityCooldown > 0.0f)
 	{
-		Dash->GetCooldown()->SetSize({ 70.0f, 70.0f });
+		Dash->GetCooldown().lock()->SetSize({70.0f, 70.0f});
 		std::string cooldownStr = std::format("{:.1f}", DashAbilityCooldown);
-		Dash->GetText()->SetText(cooldownStr);
-		Dash->GetText()->SetVisibility(true);
+		Dash->GetText().lock()->SetText(cooldownStr);
+		Dash->GetText().lock()->SetVisibility(true);
 	}
 	else
 	{
-		Dash->GetCooldown()->SetSize({ 0, 0 });
-		Dash->GetText()->SetVisibility(false);
+		Dash->GetCooldown().lock()->SetSize({ 0, 0 });
+		Dash->GetText().lock()->SetVisibility(false);
 	};
 
 }

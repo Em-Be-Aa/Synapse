@@ -5,26 +5,41 @@
 #include "glm/glm.hpp"
 #include <algorithm>
 #include <iostream>
+#include <memory>
 
 // make these hard coded things better
-Character::Character() : RenderComp(this), VitalsComp(this), AbilComp(this)
+Character::Character()
 { 
-    Collidor = SpawnActor<CollisionComponent>(this, false, 0.0f);
+}
 
+void Character::Init()
+{
+    Collidor = SpawnActor<CollisionComponent>(std::dynamic_pointer_cast<Actor>(shared_from_this()), false, 0.0f);
+    RenderComp = SpawnActor<RenderComponent>();
+    characterSprite = SpawnActor<Sprite>();
+    AbilComp = SpawnActor<AbilityComponent>();
+    VitalsComp = SpawnActor<VitalsComponent>();
+
+    RenderComp->SetOwner(shared_from_this());
+    AbilComp->SetOwner(std::dynamic_pointer_cast<Character>(shared_from_this()));
+
+
+    //fix this....this is not clean
+   
     // Bind to Collision Delegate(try to find a better way so each class doesn't have to bind in their begin play or constructor....research if this is the only option as Unreal does this too i think.......)
     Collidor->CollisionDelegate.Subscribe
     (
-        [this](CollisionInfo Info){this->OnCollision(Info);}
+        [this](CollisionInfo Info) {this->OnCollision(Info); }
     );
 
-    VitalsComp.onDeath.Subscribe
+    VitalsComp->onDeath.Subscribe
     (
-        [this]() {this->OnCharacterDeath();}
+        [this]() {this->OnCharacterDeath(); }
     );
 
-    characterSprite.spriteAnimator->onMontageComplete.Subscribe
+    characterSprite->GetAnimator().lock()->onMontageComplete.Subscribe
     (
-        [this](std::string Anim) {this->OnAnimationMontageComplete(Anim);}
+        [this](std::string Anim) {this->OnAnimationMontageComplete(Anim); }
     );
 
 }
@@ -40,25 +55,25 @@ void Character::Tick(double deltaTime)
         Velocity = (GetPosition() - GetPreviousPosition()) / glm::vec1(deltaTime);
         Speed = glm::length(Velocity);
 
-        if (Speed == 0 && characterSprite.spriteAnimator->GetCurrentAnim() != "IDLE" && !characterSprite.spriteAnimator->currentMontage.isMontage)
+        if (Speed == 0 && characterSprite->GetAnimator().lock()->GetCurrentAnim() != "IDLE" && !characterSprite->GetAnimator().lock()->currentMontage.isMontage)
         {
-            characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
+            characterSprite->GetAnimator().lock()->SetCurrentAnim("IDLE", false);
         }
-        else if (Speed != 0 && characterSprite.spriteAnimator->GetCurrentAnim() != "WALK" && !characterSprite.spriteAnimator->currentMontage.isMontage)
+        else if (Speed != 0 && characterSprite->GetAnimator().lock()->GetCurrentAnim() != "WALK" && !characterSprite->GetAnimator().lock()->currentMontage.isMontage)
         {
-            characterSprite.spriteAnimator->SetCurrentAnim("WALK", false);
+            characterSprite->GetAnimator().lock()->SetCurrentAnim("WALK", false);
 
         }
     }
    
     // Send info to render
-    RenderComp.defaultQuad.model = glm::translate(glm::mat4(1.0f), GetPosition());
-    RenderComp.defaultQuad.textureXFlip = !isFacingRight;
-    RenderComp.defaultQuad.uvScaleOffset = glm::vec4(characterSprite.spriteAnimator->uvScale.x, characterSprite.spriteAnimator->uvScale.y,
-                                         characterSprite.spriteAnimator->uvOffset.x, characterSprite.spriteAnimator->uvOffset.y);
-    if (characterSprite.spriteAnimator->currentMontage.spriteSheet)
+    RenderComp->defaultQuad.model = glm::translate(glm::mat4(1.0f), GetPosition());
+    RenderComp->defaultQuad.textureXFlip = !isFacingRight;
+    RenderComp->defaultQuad.uvScaleOffset = glm::vec4(characterSprite->GetAnimator().lock()->uvScale.x, characterSprite->GetAnimator().lock()->uvScale.y,
+                                         characterSprite->GetAnimator().lock()->uvOffset.x, characterSprite->GetAnimator().lock()->uvOffset.y);
+    if (characterSprite->GetAnimator().lock()->currentMontage.spriteSheet)
     {
-        RenderComp.defaultQuad.textureID = characterSprite.spriteAnimator->currentMontage.spriteSheet->ID;
+        RenderComp->defaultQuad.textureID = characterSprite->GetAnimator().lock()->currentMontage.spriteSheet->ID;
     }
 }
 
@@ -67,7 +82,7 @@ void Character::Update(double deltaTime)
 
     // Movement and Collision Update
     movementSpeed = 0.5 * deltaTime;
-    movementSpeed = (VitalsComp.GetMomentum() * movementSpeed) + movementSpeed;
+    movementSpeed = (VitalsComp->GetMomentum() * movementSpeed) + movementSpeed;
 
     // Collision stuff should happen in collision component....research if giving owner ref to components makes decoupling easier or difficult....
     float halfX = Collidor->BoxSize.x * 0.5f;
@@ -82,7 +97,7 @@ void Character::Update(double deltaTime)
     Collidor->Box.min = { GetPosition().x + deltaPosition.x - halfX, GetPosition().y - halfY};
     Collidor->Box.max = { GetPosition().x + deltaPosition.x + halfX, GetPosition().y  + halfY };
 
-    if (!CollisionManager::GetCollisionManager()->CheckCollision(*Collidor))
+    if (!CollisionManager::GetCollisionManager()->CheckCollision(Collidor))
     {
         glm::vec3 oldPosition = GetPosition();
         newPosition.x = oldPosition.x + deltaPosition.x;
@@ -96,7 +111,7 @@ void Character::Update(double deltaTime)
     Collidor->Box.min = { GetPosition().x - halfX, GetPosition().y + deltaPosition.y - halfY };
     Collidor->Box.max = { GetPosition().x + halfX, GetPosition().y + deltaPosition.y + halfY };
 
-    if (!CollisionManager::GetCollisionManager()->CheckCollision(*Collidor))
+    if (!CollisionManager::GetCollisionManager()->CheckCollision(Collidor))
     {
         glm::vec3 oldPosition = GetPosition();
         newPosition.y = oldPosition.y + deltaPosition.y;
@@ -110,11 +125,11 @@ void Character::Update(double deltaTime)
 
     UpdatePosition(newPosition, false);
 
-    if (deltaPosition.x > 0 && !characterSprite.spriteAnimator->currentMontage.isMontage)
+    if (deltaPosition.x > 0 && !characterSprite->GetAnimator().lock()->currentMontage.isMontage)
     {
         isFacingRight = true;
     }
-    else if (deltaPosition.x < 0 && !characterSprite.spriteAnimator->currentMontage.isMontage)
+    else if (deltaPosition.x < 0 && !characterSprite->GetAnimator().lock()->currentMontage.isMontage)
     {
         isFacingRight = false;
     }
@@ -126,9 +141,9 @@ void Character::OnCollision(CollisionInfo Info)
 {
     auto iterator = std::find(Info.ignoreActors.begin(), Info.ignoreActors.end(), this);
 
-    Character* collidorCharacter = dynamic_cast<Character*>(Info.Collidor);
+    auto collidorCharacter = std::dynamic_pointer_cast<Character>(Info.Collidor.lock());
 
-    if ((Info.Collidor && Info.Collidor == this) || (!Info.ignoreActors.empty() && iterator != Info.ignoreActors.end()) || (collidorCharacter && collidorCharacter->GetFaction() == this->GetFaction()))
+    if ((Info.Collidor.lock() && Info.Collidor.lock().get() == this) || (!Info.ignoreActors.empty() && iterator != Info.ignoreActors.end()) || (collidorCharacter && collidorCharacter->GetFaction() == this->GetFaction()))
     {
         //std::cout << "Ignoring Collision for this actor" << std::endl;
         return;
@@ -138,9 +153,9 @@ void Character::OnCollision(CollisionInfo Info)
     {
 
         // Don't hardcode it, this should come from the ability or attack the character overlapped....
-        VitalsComp.TakeDamage(Info.damageCount);
+        VitalsComp->TakeDamage(Info.damageCount);
 
-        //std::cout << "Character Base Health left: " << HealthComp.GetBaseHealth() << std::endl;
+        //std::cout << "Character Base Health left: " << VitalsComp.GetVigor() << std::endl;
         //std::cout << "Character Armor Health left: " << HealthComp.GetArmorHealth() << std::endl;
 
     }
@@ -156,7 +171,7 @@ void Character::OnCharacterDeath()
 
     // Alive Status is added so during death animations AI state machine dont work and attack and damage the player. Research if this is necessary or is there a better way.
     SetAliveStatus(false);
-    characterSprite.spriteAnimator->SetCurrentAnim("DEATH", true);
+    characterSprite->GetAnimator().lock()->SetCurrentAnim("DEATH", true);
 }
 
 void Character::OnAnimationMontageComplete(std::string Anim)
@@ -174,5 +189,5 @@ void Character::Destroy()
 
     Collidor->Destroy();
 
-    characterSprite.spriteAnimator->Destroy();
+    characterSprite->GetAnimator().lock()->Destroy();
 }

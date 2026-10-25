@@ -23,9 +23,9 @@ private:
 	
 	CardManager() {};
 
-	StatupCard* cardA;
-	StatupCard* cardB;
-	StatupCard* cardC;
+	std::shared_ptr<StatupCard> cardA;
+	std::shared_ptr<StatupCard> cardB;
+	std::shared_ptr<StatupCard> cardC;
 
 };
 

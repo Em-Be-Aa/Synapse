@@ -1,12 +1,12 @@
+#include "../Window/Window.h"
 #include "InputManager.h"
 #include <iostream>
 
-
-InputManager::InputManager(GLFWwindow* window) 
+InputManager::InputManager(std::weak_ptr<Window> window)
 {
 
-	InputWindow = window;
-	glfwSetCursorPosCallback(window, mouse_callback);
+	InputWindow = window.lock()->window;
+	glfwSetCursorPosCallback(InputWindow, mouse_callback);
 
 }
 
@@ -26,19 +26,25 @@ void InputManager::ProcessInputs()
 
 		for (auto observer : observers)
 		{
+			auto obs = observer.lock();
+			if (!obs)
+			{
+				return;
+			}
+
 			if (justClicked)
 			{
-				observer->onInputClicked(inputAction.first);
+				obs->onInputClicked(inputAction.first);
 			}
 
 			if (isPressed)
 			{
-				observer->onInputPressed(inputAction.first);
+				obs->onInputPressed(inputAction.first);
 			}
 
 			if (justReleased)
 			{
-				observer->onInputReleased(inputAction.first);
+				obs->onInputReleased(inputAction.first);
 			}
 		}
 

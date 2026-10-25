@@ -2,10 +2,12 @@
 
 #include "../Actor/Actor.h"
 #include "../Enums&Structs/GameTypes.h"
+#include "../Window/Window.h"
 #include <functional>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <map>
+#include <memory>
 
 
 
@@ -14,25 +16,27 @@ class InputManager
 
 public:
 
-	InputManager(GLFWwindow* window);
+	InputManager(std::weak_ptr<Window> window);
 	void ProcessInputs();
 	static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 
 	std::function<void(double, double)> onMouseMove;
-	GLFWwindow* InputWindow;
 
-	void EnableActorInput(IInputObserver* actor)
+	void EnableActorInput(std::weak_ptr<IInputObserver> actor)
 	{
 		observers.push_back(actor);
 	}
 
 	void DisableInputforPendingDestoryed()
 	{
-		std::erase_if(observers, [](const IInputObserver* observer) {
-			const Object* asObject = dynamic_cast<const Object*>(observer);
-			return asObject && asObject->isPendingDestroy;
+		std::erase_if(observers, [](std::weak_ptr<IInputObserver> observer) 
+			{
+				auto observerObject = std::dynamic_pointer_cast<Object>(observer.lock());
+				return observerObject && observerObject->isPendingDestroy;
 			});
 	}
+
+	GLFWwindow* InputWindow;
 
 private:
 
@@ -71,5 +75,5 @@ private:
 		{GLFW_MOUSE_BUTTON_2, { false, false }}
 	};
 
-	std::vector<IInputObserver*> observers = {};
+	std::vector<std::weak_ptr<IInputObserver>> observers = {};
 };

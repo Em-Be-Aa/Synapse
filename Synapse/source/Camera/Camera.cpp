@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Camera::Camera(Actor* AttachedActor)
+Camera::Camera(std::weak_ptr<Actor> AttachedActor)
 {
     attachedActor = AttachedActor;
 }
@@ -46,11 +46,10 @@ void Camera::CameraMove(GLFWwindow* window, double xposIn, double yposIn)
 
 void Camera::Update(double deltaTime)
 {
-    if (attachedActor)
+    if (attachedActor.lock())
     {
         UpdatePosition({ 0.0f, 0.0f, 6.0f }, false);
     }
-    
 }
 
 

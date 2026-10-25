@@ -60,16 +60,23 @@ void Renderer2D::BeginScene(const glm::mat4& worldView, const glm::mat4& worldPr
     screenSubmissions.clear();
 }
 
-void Renderer2D::Submit(RenderComponent& rc)
+void Renderer2D::Submit(std::weak_ptr<RenderComponent> rc)
 {
-    if (rc.GetIsDisabled())
+    auto renderComp = rc.lock();
+
+    if (!renderComp)
     {
-        rc.ClearQuads();
+        return;
+    }
+
+    if (renderComp->GetIsDisabled())
+    {
+        renderComp->ClearQuads();
         return;
     }
 
     Submission s;
-    std::vector<QuadInfo> QI = rc.GetQuads();
+    std::vector<QuadInfo> QI = renderComp->GetQuads();
 
     for (auto Quad : QI)
     {
@@ -91,7 +98,7 @@ void Renderer2D::Submit(RenderComponent& rc)
         }
     }
 
-    rc.ClearQuads();
+    renderComp->ClearQuads();
    
 }
 

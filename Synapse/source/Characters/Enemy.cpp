@@ -7,19 +7,22 @@
  
 Enemy::Enemy(glm::vec3 spawnPosition)
 {
-
     // this should be cleaner to specify for instances....the collidor box specification specially
-    UpdatePosition(spawnPosition, false);
+    UpdatePosition(spawnPosition, false); 
+}
+
+void Enemy::Init()
+{
+    Character::Init();
+
     Collidor->BoxSize = glm::vec2(0.2f, 0.3f);
 
     tag = "slime";
     characterFaction = Faction::Enemy;
-    characterSprite.spriteAnimator->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
-    characterSprite.spriteAnimator->SetCurrentAnim("IDLE", false);
+    characterSprite->GetAnimator().lock()->animMontage = GameConfigs::GetGameConfig().GetCharacterData(tag);
+    characterSprite->GetAnimator().lock()->SetCurrentAnim("IDLE", false);
 
-    healthBar = SpawnActor<CharacterHealthBar>(this);
-
-
+    healthBar = SpawnActor<CharacterHealthBar>(std::dynamic_pointer_cast<Actor>(shared_from_this()));
 }
 
 void Enemy::Tick(double deltaTime)

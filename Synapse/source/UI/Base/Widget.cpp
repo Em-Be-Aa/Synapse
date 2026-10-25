@@ -1,18 +1,25 @@
 #include "../../Game/Game.h"
 #include "../../Shader/Renderer2D.h"
+#include "../../Templates/Templates.h"
 #include "../../Window/Window.h"
 #include "Widget.h"
 #include <glm/ext/matrix_transform.hpp>
 
 
-Widget::Widget(const char* imagePath) : RenderComp(this), widgetSprite(imagePath)
+Widget::Widget(const char* imagePath)
 {
-
+    widgetSprite = SpawnActor<Sprite>(imagePath);
 }
 
-Widget::Widget(const char* imagePath, Widget* Parent) : RenderComp(this), widgetSprite(imagePath), parent(Parent)
+Widget::Widget(const char* imagePath, std::weak_ptr<Widget> Parent) : parent(Parent)
 {
+    widgetSprite = SpawnActor<Sprite>(imagePath);
+}
 
+void Widget::Init()
+{
+    RenderComp = SpawnActor<RenderComponent>();
+    RenderComp->SetOwner(shared_from_this());
 }
 
 void Widget::Update(double dT)
@@ -23,18 +30,18 @@ void Widget::Update(double dT)
     model = glm::scale(model, glm::vec3(GetSize(), 1.0f));
     glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
 
-    RenderComp.defaultQuad.uvScaleOffset = uv;
-    RenderComp.defaultQuad.space = widgetRenderSpace;
-    RenderComp.defaultQuad.model = model;
-    RenderComp.defaultQuad.tint = widgetColor;
-    RenderComp.defaultQuad.layer = zOrder;
+    RenderComp->defaultQuad.uvScaleOffset = uv;
+    RenderComp->defaultQuad.space = widgetRenderSpace;
+    RenderComp->defaultQuad.model = model;
+    RenderComp->defaultQuad.tint = widgetColor;
+    RenderComp->defaultQuad.layer = zOrder;
 
-    if (widgetSprite.DefaultImage)
+    if (auto Image = widgetSprite->GetDefaultImage().lock())
     {
-        RenderComp.defaultQuad.textureID = widgetSprite.DefaultImage->ID;
+        RenderComp->defaultQuad.textureID = Image->ID;
     }
 
-    RenderComp.SetIsDisabled(!isVisible);
+    RenderComp->SetIsDisabled(!isVisible);
  
 }
 
@@ -46,7 +53,7 @@ glm::vec3 Widget::CalculateWidgetPosition()
     }
     else if (widgetRenderSpace == RenderSpace::World)
     {
-        return  owner->GetPosition() + glm::vec3(offset, 0.0f);
+        return  owner.lock()->GetPosition() + glm::vec3(offset, 0.0f);
     }
 }
 
@@ -55,19 +62,19 @@ glm::vec3 Widget::CalculateWidgetPosition()
 glm::vec2 Widget::AnchorwithLocalOffset(AnchorPoint anchor, glm::vec2 Offset)
 {
 
-    float windowWidth = Game::GetGame()->GetGameWindow()->GetWindowWidth();
-    float windowHeight = Game::GetGame()->GetGameWindow()->GetWindowHeight();
+    float windowWidth = Game::GetGame()->GetGameWindow().lock()->GetWindowWidth();
+    float windowHeight = Game::GetGame()->GetGameWindow().lock()->GetWindowHeight();
     float parentPositionX = 0.0f;
     float parentPositionY = 0.0f;
     float CenterAdjustX = pixelSize.x * 0.5f;
     float CenterAdjustY = pixelSize.y * 0.5f;
 
-    if (parent)
+    if (auto parentWidget = parent.lock())
     {
-        windowWidth = parent->GetSize().x;
-        windowHeight = parent->GetSize().y;
-        parentPositionX = parent->GetPosition().x - parent->GetSize().x/2;
-        parentPositionY = parent->GetPosition().y - parent->GetSize().y/2;
+        windowWidth = parentWidget->GetSize().x;
+        windowHeight = parentWidget->GetSize().y;
+        parentPositionX = parentWidget->GetPosition().x - parentWidget->GetSize().x/2;
+        parentPositionY = parentWidget->GetPosition().y - parentWidget->GetSize().y/2;
     }
     
 
@@ -102,17 +109,17 @@ glm::vec2 Widget::AnchorwithLocalOffset(AnchorPoint anchor, glm::vec2 Offset)
 
 glm::vec2 Widget::GetRawAnchorPoint(AnchorPoint anchor, glm::vec2 offset)
 {
-    float w = Game::GetGame()->GetGameWindow()->GetWindowWidth();
-    float h = Game::GetGame()->GetGameWindow()->GetWindowHeight();
+    float w = Game::GetGame()->GetGameWindow().lock()->GetWindowWidth();
+    float h = Game::GetGame()->GetGameWindow().lock()->GetWindowHeight();
     float parentPositionX = 0.0f;
     float parentPositionY = 0.0f;
 
-    if (parent)
+    if (auto parentWidget = parent.lock())
     {
-        w = parent->GetSize().x;
-        h = parent->GetSize().y;
-        parentPositionX = parent->GetPosition().x - parent->GetSize().x / 2;
-        parentPositionY = parent->GetPosition().y - parent->GetSize().y / 2;
+        w = parentWidget->GetSize().x;
+        h = parentWidget->GetSize().y;
+        parentPositionX = parentWidget->GetPosition().x - parentWidget->GetSize().x / 2;
+        parentPositionY = parentWidget->GetPosition().y - parentWidget->GetSize().y / 2;
     }
 
     switch (anchor)

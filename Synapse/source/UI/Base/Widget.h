@@ -3,6 +3,7 @@
 #include "../../Actor/Object.h"
 #include "../../Shader/RenderComponent.h"
 #include "../../Sprite/Sprite.h"
+#include "../../Templates/Templates.h"
 #include <vector>
 
 class Actor;
@@ -11,12 +12,13 @@ class Widget : public Object
 {
 
 public:
-	Widget() : RenderComp(this) {};
+	Widget() { widgetSprite = SpawnActor<Sprite>(); };
 	Widget(const char* imagePath);
 
-	Widget(Widget* Parent) : RenderComp(this) { parent = Parent; };
-	Widget(const char* imagePath, Widget* Parent);
+	Widget(std::weak_ptr<Widget> Parent) { parent = Parent; widgetSprite = SpawnActor<Sprite>();};
+	Widget(const char* imagePath, std::weak_ptr<Widget> Parent);
 
+	void Init() override;
 	void Update(double dT) override;
 
 	glm::vec3 CalculateWidgetPosition();
@@ -25,8 +27,8 @@ public:
 
 protected:
 
-	RenderComponent RenderComp;
-	Sprite widgetSprite;
+	std::shared_ptr<RenderComponent> RenderComp;
+	std::shared_ptr<Sprite> widgetSprite;
 	glm::vec3 widgetPosition;
 	glm::vec2 pixelSize = { 50.0f, 50.0f };
 	glm::vec2 offset = { 0.00f, 0.0f };
@@ -34,8 +36,8 @@ protected:
 	int zOrder = 0;
 	bool isVisible = true;
 
-	Actor* owner = nullptr;
-	Widget* parent = nullptr;
+	std::weak_ptr<Actor> owner;
+	std::weak_ptr<Widget> parent;
 
 	AnchorPoint widgetAnchor = AnchorPoint::TopRight;
 	RenderSpace widgetRenderSpace = RenderSpace::Screen;
@@ -79,14 +81,14 @@ public:
 		return pixelSize;
 	}
 
-	void SetOwner(Actor* Owner)
+	void SetOwner(std::weak_ptr<Actor> Owner)
 	{
 		owner = Owner;
 	}
 
 	void SetImage(const char* imagePath)
 	{
-		widgetSprite.Init(imagePath);
+		widgetSprite->Init(imagePath);
 	}
 
 	void SetVisibility(bool value)

@@ -18,7 +18,7 @@ public:
 
 private:
 
-    Sprite* basicTile;
+    std::shared_ptr<Sprite> basicTile;
 
     std::vector<glm::vec2> generatebackgroundTilePositions()
     {

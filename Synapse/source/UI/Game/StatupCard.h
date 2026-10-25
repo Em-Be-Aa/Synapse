@@ -27,9 +27,9 @@ private:
 	CardInfo cardInfo;
 	float cardPosition;
 
-	AbilityWidget* StatIcon;
-	TextWidget* TitleText;
-	TextWidget* DescText;
+	std::shared_ptr<AbilityWidget> StatIcon;
+	std::shared_ptr<TextWidget> TitleText;
+	std::shared_ptr<TextWidget> DescText;
 
 };
 

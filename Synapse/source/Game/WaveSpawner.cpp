@@ -25,7 +25,7 @@ void WaveSpawner::StartWave(int CurrentWaveCount)
     {
         currentWaveInfo = it->second;
 
-        Player* currentPlayer = currentSession->GetActivePlayer();
+        auto currentPlayer = currentSession.lock()->GetActivePlayer().lock();
         currentEnemies.clear();
 
         currentWaveCount = CurrentWaveCount;
@@ -33,10 +33,10 @@ void WaveSpawner::StartWave(int CurrentWaveCount)
         for (size_t i = 0; i < currentWaveInfo.enemyCount; i++)
         {
 
-            Enemy* newEnemy = SpawnActor<Enemy>(GetRandomSpawnPosition());
+            std::shared_ptr<Enemy> newEnemy = SpawnActor<Enemy>(GetRandomSpawnPosition());
             AbilityInfo LightAttack = GameConfigs::GetGameConfig().GetCharacterAbilityData(newEnemy->GetCharacterTag(), "LIGHT ATTACK");
             AddAbility<AttackAbility>(newEnemy, "LIGHT ATTACK", LightAttack);
-            newEnemy->GetVitalsComponent().SetVitals({ {100.0f, 100.0f }, 1.0f, {0.0f, 0.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown}, {"HEAVY ATTACK", 0.0f, 0.0f}, {"DASH", 0.0f, 0.0f}});
+            newEnemy->GetVitalsComponent().lock()->SetVitals({{100.0f, 100.0f}, 1.0f, {0.0f, 0.0f}, 0.0f, 0.0f, 0, {"LIGHT ATTACK", LightAttack.abilityDamage, LightAttack.abilityCooldown}, {"HEAVY ATTACK", 0.0f, 0.0f}, {"DASH", 0.0f, 0.0f}});
             newEnemy->AIStateMachine = SpawnActor<StateMachine>(newEnemy, currentPlayer);
             currentEnemies.push_back(newEnemy);
         }

@@ -2,14 +2,8 @@
 #include "AbilityComponent.h"
 #include <string>
 
-AbilityComponent::AbilityComponent(Character* C)
-{
-	componentOwner = C;
-}
 
-
-
-Ability* AbilityComponent::GetAbility(std::string Tag)
+std::weak_ptr<Ability> AbilityComponent::GetAbility(std::string Tag)
 {
 	for (auto abil : abilities)
 	{
@@ -18,7 +12,7 @@ Ability* AbilityComponent::GetAbility(std::string Tag)
 			return abil;
 		}
 	}
-	return nullptr;
+	return {};
 }
 
 void AbilityComponent::ActivateAbility(std::string Tag)
@@ -33,7 +27,7 @@ void AbilityComponent::ActivateAbility(std::string Tag)
 	
 	}
 
-	if (Ability* targetAbility = GetAbility(Tag))
+	if (auto targetAbility = GetAbility(Tag).lock())
 	{
 		targetAbility->Activate();
 	}

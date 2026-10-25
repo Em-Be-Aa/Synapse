@@ -122,7 +122,6 @@
     }
   },
 
-
   "cards": {
     "VITALS": {
       "pool": [
@@ -137,11 +136,51 @@
           "vfxTag": ""
         },
         {
+          "id": "vitals_vigor_02",
+          "title": "Hardened Frame",
+          "description": "Increases Max Health by 35.",
+          "statTag": "VIGOR",
+          "value": 35.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_vigor_03",
+          "title": "Vital Reserve",
+          "description": "Increases Max Health by 12%.",
+          "statTag": "VIGOR",
+          "value": 0.12,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
           "id": "vitals_momentum_01",
           "title": "Light Feet",
           "description": "Increases Move Speed by 8%.",
           "statTag": "MOMENTUM",
           "value": 0.08,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_momentum_02",
+          "title": "Swift Stride",
+          "description": "Increases Move Speed by 5%.",
+          "statTag": "MOMENTUM",
+          "value": 0.05,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_momentum_03",
+          "title": "Sprinter's Instinct",
+          "description": "Increases Move Speed by 15%.",
+          "statTag": "MOMENTUM",
+          "value": 0.15,
           "isMultiplier": true,
           "icon": "Assets/UI/InsightVital.png",
           "vfxTag": ""
@@ -157,11 +196,91 @@
           "vfxTag": ""
         },
         {
+          "id": "vitals_plating_02",
+          "title": "Reinforced Plates",
+          "description": "Increase armor strength by 10%.",
+          "statTag": "PLATING",
+          "value": 0.10,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_plating_03",
+          "title": "Scale Mail",
+          "description": "Increase armor strength by 3%.",
+          "statTag": "PLATING",
+          "value": 0.03,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
           "id": "vitals_focus_01",
           "title": "Steady Aim",
           "description": "Increases Crit Chance by 50%.",
           "statTag": "FOCUS",
           "value": 0.5,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_focus_02",
+          "title": "Killer Instinct",
+          "description": "Increases Crit Chance by 15%.",
+          "statTag": "FOCUS",
+          "value": 0.15,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_focus_03",
+          "title": "Precision Strikes",
+          "description": "Increases Crit Damage by 25%.",
+          "statTag": "CRITDAMAGE",
+          "value": 0.25,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_recovery_01",
+          "title": "Second Wind",
+          "description": "Restores 1.5 Health per second.",
+          "statTag": "RECOVERY",
+          "value": 1.5,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_recovery_02",
+          "title": "Battle Meditation",
+          "description": "Restores 3% of Max Health every 5 seconds.",
+          "statTag": "RECOVERY",
+          "value": 0.03,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_insight_01",
+          "title": "Sharp Eye",
+          "description": "Increases the odds of rare cards appearing in future drafts by 10%.",
+          "statTag": "INSIGHT",
+          "value": 0.10,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "vitals_insight_02",
+          "title": "Hoarder's Luck",
+          "description": "Future draft screens offer 1 additional card choice.",
+          "statTag": "INSIGHT",
+          "value": 1.0,
           "isMultiplier": false,
           "icon": "Assets/UI/InsightVital.png",
           "vfxTag": ""
@@ -183,6 +302,16 @@
           "vfxTag": "SLASH_TRAIL"
         },
         {
+          "id": "reflex_damage_02",
+          "title": "Honed Blade",
+          "description": "Light Attack deals +4 damage.",
+          "statTag": "DAMAGE",
+          "value": 4.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "SLASH_TRAIL"
+        },
+        {
           "id": "reflex_cooldown_01",
           "title": "Quick Hands",
           "description": "Light Attack cooldown reduced by 10%.",
@@ -191,6 +320,76 @@
           "isMultiplier": true,
           "icon": "Assets/UI/InsightVital.png",
           "vfxTag": ""
+        },
+        {
+          "id": "reflex_cooldown_02",
+          "title": "Nimble Wrists",
+          "description": "Light Attack cooldown reduced by 6%.",
+          "statTag": "COOLDOWN",
+          "value": -0.06,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "reflex_range_01",
+          "title": "Extended Reach",
+          "description": "Light Attack range increased by 10%.",
+          "statTag": "RANGE",
+          "value": 0.10,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "reflex_lifesteal_01",
+          "title": "Vampiric Edge",
+          "description": "Light Attack heals for 3% of damage dealt.",
+          "statTag": "LIFESTEAL",
+          "value": 0.03,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "SLASH_TRAIL"
+        },
+        {
+          "id": "reflex_crit_01",
+          "title": "Opportunist",
+          "description": "Light Attack Crit Chance increased by 10%.",
+          "statTag": "FOCUS",
+          "value": 0.10,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "reflex_stagger_01",
+          "title": "Staggering Slash",
+          "description": "Light Attack has a 15% chance to briefly stagger the target.",
+          "statTag": "STAGGER",
+          "value": 0.15,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "SLASH_TRAIL"
+        },
+        {
+          "id": "reflex_combo_01",
+          "title": "Flow State",
+          "description": "Light Attack combo window extended by 15%.",
+          "statTag": "COMBO",
+          "value": 0.15,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "reflex_aoe_01",
+          "title": "Wide Arc",
+          "description": "Light Attack swing width increased by 12%.",
+          "statTag": "AOE",
+          "value": 0.12,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "SLASH_TRAIL"
         }
       ]
     },
@@ -209,6 +408,16 @@
           "vfxTag": "IMPACT_SHOCKWAVE"
         },
         {
+          "id": "impact_damage_02",
+          "title": "Sledge Weight",
+          "description": "Heavy Attack deals +10 damage.",
+          "statTag": "DAMAGE",
+          "value": 10.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
+        },
+        {
           "id": "impact_cooldown_01",
           "title": "Heavy Momentum",
           "description": "Heavy Attack cooldown reduced by 8%.",
@@ -217,6 +426,76 @@
           "isMultiplier": true,
           "icon": "Assets/UI/InsightVital.png",
           "vfxTag": ""
+        },
+        {
+          "id": "impact_cooldown_02",
+          "title": "Efficient Swing",
+          "description": "Heavy Attack cooldown reduced by 5%.",
+          "statTag": "COOLDOWN",
+          "value": -0.05,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "impact_stagger_01",
+          "title": "Bone Breaker",
+          "description": "Heavy Attack stagger duration increased by 20%.",
+          "statTag": "STAGGER",
+          "value": 0.20,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
+        },
+        {
+          "id": "impact_armorshred_01",
+          "title": "Armor Piercer",
+          "description": "Heavy Attack reduces target armor by 8% for 4 seconds.",
+          "statTag": "ARMORSHRED",
+          "value": 0.08,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
+        },
+        {
+          "id": "impact_aoe_01",
+          "title": "Ground Shatter",
+          "description": "Heavy Attack AoE radius increased by 15%.",
+          "statTag": "AOE",
+          "value": 0.15,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
+        },
+        {
+          "id": "impact_lifesteal_01",
+          "title": "Brutal Harvest",
+          "description": "Heavy Attack heals for 2% of damage dealt.",
+          "statTag": "LIFESTEAL",
+          "value": 0.02,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "impact_chargetime_01",
+          "title": "Coiled Spring",
+          "description": "Heavy Attack charge-up time reduced by 12%.",
+          "statTag": "CHARGETIME",
+          "value": -0.12,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "impact_knockback_01",
+          "title": "Bull Rush",
+          "description": "Heavy Attack knockback distance increased by 20%.",
+          "statTag": "KNOCKBACK",
+          "value": 0.20,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "IMPACT_SHOCKWAVE"
         }
       ]
     },
@@ -235,6 +514,16 @@
           "vfxTag": ""
         },
         {
+          "id": "surge_cooldown_02",
+          "title": "Restless Feet",
+          "description": "Dash cooldown reduced by 10%.",
+          "statTag": "COOLDOWN",
+          "value": -0.10,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
           "id": "surge_distance_01",
           "title": "Long Stride",
           "description": "Dash distance increased by 25%.",
@@ -243,11 +532,78 @@
           "isMultiplier": true,
           "icon": "Assets/UI/InsightVital.png",
           "vfxTag": "DASH_STREAK"
+        },
+        {
+          "id": "surge_distance_02",
+          "title": "Extended Surge",
+          "description": "Dash distance increased by 12%.",
+          "statTag": "DISTANCE",
+          "value": 0.12,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "DASH_STREAK"
+        },
+        {
+          "id": "surge_iframe_01",
+          "title": "Phase Step",
+          "description": "Dash invulnerability window extended by 15%.",
+          "statTag": "IFRAME",
+          "value": 0.15,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "DASH_STREAK"
+        },
+        {
+          "id": "surge_charges_01",
+          "title": "Double Surge",
+          "description": "Dash gains 1 additional charge.",
+          "statTag": "CHARGES",
+          "value": 1.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "surge_damage_01",
+          "title": "Ramming Speed",
+          "description": "Dash deals 6 damage to enemies passed through.",
+          "statTag": "DAMAGE",
+          "value": 6.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "DASH_STREAK"
+        },
+        {
+          "id": "surge_momentum_01",
+          "title": "Trailing Momentum",
+          "description": "Move Speed increased by 10% for 1.5 seconds after dashing.",
+          "statTag": "MOMENTUM",
+          "value": 0.10,
+          "isMultiplier": true,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "DASH_STREAK"
+        },
+        {
+          "id": "surge_recovery_01",
+          "title": "Adrenaline Rush",
+          "description": "Dash restores 5 Health on use.",
+          "statTag": "RECOVERY",
+          "value": 5.0,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": ""
+        },
+        {
+          "id": "surge_stagger_01",
+          "title": "Shockwave Step",
+          "description": "Dash releases a small stagger pulse on activation.",
+          "statTag": "STAGGER",
+          "value": 0.10,
+          "isMultiplier": false,
+          "icon": "Assets/UI/InsightVital.png",
+          "vfxTag": "DASH_STREAK"
         }
       ]
     }
   }
-
-
-
 }

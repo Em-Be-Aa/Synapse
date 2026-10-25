@@ -1,9 +1,10 @@
 #pragma once
 
 #include "../Interfaces/IUpdate.h"
+#include <memory>
 
 
-class Object : public IUpdate
+class Object : public IUpdate, public std::enable_shared_from_this<Object>
 {
 public: 
 

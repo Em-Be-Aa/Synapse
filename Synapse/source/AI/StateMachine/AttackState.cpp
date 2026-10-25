@@ -9,7 +9,10 @@ void AttackState::Enter()
 
 void AttackState::Update(double deltaTime)
 {
-    SM->GetOwner()->GetAbilityComponent().ActivateAbility("LIGHT ATTACK");
+	if (auto w = SM.lock())
+	{
+		w->GetOwner().lock()->GetAbilityComponent().lock()->ActivateAbility("LIGHT ATTACK");
+	}
 }
 
 void AttackState::Exit()

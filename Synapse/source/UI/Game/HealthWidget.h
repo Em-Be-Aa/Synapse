@@ -17,10 +17,10 @@ public:
 
 private:
 
-	Widget* VigorBar;
-	Widget* PlatingBar;
+	std::shared_ptr<Widget> VigorBar;
+	std::shared_ptr<Widget> PlatingBar;
 
-	TextWidget* VigorText;
-	TextWidget* PlatingText;
+	std::shared_ptr<TextWidget> VigorText;
+	std::shared_ptr<TextWidget> PlatingText;
 };
 

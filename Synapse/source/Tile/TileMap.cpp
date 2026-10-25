@@ -8,7 +8,7 @@
 TileMap::TileMap()
 {
 
-    basicTile = new Sprite("Assets/Map/Tiles/Test.png");
+    basicTile = std::make_shared<Sprite>("Assets/Map/Tiles/Test.png");
 
     backgroundTiles = generatebackgroundTilePositions();
     patchTiles = generatepatchTilePositions();
@@ -38,8 +38,9 @@ void TileMap::Update(double deltaTime)
 
     glm::vec4 uv = glm::vec4(1.0f, 1.0f, 0.0f, 0.0f);
 
+
     Renderer2D::GetRenderer()->Submit(
-        basicTile->DefaultImage->ID,
+        basicTile->GetDefaultImage().lock()->ID,
         model,
         uv,
         RenderSpace::World
